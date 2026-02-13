@@ -1,0 +1,11 @@
+last 1 years
+not ios_saf < 15
+not safari < 15
+not samsung < 17
+not and_qq > 0
+not and_uc > 0
+not baidu > 0
+not ie > 0
+not kaios > 0
+not op_mob > 0
+not dead

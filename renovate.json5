@@ -1,0 +1,58 @@
+{
+  extends: ["config:base", ":prConcurrentLimitNone"],
+
+  timezone: "America/New_York",
+  schedule: ["before 6am"],
+
+  commitMessageAction: "update",
+  commitMessagePrefix: "chore(deps):",
+  labels: ["dependencies"],
+
+  packageRules: [
+    {
+      matchCategories: ["ci"],
+      commitMessagePrefix: "ci:",
+    },
+    {
+      matchManagers: ["npm"],
+      matchDepTypes: ["dependencies"],
+      rangeStrategy: "bump",
+    },
+    {
+      matchManagers: ["npm"],
+      matchDepTypes: ["devDependencies"],
+      matchUpdateTypes: ["major"],
+      commitMessagePrefix: "chore(dev-deps):",
+    },
+    {
+      groupName: "bump all non-major development dependencies",
+      groupSlug: "all-dev-minor-patch",
+      matchManagers: ["npm"],
+      matchDepTypes: ["devDependencies"],
+      matchUpdateTypes: ["minor", "patch"],
+      matchPackagePatterns: ["*"],
+      commitMessagePrefix: "chore(dev-deps):",
+    },
+    {
+      groupName: "bump eslint dependencies",
+      groupSlug: "all-eslint-major",
+      matchManagers: ["npm"],
+      matchDepTypes: ["devDependencies"],
+      matchUpdateTypes: ["major"],
+      packagePatterns: [".*eslint.*"],
+      commitMessagePrefix: "chore(dev-deps):",
+    },
+    {
+      matchManagers: ["npm"],
+      matchDepTypes: ["peerDependencies"],
+      rangeStrategy: "widen",
+      commitMessagePrefix: "chore(peer-deps):",
+    },
+    
+    // to support previous react version
+    {
+      "matchPackageNames": ["react-18", "react-dom-18"],
+      "allowedVersions": "<19.0.0",
+    },
+  ],
+}
