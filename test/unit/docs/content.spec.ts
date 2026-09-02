@@ -1,17 +1,16 @@
 /**
  * @jest-environment node
  */
-import fg from 'fast-glob';
-import * as fs from 'fs-extra';
+import { glob, readFile } from 'fs/promises';
 // Disabling eslint design to prevent using regeneratorRuntime in distributions
 
 it('should end all nested docs with a link back to the documentation root', async () => {
-  const files: string[] = await fg('docs/**/*.md');
+  const files: string[] = await Array.fromAsync(glob('docs/**/*.md'));
   expect(files.length).toBeGreaterThan(0);
   const backLink = '[← Back to documentation](/README.md#documentation-)';
 
   for (const file of files) {
-    const contents: string = await fs.readFile(file, 'utf8');
+    const contents: string = await readFile(file, 'utf8');
 
     // Printing a nice message to allow for quick fixing
     const endsWithBacklink: boolean = contents.trim().endsWith(backLink);
@@ -30,11 +29,13 @@ it('should end all nested docs with a link back to the documentation root', asyn
 });
 
 it('should use correct wording', async () => {
-  const files: string[] = await fg(['**/*.md', '!**/node_modules/**']);
+  const files: string[] = await Array.fromAsync(
+    glob(['**/*.md', '!**/node_modules/**']),
+  );
   expect(files.length).toBeGreaterThan(0);
 
   for (const file of files) {
-    const contents: string = await fs.readFile(file, 'utf8');
+    const contents: string = await readFile(file, 'utf8');
 
     // Expected: <Draggable />, <Droppable />, `<DragDropContext />`
     expect(contents.includes('`Draggable`')).toBe(false);

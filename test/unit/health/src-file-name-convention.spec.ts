@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import fg from 'fast-glob';
+import { glob } from 'fs/promises';
 import { invariant } from '../../../src/invariant';
 import pkg from '../../../package.json';
 
@@ -20,7 +20,7 @@ const exceptions: string[] = [
 
 it('should have every prettier target following the file name convention', async () => {
   const targets: string[] = pkg.config.prettier_target.split(' ');
-  const paths: string[] = await fg(targets);
+  const paths: string[] = await Array.fromAsync(glob(targets));
 
   invariant(
     paths.length,
