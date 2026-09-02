@@ -11,7 +11,7 @@ import {
 
 // Spy Placeholder component
 jest.mock('../../../../src/view/placeholder', () => jest.fn());
-// eslint-disable-next-line import/newline-after-import, import/first
+
 import _Placeholder from '../../../../src/view/placeholder';
 const Placeholder = jest.mocked(_Placeholder);
 const { default: OriginalPlaceholder } = jest.requireActual<{

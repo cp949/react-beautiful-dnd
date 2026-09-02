@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-await-in-loop */
 import React, { useState, useEffect, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import type {

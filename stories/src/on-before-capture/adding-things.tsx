@@ -13,7 +13,6 @@ import reorder, { moveBetween } from '../reorder';
 
 let uniqueId = 0;
 function getTasks(count: number): Task[] {
-  // eslint-disable-next-line no-restricted-syntax
   return Array.from({ length: count }, (): Task => {
     const id = `${uniqueId++}`;
 

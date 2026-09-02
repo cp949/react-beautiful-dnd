@@ -4,7 +4,6 @@ import type {
   DroppableProvided,
 } from '../../../../../src/view/droppable/droppable-types';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (mock = (arg: unknown) => {}) =>
   class Stubber extends React.Component<{
     provided: DroppableProvided;

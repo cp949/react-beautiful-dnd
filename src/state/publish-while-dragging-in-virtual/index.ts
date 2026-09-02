@@ -122,7 +122,7 @@ export default ({
 
   const draggingState: DraggingState = {
     ...state,
-    // eslint-disable-next-line
+
     phase: 'DRAGGING',
     impact,
     onLiftImpact,
@@ -142,7 +142,7 @@ export default ({
 
   const dropPending: DropPendingState = {
     ...draggingState,
-    // eslint-disable-next-line
+
     phase: 'DROP_PENDING',
     // No longer waiting
     reason: state.reason,

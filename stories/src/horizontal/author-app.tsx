@@ -24,7 +24,6 @@ const Root = styled.div`
 `;
 
 export default class AuthorApp extends Component<Props, State> {
-  /* eslint-disable react/sort-comp */
   static defaultProps = {
     isCombineEnabled: false,
   };
@@ -32,7 +31,6 @@ export default class AuthorApp extends Component<Props, State> {
   state: State = {
     quotes: this.props.initial,
   };
-  /* eslint-enable react/sort-comp */
 
   onDragEnd = (result: DropResult): void => {
     // super simple, just removing the dragging item

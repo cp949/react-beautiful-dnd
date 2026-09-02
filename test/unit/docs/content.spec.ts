@@ -4,8 +4,6 @@
 import fg from 'fast-glob';
 import * as fs from 'fs-extra';
 // Disabling eslint design to prevent using regeneratorRuntime in distributions
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-await-in-loop */
 
 it('should end all nested docs with a link back to the documentation root', async () => {
   const files: string[] = await fg('docs/**/*.md');

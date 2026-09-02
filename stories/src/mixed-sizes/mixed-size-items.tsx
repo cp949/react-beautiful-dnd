@@ -9,7 +9,7 @@ import reorder from '../reorder';
 function getQuotes() {
   const large: Quote = {
     ...initial[0],
-    // eslint-disable-next-line no-restricted-syntax
+
     content: Array.from({ length: 20 })
       .map(() => 'some really long text')
       .join(' '),

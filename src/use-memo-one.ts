@@ -54,7 +54,7 @@ export function useMemo<T>(
   return cache.result;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function useCallback<T extends Function>(
   // getResult changes on every call,
   callback: T,

@@ -11,7 +11,6 @@ import type { DroppableProvided } from '../../../src/view/droppable/droppable-ty
 import setDOMRect from '../../util/set-dom-rect';
 
 const reorder = (list: any[], startIndex: number, endIndex: number): any[] => {
-  // eslint-disable-next-line no-restricted-syntax
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);

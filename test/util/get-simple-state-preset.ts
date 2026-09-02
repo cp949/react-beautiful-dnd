@@ -42,7 +42,6 @@ export default (axis: Axis = vertical) => {
   const origin: Position = { x: 0, y: 0 };
 
   const dragging = (
-    // eslint-disable-next-line default-param-last
     id: DraggableId = critical.draggable.id,
     selection?: Position,
     viewport: Viewport = preset.viewport,

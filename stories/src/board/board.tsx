@@ -47,7 +47,6 @@ interface State {
 }
 
 export default class Board extends Component<Props, State> {
-  /* eslint-disable react/sort-comp */
   static defaultProps = {
     isCombineEnabled: false,
     applyGlobalStyles: true,

@@ -230,7 +230,7 @@ function getSecondarySelector(): TrySelect {
   const getMemoizedProps = memoizeOne(
     (
       offset: Position,
-      // eslint-disable-next-line default-param-last
+
       combineTargetFor: DraggableId | null = null,
       shouldAnimateDisplacement: boolean,
     ): MapProps => ({

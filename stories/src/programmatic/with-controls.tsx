@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useRef, useState, useCallback, ReactElement } from 'react';
+import React, { useRef, useState, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import type {
   DropResult,
@@ -8,6 +8,7 @@ import type {
   SensorAPI,
 } from '@cp949/react-beautiful-dnd';
 import { DragDropContext } from '@cp949/react-beautiful-dnd';
+import { useCallback } from '../../../src/use-memo-one';
 import type { Quote } from '../types';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';

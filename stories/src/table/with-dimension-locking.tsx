@@ -1,4 +1,3 @@
-/* eslint-disable react/sort-comp */
 import type { Property } from 'csstype';
 import React, { Component, Fragment, ReactElement } from 'react';
 import type { ReactNode } from 'react';

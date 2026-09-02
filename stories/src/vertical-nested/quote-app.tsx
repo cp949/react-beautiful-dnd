@@ -44,11 +44,9 @@ interface State {
 }
 
 export default class QuoteApp extends Component<unknown, State> {
-  /* eslint-disable react/sort-comp */
   state: State = {
     list: initialList,
   };
-  /* eslint-enable */
 
   onDragEnd = (result: DropResult): void => {
     // dropped outside the list

@@ -266,7 +266,7 @@ const mapDispatchToProps: DispatchProps = {
 
 // Abstract class allows to specify props and defaults to component.
 // All other ways give any or do not let add default props.
-// eslint-disable-next-line
+
 /*::
 class DroppableType extends Component<OwnProps> {
   static defaultProps = defaultProps;

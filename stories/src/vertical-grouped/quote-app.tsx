@@ -42,8 +42,6 @@ interface State {
 }
 
 export default class QuoteApp extends Component<Props, State> {
-  /* eslint-disable react/sort-comp */
-
   state: State = {
     quoteMap: this.props.initial,
   };

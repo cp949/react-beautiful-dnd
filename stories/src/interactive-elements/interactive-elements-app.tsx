@@ -126,7 +126,6 @@ const initial: ItemType[] = [
     component: (
       <div
         contentEditable
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: `
             A content editable with

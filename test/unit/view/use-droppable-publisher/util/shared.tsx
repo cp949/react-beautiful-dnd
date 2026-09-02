@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import { createBox } from 'css-box-model';
 import type { Spacing, BoxModel } from 'css-box-model';
 import React, { useMemo } from 'react';

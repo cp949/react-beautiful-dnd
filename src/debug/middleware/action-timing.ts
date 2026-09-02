@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as timings from '../timings';
 import type { Action } from '../../state/store-types';
 

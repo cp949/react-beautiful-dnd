@@ -452,7 +452,7 @@ export default function useTouchSensor(api: SensorAPI) {
         // using a new noop function for each usage as a single `removeEventListener()`
         // call will remove all handlers with the same reference
         // https://codesandbox.io/s/removing-multiple-handlers-with-same-reference-fxe15
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+
         fn: () => {},
         options: { capture: false, passive: false },
       },

@@ -22,7 +22,6 @@ interface Item {
 
 // fake data generator
 const getItems = (count: number): Item[] =>
-  // eslint-disable-next-line no-restricted-syntax
   Array.from({ length: count }, (v, k) => k).map((k) => ({
     id: `item-${k}`,
     content: `item ${k}`,

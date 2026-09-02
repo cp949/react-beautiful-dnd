@@ -130,7 +130,6 @@ export const resetData = (seed: string) => {
 resetData('base');
 
 export const getQuotes = (count: number = quotes.length): Quote[] =>
-  // eslint-disable-next-line no-restricted-syntax
   Array.from({ length: count }, (v, k) => k).map(() => {
     const random: Quote =
       quotes[Math.floor(predictableMathRandom() * quotes.length)];

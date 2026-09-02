@@ -78,19 +78,17 @@ it('should not allow a sensor to obtain a on a dropping item, but can claim one 
 
   // release the movement
   act(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     actions!.move({ x: 100, y: 100 });
   });
   requestAnimationFrame.flush();
 
   act(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     actions!.drop();
   });
   expect(isDropAnimating(handle)).toBe(true);
 
   // lock is no longer active
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
   expect(actions!.isActive()).toBe(false);
   expect(preDrag.isActive()).toBe(false);
 

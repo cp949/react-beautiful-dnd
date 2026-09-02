@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { grid } from '../constants';

@@ -58,7 +58,7 @@ function execute<TData extends AnyResponderData>(
   responder: PrimaryResponderFn<TData> | undefined,
   data: TData,
   announce: Announce,
-  // eslint-disable-next-line no-shadow
+
   getDefaultMessage: GetDefaultMessage<TData>,
 ) {
   if (!responder) {

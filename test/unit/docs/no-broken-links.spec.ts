@@ -73,7 +73,7 @@ it('should use have no dead links', async () => {
 
   for (const file of files) {
     // Disabling eslint design to prevent using regeneratorRuntime in distributions
-    // eslint-disable-next-line no-await-in-loop
+
     const contents: string = await fs.readFile(file, 'utf8');
 
     const tokens = markdown.parse(contents, {});

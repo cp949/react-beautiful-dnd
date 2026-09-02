@@ -99,7 +99,6 @@ interface AppState {
 }
 
 export default class TableApp extends Component<AppProps, AppState> {
-  // eslint-disable-next-line react/sort-comp
   tableRef: HTMLElement | undefined | null;
 
   state: AppState = {

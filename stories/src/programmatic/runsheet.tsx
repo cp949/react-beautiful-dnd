@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useState, useCallback, useEffect, ReactElement } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import type {
   DropResult,
   PreDragActions,
@@ -7,6 +6,7 @@ import type {
   SensorAPI,
 } from '@cp949/react-beautiful-dnd';
 import { DragDropContext } from '@cp949/react-beautiful-dnd';
+import { useCallback } from '../../../src/use-memo-one';
 import type { Quote } from '../types';
 import QuoteList from '../primatives/quote-list';
 import reorder from '../reorder';

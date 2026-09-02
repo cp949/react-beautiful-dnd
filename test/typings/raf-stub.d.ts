@@ -7,6 +7,5 @@ declare module 'raf-stub' {
     step: (steps?: number, duration?: number) => void;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export default (a: number, b: number) => Stub;
 }

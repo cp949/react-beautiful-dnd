@@ -68,7 +68,6 @@ function removeScrollJumpRequest(
 
 const idle: IdleState = { phase: 'IDLE', completed: null, shouldFlush: false };
 
-// eslint-disable-next-line default-param-last
 export default (state: State = idle, action: Action): State => {
   if (action.type === 'FLUSH') {
     return {

@@ -73,7 +73,7 @@ const List = styled.div`
   width: 200px;
   margin: ${grid}px;
 `;
-// eslint-disable-next-line no-restricted-syntax
+
 const initial: Task[] = Array.from(
   { length: 10 },
   (v, k): Task => ({

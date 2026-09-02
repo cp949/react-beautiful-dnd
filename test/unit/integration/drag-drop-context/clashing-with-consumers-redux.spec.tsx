@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { render } from '@testing-library/react';
 import { Provider, connect } from 'react-redux';

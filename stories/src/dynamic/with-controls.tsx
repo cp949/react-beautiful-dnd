@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import React, { ReactElement } from 'react';
 import type { ChangeEvent } from 'react';
 import styled from '@emotion/styled';

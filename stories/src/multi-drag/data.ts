@@ -1,7 +1,6 @@
 import type { Column, Entities, TaskMap } from './types';
 import type { Task, Id } from '../types';
 
-// eslint-disable-next-line no-restricted-syntax
 const tasks: Task[] = Array.from({ length: 20 }, (v, k) => k).map(
   (val: number): Task => ({
     id: `task-${val}`,
