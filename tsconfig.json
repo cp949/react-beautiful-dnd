@@ -13,6 +13,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
+    "target": "ES2019",
+    "ignoreDeprecations": "6.0",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
