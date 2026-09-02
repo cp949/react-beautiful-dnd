@@ -16,6 +16,38 @@
 
 </div>
 
+## Fork history
+
+This package descends from a chain of forks:
+
+1. [`react-beautiful-dnd`](https://github.com/atlassian/react-beautiful-dnd) — the
+   original project, created by Alex Reardon at Atlassian. No longer maintained.
+2. [`@hello-pangea/dnd`](https://github.com/hello-pangea/dnd) — community fork of
+   (1), continuing maintenance after Atlassian stepped back.
+3. `@cp949/react-beautiful-dnd` (this package) — fork of (2).
+
+### What changed in this fork
+
+- **Build**: replaced the Rollup + Babel build with
+  [`tsdown`](https://github.com/rolldown/tsdown) (esbuild/rolldown-based). The
+  published `dist` no longer contains `@babel/runtime` helpers or
+  `regenerator-runtime` — consumers do not need `@babel/runtime` as a dependency.
+  The legacy UMD bundle (`dnd.js`, `dnd.min.js`) was dropped; only ESM and CJS
+  are published.
+- **Browser target**: dropped ES5 support. The build target is Chrome 75 —
+  see [Browser support](/docs/about/browser-support.md).
+- **Package**: renamed to `@cp949/react-beautiful-dnd`; `dist` file names changed
+  from `dnd.*` to `react-beautiful-dnd.*` to match. `peerDependencies` now allow
+  React 19 (`^18.0.0 || ^19.0.0`).
+- **Tooling**: migrated from ESLint 8 + `eslint-config-airbnb` (unmaintained
+  since 2021, incompatible with ESLint 9+) to ESLint 9 flat config.
+- **Security**: `pnpm audit` findings reduced from 168 to 0 by upgrading
+  `express`, `webpack`, `cypress`, `lighthouse`, and adjusting `pnpm.overrides`
+  for transitive dependencies with no direct upgrade path.
+- **Dependencies**: removed `markdown-it`, `lodash.isequal`, `fs-extra`, and
+  `fast-glob` from `devDependencies` — each had exactly one call site, replaced
+  with Node's built-in `fs/promises` APIs or a small inlined implementation.
+
 ## Core characteristics
 
 - Beautiful and [natural movement](/docs/about/animations.md) of items 💐
@@ -131,29 +163,6 @@ There are a lot of libraries out there that allow for drag and drop interactions
 
 - [Engineering health](/docs/support/engineering-health.md)
 - [Community and addons](/docs/support/community-and-addons.md)
-- [Release notes and changelog](https://github.com/hello-pangea/dnd/releases)
+- [Release notes and changelog](/CHANGELOG.md)
 - [Upgrading](/docs/support/upgrading.md)
-- [Road map](https://github.com/hello-pangea/dnd/issues)
 - [Media](/docs/support/media.md)
-
-## Creator ✍️
-
-Alex Reardon [@alexandereardon](https://twitter.com/alexandereardon)
-
-> Alex is no longer personally maintaning this project. The other wonderful maintainers are carrying this project forward.
-
-## Maintainers 🛠️
-
-- Gabriel Santerre [@100terres](https://github.com/100terres)
-- Reece Carolan [@Xhale1](https://github.com/Xhale1)
-- Many [@Atlassian](https://twitter.com/Atlassian)'s have contributed to the original [`react-beautiful-dnd`](https://github.com/atlassian/react-beautiful-dnd). _Atlassian is no longer involved with this project._
-
-## Collaborators 🤝
-
-- Bogdan Chadkin [@IAmTrySound](https://twitter.com/IAmTrySound)
-
-## Thanks 🤗
-
-<a href="https://www.chromatic.com/"><img src="https://user-images.githubusercontent.com/321738/84662277-e3db4f80-af1b-11ea-88f5-91d67a5e59f6.png" width="153" height="30" alt="Chromatic" /></a>
-
-Thanks to [Chromatic](https://www.chromatic.com/) for providing the visual testing platform that helps us review UI changes and catch visual regressions.

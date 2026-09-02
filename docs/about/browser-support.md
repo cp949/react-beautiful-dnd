@@ -1,5 +1,9 @@
 # Browser support 🌍
 
+The build target is Chrome 75 (`tsdown.config.mts`'s `target: 'chrome75'`) — this
+is the minimum, not the recommended baseline. ES5 is not supported; the published
+`dist` is not transpiled down to ES5 syntax.
+
 | Desktop                         | Version                                                 |
 | ------------------------------- | ------------------------------------------------------- |
 | Microsoft Edge                  | Latest 5 stable versions supported                      |
