@@ -48,12 +48,10 @@ const getCombineWithFromImpact = (impact: DragImpact): DraggableId | null => {
 type TrySelect = (state: State, ownProps: OwnProps) => MapProps | null;
 
 function getDraggableSelector(): TrySelect {
-  const memoizedOffset = memoizeOne(
-    (x: number, y: number): Position => ({
-      x,
-      y,
-    }),
-  );
+  const memoizedOffset = memoizeOne((x: number, y: number): Position => ({
+    x,
+    y,
+  }));
 
   const getMemoizedSnapshot = memoizeOne(
     (
@@ -218,12 +216,10 @@ const atRest: MapProps = {
 };
 
 function getSecondarySelector(): TrySelect {
-  const memoizedOffset = memoizeOne(
-    (x: number, y: number): Position => ({
-      x,
-      y,
-    }),
-  );
+  const memoizedOffset = memoizeOne((x: number, y: number): Position => ({
+    x,
+    y,
+  }));
 
   const getMemoizedSnapshot = memoizeOne(getSecondarySnapshot);
 

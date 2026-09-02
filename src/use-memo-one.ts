@@ -32,8 +32,8 @@ export function useMemo<T>(
     isFirstRun.current ||
     Boolean(
       inputs &&
-        committed.current.inputs &&
-        areInputsEqual(inputs, committed.current.inputs),
+      committed.current.inputs &&
+      areInputsEqual(inputs, committed.current.inputs),
     );
 
   // create a new cache if required

@@ -38,16 +38,14 @@ export default ({
 
   const droppables: DroppableDimension[] = registry.droppable
     .getAllByType(home.type)
-    .map(
-      (entry: DroppableEntry): DroppableDimension =>
-        entry.callbacks.getDimensionAndWatchScroll(windowScroll, scrollOptions),
+    .map((entry: DroppableEntry): DroppableDimension =>
+      entry.callbacks.getDimensionAndWatchScroll(windowScroll, scrollOptions),
     );
 
   const draggables: DraggableDimension[] = registry.draggable
     .getAllByType(critical.draggable.type)
-    .map(
-      (entry: DraggableEntry): DraggableDimension =>
-        entry.getDimension(windowScroll),
+    .map((entry: DraggableEntry): DraggableDimension =>
+      entry.getDimension(windowScroll),
     );
 
   const dimensions: DimensionMap = {

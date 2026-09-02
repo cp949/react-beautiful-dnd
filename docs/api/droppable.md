@@ -66,9 +66,7 @@ The `React` children of a `<Droppable />` must be a function that returns a [`Re
 
 ```js
 <Droppable droppableId="droppable-1">
-  {(provided, snapshot) => ({
-    /*...*/
-  })}
+  {(provided, snapshot) => ({/*...*/})}
 </Droppable>
 ```
 

@@ -68,12 +68,9 @@ interface Props extends Partial<Responders> {
 }
 
 function getItems() {
-  return Array.from(
-    { length: 3 },
-    (v, k): Item => ({
-      id: `${k}`,
-    }),
-  );
+  return Array.from({ length: 3 }, (v, k): Item => ({
+    id: `${k}`,
+  }));
 }
 
 function withDefaultBool(value: unknown, defaultValue: boolean) {

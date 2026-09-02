@@ -208,8 +208,7 @@ export interface CombineImpact<TId extends string = string> {
 }
 
 export type ImpactLocation<TId extends string = string> =
-  | ReorderImpact<TId>
-  | CombineImpact<TId>;
+  ReorderImpact<TId> | CombineImpact<TId>;
 
 export interface Displaced<TId extends string = string> {
   forwards: DisplacementGroups<TId>;
@@ -265,13 +264,15 @@ export interface BeforeCapture<TId extends string = string> {
 }
 
 // published when a drag starts
-export interface DragStart<TId extends string = string>
-  extends DraggableRubric<TId> {
+export interface DragStart<
+  TId extends string = string,
+> extends DraggableRubric<TId> {
   mode: MovementMode;
 }
 
-export interface DragUpdate<TId extends string = string>
-  extends DragStart<TId> {
+export interface DragUpdate<
+  TId extends string = string,
+> extends DragStart<TId> {
   // may not have any destination (drag to nowhere)
   destination: DraggableLocation<TId> | null;
   // populated when a draggable is dragging over another in combine mode
@@ -281,8 +282,9 @@ export interface DragUpdate<TId extends string = string>
 export type DropReason = 'DROP' | 'CANCEL';
 
 // published when a drag finishes
-export interface DropResult<TId extends string = string>
-  extends DragUpdate<TId> {
+export interface DropResult<
+  TId extends string = string,
+> extends DragUpdate<TId> {
   reason: DropReason;
 }
 
@@ -366,8 +368,9 @@ interface BaseState<TId extends string = string> {
   // whether or not draggable movements should be animated
   forceShouldAnimate: boolean | null;
 }
-export interface DraggingState<TId extends string = string>
-  extends BaseState<TId> {
+export interface DraggingState<
+  TId extends string = string,
+> extends BaseState<TId> {
   phase: 'DRAGGING';
 }
 
@@ -376,8 +379,9 @@ export interface DraggingState<TId extends string = string>
 // If a drop occurs during this phase, it must wait until it is
 // completed before continuing with the drop
 // TODO: rename to BulkCollectingState
-export interface CollectingState<TId extends string = string>
-  extends BaseState<TId> {
+export interface CollectingState<
+  TId extends string = string,
+> extends BaseState<TId> {
   phase: 'COLLECTING';
 }
 
@@ -385,8 +389,9 @@ export interface CollectingState<TId extends string = string>
 // wait for the collection to finish before performing the drop.
 // This is to ensure that everything has the correct index after
 // a drop
-export interface DropPendingState<TId extends string = string>
-  extends BaseState<TId> {
+export interface DropPendingState<
+  TId extends string = string,
+> extends BaseState<TId> {
   phase: 'DROP_PENDING';
   isWaiting: boolean;
   reason: DropReason;
@@ -410,8 +415,7 @@ export type State<TId extends string = string> =
   | DropAnimatingState<TId>;
 
 export type StateWhenUpdatesAllowed<TId extends string = string> =
-  | DraggingState<TId>
-  | CollectingState<TId>;
+  DraggingState<TId> | CollectingState<TId>;
 
 export type Announce = (message: string) => void;
 

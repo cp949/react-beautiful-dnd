@@ -1,7 +1,5 @@
 const supportedMatchesName:
-  | 'matches'
-  | 'msMatchesSelector'
-  | 'webkitMatchesSelector' = (() => {
+  'matches' | 'msMatchesSelector' | 'webkitMatchesSelector' = (() => {
   const base = 'matches' as const;
 
   // Server side rendering

@@ -123,7 +123,8 @@ export const makeScrollable = (droppable: DroppableDimension, amount = 20) => {
 export const makeVirtual = (
   droppable: DroppableDimension,
   amount?: number,
-): DroppableDimension => // a virtual list also needs to be scrollable
+): DroppableDimension =>
+  // a virtual list also needs to be scrollable
   makeScrollable(
     {
       ...droppable,

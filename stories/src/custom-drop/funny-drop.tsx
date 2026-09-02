@@ -86,13 +86,10 @@ const List = styled.div`
   margin: ${grid}px;
 `;
 
-const initial: Task[] = Array.from(
-  { length: 10 },
-  (v, k): Task => ({
-    id: `task-${k}`,
-    content: `Task ${k}`,
-  }),
-);
+const initial: Task[] = Array.from({ length: 10 }, (v, k): Task => ({
+  id: `task-${k}`,
+  content: `Task ${k}`,
+}));
 
 interface State {
   tasks: Task[];
