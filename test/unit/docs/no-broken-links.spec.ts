@@ -3,8 +3,13 @@
  */
 import fg from 'fast-glob';
 import * as fs from 'fs-extra';
-import type { Token } from 'markdown-it';
 import getProcessor from 'markdown-it';
+
+interface Token {
+  type: string;
+  attrs: Array<[string, string]> | null;
+  children: Token[] | null;
+}
 
 const markdown = getProcessor();
 

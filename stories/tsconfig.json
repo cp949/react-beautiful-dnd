@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "include": ["**/*"],
   "compilerOptions": {
-    "baseUrl": ".",
     "types": ["csstype"],
     "paths": {
       "@hello-pangea/dnd": ["../src/index.ts"]

@@ -1,6 +1,6 @@
 {
-  "name": "@hello-pangea/dnd",
-  "version": "18.0.1",
+  "name": "@cp949/react-beautiful-dnd",
+  "version": "1.0.0",
   "private": false,
   "description": "Beautiful and accessible drag and drop for lists with React",
   "author": "Alex Reardon <areardon@atlassian.com>",
@@ -22,10 +22,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hello-pangea/dnd.git"
+    "url": "https://github.com/cp949/react-beautiful-dnd.git"
   },
   "bugs": {
-    "url": "https://github.com/hello-pangea/dnd/issues"
+    "url": "https://github.com/cp949/react-beautiful-dnd/issues"
   },
   "main": "dist/dnd.cjs.js",
   "module": "dist/dnd.esm.js",
@@ -67,13 +67,12 @@
     "bundle-size:update": "pnpm build:clean && pnpm build:dist && pnpm build:clean",
     "build": "pnpm build:clean && pnpm build:dist",
     "build:clean": "rimraf dist",
-    "build:dist": "cross-env NODE_ENV=production rollup -c",
+    "build:dist": "tsdown",
     "storybook": "storybook dev -p 9002",
     "build-storybook": "storybook build -c .storybook -o site",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.26.7",
     "css-box-model": "^1.2.1",
     "raf-schd": "^4.0.3",
     "react-redux": "^9.2.0",
@@ -89,7 +88,6 @@
     "@babel/plugin-transform-object-assign": "7.25.9",
     "@babel/plugin-transform-private-methods": "7.25.9",
     "@babel/plugin-transform-private-property-in-object": "7.25.9",
-    "@babel/plugin-transform-runtime": "7.26.8",
     "@babel/preset-env": "7.26.8",
     "@babel/preset-react": "7.26.3",
     "@babel/preset-typescript": "7.26.0",
@@ -101,13 +99,6 @@
     "@emotion/styled": "11.14.0",
     "@jest/environment": "29.7.0",
     "@release-it/conventional-changelog": "10.0.0",
-    "@rollup/plugin-babel": "6.0.4",
-    "@rollup/plugin-commonjs": "25.0.8",
-    "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "15.3.1",
-    "@rollup/plugin-replace": "5.0.7",
-    "@rollup/plugin-strip": "3.0.4",
-    "@rollup/plugin-terser": "0.4.4",
     "@storybook/addon-docs": "8.5.3",
     "@storybook/addon-essentials": "8.5.3",
     "@storybook/addon-storysource": "8.5.3",
@@ -184,8 +175,6 @@
     "release-it": "18.1.2",
     "require-from-string": "2.0.2",
     "rimraf": "6.0.1",
-    "rollup": "4.34.6",
-    "rollup-plugin-dts": "6.1.1",
     "seedrandom": "3.0.5",
     "storybook": "8.5.3",
     "styled-components": "6.1.15",
@@ -193,7 +182,8 @@
     "stylelint-config-recommended": "14.0.1",
     "stylelint-config-standard": "36.0.1",
     "ts-node": "10.9.2",
-    "typescript": "5.7.3",
+    "tsdown": "0.22.14",
+    "typescript": "6.0.3",
     "wait-on": "8.0.2",
     "webpack": "5.97.1"
   },

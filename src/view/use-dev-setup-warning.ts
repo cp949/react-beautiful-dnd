@@ -12,7 +12,7 @@ export default function useDevSetupWarning(fn: () => void, inputs?: unknown[]) {
         error(`
           A setup problem was encountered.
 
-          > ${e.message}
+          > ${e instanceof Error ? e.message : String(e)}
         `);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

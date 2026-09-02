@@ -19,7 +19,8 @@ export default class MyJSDOMEnvironment extends JSDOMEnvironment {
     // When importing jsdom in one of the test it throws an
     // error, because TextDecoder and TextEncoder are needed.
     this.global.TextDecoder = TextDecoder as typeof this.global.TextDecoder;
-    this.global.TextEncoder = TextEncoder;
+    this.global.TextEncoder =
+      TextEncoder as unknown as typeof this.global.TextEncoder;
 
     // FIXME: There's some types issues here
     this.global.MessageChannel =
