@@ -1,6 +1,7 @@
 import React from 'react';
+import { act } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, type Root } from 'react-dom/client';
 import { invariant } from '../../../../src/invariant';
 import App from '../util/app';
 import { noop } from '../../../../src/empty';
@@ -32,5 +33,18 @@ it('should support hydrating a server side rendered application', () => {
   el.innerHTML = serverHTML;
   getBodyElement().appendChild(el);
 
-  expect(() => hydrateRoot(el, <App />)).not.toThrow();
+  let root: Root | undefined;
+
+  // hydrateRoot는 React 18+ 동시성 작업을 예약한다. act()로 감싸서 동기적으로
+  // 플러시하지 않으면, 테스트 종료 후 jsdom 환경이 해제된 뒤에 예약된 작업이
+  // 뒤늦게 발화되어 크래시가 발생한다.
+  expect(() => {
+    act(() => {
+      root = hydrateRoot(el, <App />);
+    });
+  }).not.toThrow();
+
+  act(() => {
+    root?.unmount();
+  });
 });
