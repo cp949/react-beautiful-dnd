@@ -59,7 +59,7 @@ const storybookConfig: StorybookConfig = {
         ...(config?.jsc || {}),
         baseUrl: resolve(__dirname),
         paths: {
-          '@hello-pangea/dnd': [
+          '@cp949/react-beautiful-dnd': [
             process.env.USE_PRODUCTION_BUILD === 'true'
               ? resolve(__dirname, '../dist/dnd.esm')
               : resolve(__dirname, '../src/index.ts'),

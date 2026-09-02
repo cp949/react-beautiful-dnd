@@ -9,8 +9,12 @@ import { getBox } from 'css-box-model';
 import type { Position, BoxModel } from 'css-box-model';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import type { BeforeCapture, DropResult } from '@hello-pangea/dnd';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from '@cp949/react-beautiful-dnd';
+import type { BeforeCapture, DropResult } from '@cp949/react-beautiful-dnd';
 import { getQuotes } from '../data';
 import type { Quote } from '../types';
 import bindEvents from '../../../src/view/event-bindings/bind-events';

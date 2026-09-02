@@ -4,7 +4,7 @@ import {
   Droppable,
   Draggable,
   DropResult,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 
 // fake data generator
 const getItems = (count: number) =>

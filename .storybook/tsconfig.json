@@ -3,7 +3,7 @@
   "include": ["**/*"],
   "compilerOptions": {
     "paths": {
-      "@hello-pangea/dnd": ["../src/index.ts"]
+      "@cp949/react-beautiful-dnd": ["../src/index.ts"]
     }
-  },
+  }
 }

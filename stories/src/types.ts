@@ -1,4 +1,7 @@
-import type { DraggableId, DraggableLocation } from '@hello-pangea/dnd';
+import type {
+  DraggableId,
+  DraggableLocation,
+} from '@cp949/react-beautiful-dnd';
 
 export type Id = string;
 

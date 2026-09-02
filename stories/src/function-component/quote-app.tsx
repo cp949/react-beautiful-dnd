@@ -1,11 +1,15 @@
 import React, { ReactElement, useState } from 'react';
 import styled from '@emotion/styled';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from '@cp949/react-beautiful-dnd';
 import type {
   DropResult,
   DraggableProvided,
   DroppableProvided,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import type { Quote as QuoteType } from '../types';
 import { quotes as initial } from '../data';
 import reorder from '../reorder';

@@ -1,6 +1,10 @@
 import React, { CSSProperties, ReactElement, useState } from 'react';
 import { FixedSizeList as List, areEqual } from 'react-window';
-import { Droppable, Draggable, DragDropContext } from '@hello-pangea/dnd';
+import {
+  Droppable,
+  Draggable,
+  DragDropContext,
+} from '@cp949/react-beautiful-dnd';
 
 import type {
   DroppableProvided,
@@ -8,7 +12,7 @@ import type {
   DraggableStateSnapshot,
   DraggableRubric,
   DropResult,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import type { Quote } from '../../types';
 
 import QuoteItem from '../../primatives/quote-item';

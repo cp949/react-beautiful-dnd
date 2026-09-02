@@ -14,7 +14,7 @@ import {
   DroppableProvided,
   DraggableRubric,
   DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import type { QuoteMap, Quote } from '../../types';
 import Title from '../../primatives/title';
 import { reorderQuoteMap } from '../../reorder';

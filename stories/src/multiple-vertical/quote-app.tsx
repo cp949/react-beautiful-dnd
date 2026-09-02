@@ -1,8 +1,8 @@
 import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { DragDropContext } from '@hello-pangea/dnd';
-import type { DropResult, DraggableLocation } from '@hello-pangea/dnd';
+import { DragDropContext } from '@cp949/react-beautiful-dnd';
+import type { DropResult, DraggableLocation } from '@cp949/react-beautiful-dnd';
 import QuoteList from '../primatives/quote-list';
 import { grid } from '../constants';
 import { reorderQuoteMap } from '../reorder';

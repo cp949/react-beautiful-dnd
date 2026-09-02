@@ -4,7 +4,7 @@ import { colors } from '@atlaskit/theme';
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import { grid } from '../constants';
 import type { Author } from '../types';
 

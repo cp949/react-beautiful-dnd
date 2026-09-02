@@ -1,11 +1,11 @@
 import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { Droppable } from '@hello-pangea/dnd';
+import { Droppable } from '@cp949/react-beautiful-dnd';
 import type {
   DroppableProvided,
   DroppableStateSnapshot,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import { memoizeOne } from '../../../src/memoize-one';
 import { grid, borderRadius } from '../constants';
 import Task from './task';

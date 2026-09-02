@@ -8,8 +8,8 @@ import type {
   SnapDragActions,
   Sensor,
   SensorAPI,
-} from '@hello-pangea/dnd';
-import { DragDropContext } from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
+import { DragDropContext } from '@cp949/react-beautiful-dnd';
 import { useCallback } from '../../../src/use-memo-one';
 import type { Quote } from '../types';
 import { quotes as initial } from '../data';

@@ -2,11 +2,11 @@ import React, { Component, ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { Draggable } from '@hello-pangea/dnd';
+import { Draggable } from '@cp949/react-beautiful-dnd';
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
-} from '@hello-pangea/dnd';
+} from '@cp949/react-beautiful-dnd';
 import { memoizeOne } from '../../../src/memoize-one';
 import { invariant } from '../../../src/invariant';
 import type { Task as TaskType } from '../types';
