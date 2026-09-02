@@ -7,8 +7,32 @@
  * Description: A memoization library which only remembers the latest invocation.
  */
 
-import isDeepEqual from 'lodash.isequal';
 import { memoizeOne, EqualityFn } from '../../src/memoize-one';
+
+function isDeepEqual(a: unknown, b: unknown): boolean {
+  if (Object.is(a, b)) {
+    return true;
+  }
+  if (
+    typeof a !== 'object' ||
+    typeof b !== 'object' ||
+    a === null ||
+    b === null
+  ) {
+    return false;
+  }
+  const aKeys = Object.keys(a);
+  const bKeys = Object.keys(b);
+  return (
+    aKeys.length === bKeys.length &&
+    aKeys.every((key) =>
+      isDeepEqual(
+        (a as Record<string, unknown>)[key],
+        (b as Record<string, unknown>)[key],
+      ),
+    )
+  );
+}
 
 interface HasA {
   a: number;
