@@ -61,7 +61,7 @@ const storybookConfig: StorybookConfig = {
         paths: {
           '@cp949/react-beautiful-dnd': [
             process.env.USE_PRODUCTION_BUILD === 'true'
-              ? resolve(__dirname, '../dist/react-beautiful-dnd.esm')
+              ? resolve(__dirname, '../dist/react-beautiful-dnd.esm.js')
               : resolve(__dirname, '../src/index.ts'),
           ],
         },
