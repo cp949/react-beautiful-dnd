@@ -3,7 +3,7 @@
 `<Droppable />` components can be **dropped on by a `<Draggable />`**. They also **contain** `<Draggable />`s. A `<Draggable />` must be contained within a `<Droppable />`.
 
 ```js
-import { Droppable } from '@hello-pangea/dnd';
+import { Droppable } from '@cp949/react-beautiful-dnd';
 
 <Droppable droppableId="droppable-1" type="PERSON">
   {(provided, snapshot) => (
@@ -45,7 +45,7 @@ type Direction = 'horizontal' | 'vertical';
 
 ### Required props
 
-> `@hello-pangea/dnd` will throw an error if a required prop is not provided
+> `@cp949/react-beautiful-dnd` will throw an error if a required prop is not provided
 
 - `droppableId`: A _required_ `DroppableId(string)`. See our [identifiers guide](/docs/guides/identifiers.md) for more information.
 
@@ -144,7 +144,7 @@ The `children` function is also provided with a small amount of state relating t
 
 ## Combining
 
-`@hello-pangea/dnd` supports the combining of `<Draggable />`s 🤩
+`@cp949/react-beautiful-dnd` supports the combining of `<Draggable />`s 🤩
 
 ![combining](https://user-images.githubusercontent.com/2182637/48045145-318dc300-e1e3-11e8-83bd-22c9bd44c442.gif)
 
@@ -180,7 +180,7 @@ It is recommended that you put a `min-height` on a vertical `<Droppable />` or a
 
 ## Fixed `<Droppable />`s
 
-`@hello-pangea/dnd` has partial support for `<Droppable />` lists that use `position: fixed`. When you start a drag and _any_ list of the same type is `position:fixed` then auto window scrolling will be disabled. This is because our virtual model assumes that when the page scroll changes the position of a `<Droppable />` will shift too. If a manual window scroll is detected then the scroll will be aborted. Scroll container scroll is still allowed. We could improve this support, but it would just be a big effort. Please raise an issue if you would be keen to be a part of this effort ❤️
+`@cp949/react-beautiful-dnd` has partial support for `<Droppable />` lists that use `position: fixed`. When you start a drag and _any_ list of the same type is `position:fixed` then auto window scrolling will be disabled. This is because our virtual model assumes that when the page scroll changes the position of a `<Droppable />` will shift too. If a manual window scroll is detected then the scroll will be aborted. Scroll container scroll is still allowed. We could improve this support, but it would just be a big effort. Please raise an issue if you would be keen to be a part of this effort ❤️
 
 ## Recommended 🏠 home list styling
 

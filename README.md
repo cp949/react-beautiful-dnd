@@ -7,15 +7,12 @@
 
 **Beautiful** and **accessible** drag and drop for lists with [`React`](https://facebook.github.io/react/)
 
-[![CircleCI branch](https://img.shields.io/circleci/project/github/hello-pangea/dnd/main.svg)](https://circleci.com/gh/hello-pangea/dnd/tree/main)
 [![npm](https://img.shields.io/npm/v/@cp949/react-beautiful-dnd.svg)](https://www.npmjs.com/package/@cp949/react-beautiful-dnd)
 [![Discord](https://img.shields.io/discord/1007763479010234398?color=blue)](https://discord.gg/zKhPpmvCEv)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-blue.svg)](http://commitizen.github.io/cz-cli/)
 
 ![quote application example](https://user-images.githubusercontent.com/2182637/53614150-efbed780-3c2c-11e9-9204-a5d2e746faca.gif)
-
-[Play with this example if you want!](https://dnd.hellopangea.com/?path=/story/examples-board--simple)
 
 </div>
 
@@ -29,19 +26,9 @@
 - [Unopinionated styling](/docs/guides/preset-styles.md)
 - No creation of additional wrapper dom nodes - flexbox and focus management friendly!
 
-## Star History
-
-<a href="https://star-history.com/#hello-pangea/dnd&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hello-pangea/dnd&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hello-pangea/dnd&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hello-pangea/dnd&type=Date" />
- </picture>
-</a>
-
 ## Get started 👩‍🏫
 
-Alex Reardon has created [a free course on `egghead.io` 🥚](https://egghead.io/courses/beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd) (using [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)) to help you get started with `@hello-pangea/dnd` as quickly as possible.
+Alex Reardon has created [a free course on `egghead.io` 🥚](https://egghead.io/courses/beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd) (using [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)) to help you get started with `@cp949/react-beautiful-dnd` as quickly as possible.
 
 [![course-logo](https://user-images.githubusercontent.com/2182637/43372837-8c72d3f8-93e8-11e8-9d92-a82adde7718f.png)](https://egghead.io/courses/beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd)
 
@@ -73,14 +60,14 @@ Alex Reardon has created [a free course on `egghead.io` 🥚](https://egghead.io
 
 ## Motivation 🤔
 
-`@hello-pangea/dnd` exists to create beautiful drag and drop for lists that anyone can use - even people who cannot see. For a good overview of the history and motivations of the project you can take a look at these external resources:
+`@cp949/react-beautiful-dnd` exists to create beautiful drag and drop for lists that anyone can use - even people who cannot see. For a good overview of the history and motivations of the project you can take a look at these external resources:
 
 - 📖 [Rethinking drag and drop](https://medium.com/@alexandereardon/rethinking-drag-and-drop-d9f5770b4e6b)
 - 🎧 [React podcast: fast, accessible and beautiful drag and drop](https://reactpodcast.simplecast.fm/17)
 
 ## Not for everyone ✌️
 
-There are a lot of libraries out there that allow for drag and drop interactions within React. Most notable of these is the amazing [`react-dnd`](https://github.com/react-dnd/react-dnd). It does an incredible job at providing a great set of drag and drop primitives which work especially well with the [wildly inconsistent](https://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html) html5 drag and drop feature. `@hello-pangea/dnd` is a higher level abstraction specifically built for lists (vertical, horizontal, movement between lists, nested lists and so on). Within that subset of functionality `@hello-pangea/dnd` offers a powerful, natural and beautiful drag and drop experience. However, it does not provide the breadth of functionality offered by `react-dnd`. One shortcoming is that grid layouts are not supported (yet). So `@hello-pangea/dnd` might not be for you depending on what your use case is.
+There are a lot of libraries out there that allow for drag and drop interactions within React. Most notable of these is the amazing [`react-dnd`](https://github.com/react-dnd/react-dnd). It does an incredible job at providing a great set of drag and drop primitives which work especially well with the [wildly inconsistent](https://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html) html5 drag and drop feature. `@cp949/react-beautiful-dnd` is a higher level abstraction specifically built for lists (vertical, horizontal, movement between lists, nested lists and so on). Within that subset of functionality `@cp949/react-beautiful-dnd` offers a powerful, natural and beautiful drag and drop experience. However, it does not provide the breadth of functionality offered by `react-dnd`. One shortcoming is that grid layouts are not supported (yet). So `@cp949/react-beautiful-dnd` might not be for you depending on what your use case is.
 
 ## Documentation 📖
 
@@ -129,7 +116,7 @@ There are a lot of libraries out there that allow for drag and drop interactions
 - [Avoiding image flickering](/docs/guides/avoiding-image-flickering.md)
 - [Non-visible preset styles](/docs/guides/preset-styles.md)
 - [How we detect scroll containers](/docs/guides/how-we-detect-scroll-containers.md)
-- [How we use dom events](/docs/guides/how-we-use-dom-events.md) - _Useful if you need to build on top of `@hello-pangea/dnd`_
+- [How we use dom events](/docs/guides/how-we-use-dom-events.md) - _Useful if you need to build on top of `@cp949/react-beautiful-dnd`_
 - [Adding `<Draggable />`s during a drag (11.x behaviour)](/docs/guides/changes-while-dragging.md) - _⚠️ Advanced_
 - [Setting up Content Security Policy](/docs/guides/content-security-policy.md)
 
