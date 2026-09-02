@@ -27,6 +27,9 @@
   "bugs": {
     "url": "https://github.com/cp949/react-beautiful-dnd/issues"
   },
+  "engines": {
+    "node": "^22.18.0 || >=24.11.0"
+  },
   "main": "dist/dnd.cjs.js",
   "module": "dist/dnd.esm.js",
   "types": "dist/dnd.d.ts",
