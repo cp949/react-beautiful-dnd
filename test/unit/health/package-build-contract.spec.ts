@@ -31,13 +31,17 @@ it('publishes the scoped ESM and CJS package without Babel runtime', async () =>
   });
 
   const distDirectory = path.resolve(__dirname, '../../../dist');
-  const esmPath = path.join(distDirectory, 'dnd.esm.js');
-  const cjsPath = path.join(distDirectory, 'dnd.cjs.js');
+  const esmPath = path.join(distDirectory, 'react-beautiful-dnd.esm.js');
+  const cjsPath = path.join(distDirectory, 'react-beautiful-dnd.cjs.js');
 
   expect(await exists(esmPath)).toBe(true);
   expect(await exists(cjsPath)).toBe(true);
-  expect(await exists(path.join(distDirectory, 'dnd.js'))).toBe(false);
-  expect(await exists(path.join(distDirectory, 'dnd.min.js'))).toBe(false);
+  expect(await exists(path.join(distDirectory, 'react-beautiful-dnd.js'))).toBe(
+    false,
+  );
+  expect(
+    await exists(path.join(distDirectory, 'react-beautiful-dnd.min.js')),
+  ).toBe(false);
 
   const contents = `${await readFile(esmPath, 'utf8')}\n${await readFile(
     cjsPath,

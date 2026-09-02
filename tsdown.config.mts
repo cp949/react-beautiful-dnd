@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  entry: { dnd: 'src/index.ts' },
+  entry: { 'react-beautiful-dnd': 'src/index.ts' },
   format: ['esm', 'cjs'],
   dts: true,
   outDir: 'dist',
