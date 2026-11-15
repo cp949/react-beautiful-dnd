@@ -1,6 +1,5 @@
-import { useRef } from 'react';
 import type { Position } from 'css-box-model';
-import { useCallback, useMemo } from '../../../use-memo-one';
+import { useMemo } from '../../../use-memo-one';
 import { invariant } from '../../../invariant';
 import type {
   DraggableId,
@@ -10,54 +9,46 @@ import type {
 } from '../../../types';
 import type {
   AnyEventBinding,
-  EventOptions,
   TouchEventBinding,
 } from '../../event-bindings/event-types';
 import bindEvents from '../../event-bindings/bind-events';
 import * as keyCodes from '../../key-codes';
 import supportedPageVisibilityEventName from './util/supported-page-visibility-event-name';
-import { noop } from '../../../empty';
 import useLayoutEffect from '../../use-isomorphic-layout-effect';
+import createCaptureLifecycle from './util/create-capture-lifecycle';
+import type {
+  CaptureLifecycle,
+  CapturePhase,
+  DraggingPhase,
+  PendingPhase,
+} from './util/create-capture-lifecycle';
 
 type TouchWithForce = Touch & {
   force: number;
 };
 
-interface Idle {
-  type: 'IDLE';
-}
-
-interface Pending {
-  type: 'PENDING';
+interface Pending extends PendingPhase {
   point: Position;
-  actions: PreDragActions;
   longPressTimerId: TimeoutID;
 }
 
-interface Dragging {
-  type: 'DRAGGING';
-  actions: FluidDragActions;
+interface Dragging extends DraggingPhase {
   hasMoved: boolean;
 }
 
-type Phase = Idle | Pending | Dragging;
+type Phase = CapturePhase<Pending, Dragging>;
 
-const idle: Idle = { type: 'IDLE' };
+type TouchLifecycle = CaptureLifecycle<Pending, Dragging>;
+
 // Decreased from 150 as a work around for an issue for forcepress on iOS
 // https://github.com/atlassian/react-beautiful-dnd/issues/1401
 export const timeForLongPress = 120;
 export const forcePressThreshold = 0.15;
 
-interface GetBindingArgs {
-  cancel: () => void;
-  completed: () => void;
-  getPhase: () => Phase;
-}
-
 function getWindowBindings({
   cancel,
   getPhase,
-}: GetBindingArgs): AnyEventBinding[] {
+}: TouchLifecycle): AnyEventBinding[] {
   return [
     // If the orientation of the device changes - kill the drag
     // https://davidwalsh.name/orientation-change
@@ -111,9 +102,9 @@ function getWindowBindings({
 // This plays well with the event.target being unmounted during a drag
 function getHandleBindings({
   cancel,
-  completed,
+  stop: completed,
   getPhase,
-}: GetBindingArgs): AnyEventBinding[] {
+}: TouchLifecycle): AnyEventBinding[] {
   return [
     {
       eventName: 'touchmove',
@@ -243,201 +234,104 @@ function getHandleBindings({
   ];
 }
 
-export default function useTouchSensor(api: SensorAPI) {
-  const phaseRef = useRef<Phase>(idle);
-  const unbindEventsRef = useRef<() => void>(noop);
-
-  const getPhase = useCallback(function getPhase(): Phase {
-    return phaseRef.current;
-  }, []);
-
-  const setPhase = useCallback(function setPhase(phase: Phase) {
-    phaseRef.current = phase;
-  }, []);
-
-  const startCaptureBinding: TouchEventBinding = useMemo(
-    () => ({
-      eventName: 'touchstart',
-      fn: function onTouchStart(event: TouchEvent) {
-        // Event already used by something else
-        if (event.defaultPrevented) {
-          return;
-        }
-
-        // We need to NOT call event.preventDefault() so as to maintain as much standard
-        // browser interactions as possible.
-        // This includes navigation on anchors which we want to preserve
-
-        const draggableId: DraggableId | null =
-          api.findClosestDraggableId(event);
-
-        if (!draggableId) {
-          return;
-        }
-
-        const actions: PreDragActions | null = api.tryGetLock(
-          draggableId,
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          stop,
-          { sourceEvent: event },
+function createTouchLifecycle(api: SensorAPI): TouchLifecycle {
+  return createCaptureLifecycle<Pending, Dragging>({
+    getCaptureBindings: ({ stop, startPendingDrag, getPhase, setPhase }) => {
+      function startDragging() {
+        const phase: Phase = getPhase();
+        invariant(
+          phase.type === 'PENDING',
+          `Cannot start dragging from phase ${phase.type}`,
         );
 
-        // could not start a drag
-        if (!actions) {
-          return;
-        }
+        const actions: FluidDragActions = phase.actions.fluidLift(phase.point);
 
-        const touch: Touch = event.touches[0];
-        const { clientX, clientY } = touch;
-        const point: Position = {
-          x: clientX,
-          y: clientY,
-        };
+        setPhase({
+          type: 'DRAGGING',
+          actions,
+          hasMoved: false,
+        });
+      }
 
-        // unbind this event handler
-        unbindEventsRef.current();
+      const startCaptureBinding: TouchEventBinding = {
+        eventName: 'touchstart',
+        fn: function onTouchStart(event: TouchEvent) {
+          // Event already used by something else
+          if (event.defaultPrevented) {
+            return;
+          }
 
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        startPendingDrag(actions, point);
-      },
-    }),
-    // not including stop or startPendingDrag as it is not defined initially
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api],
-  );
+          // We need to NOT call event.preventDefault() so as to maintain as much standard
+          // browser interactions as possible.
+          // This includes navigation on anchors which we want to preserve
 
-  const listenForCapture = useCallback(
-    function listenForCapture() {
-      const options: EventOptions = {
-        capture: true,
-        passive: false,
+          const draggableId: DraggableId | null =
+            api.findClosestDraggableId(event);
+
+          if (!draggableId) {
+            return;
+          }
+
+          const actions: PreDragActions | null = api.tryGetLock(
+            draggableId,
+            stop,
+            { sourceEvent: event },
+          );
+
+          // could not start a drag
+          if (!actions) {
+            return;
+          }
+
+          const touch: Touch = event.touches[0];
+          const { clientX, clientY } = touch;
+          const point: Position = {
+            x: clientX,
+            y: clientY,
+          };
+
+          // timer는 IDLE 검증을 통과한 뒤에 만든다.
+          startPendingDrag(() => ({
+            type: 'PENDING',
+            point,
+            actions,
+            longPressTimerId: setTimeout(startDragging, timeForLongPress),
+          }));
+        },
       };
 
-      unbindEventsRef.current = bindEvents(
-        window,
-        [startCaptureBinding],
-        options,
-      );
+      return [startCaptureBinding];
     },
-    [startCaptureBinding],
-  );
-
-  const stop = useCallback(() => {
-    const current: Phase = phaseRef.current;
-    if (current.type === 'IDLE') {
-      return;
-    }
-
+    // In prior versions of iOS it was required that touch listeners be added
+    // to the handle to work correctly (even if the handle got removed in a portal / clone)
+    // In the latest version it appears to be the opposite: for reparenting to work
+    // the events need to be attached to the window.
+    // For now i'll keep these two functions seperate in case we need to swap it back again
+    // Old behaviour:
+    // https://gist.github.com/parris/dda613e3ae78f14eb2dc9fa0f4bfce3d
+    // https://stackoverflow.com/questions/33298828/touch-move-event-dont-fire-after-touch-start-target-is-removed
+    getDragBindingGroups: (lifecycle) => [
+      getHandleBindings(lifecycle),
+      getWindowBindings(lifecycle),
+    ],
     // aborting any pending drag
-    if (current.type === 'PENDING') {
-      clearTimeout(current.longPressTimerId);
-    }
+    cleanupPending: (pending) => clearTimeout(pending.longPressTimerId),
+    // need to kill any pending drag start timer
+    resetPendingOnUnmount: true,
+  });
+}
 
-    setPhase(idle);
-    unbindEventsRef.current();
-
-    listenForCapture();
-  }, [listenForCapture, setPhase]);
-
-  const cancel = useCallback(() => {
-    const phase: Phase = phaseRef.current;
-    stop();
-    if (phase.type === 'DRAGGING') {
-      phase.actions.cancel({ shouldBlockNextClick: true });
-    }
-    if (phase.type === 'PENDING') {
-      phase.actions.abort();
-    }
-  }, [stop]);
-
-  const bindCapturingEvents = useCallback(
-    function bindCapturingEvents() {
-      const options: EventOptions = { capture: true, passive: false };
-      const args: GetBindingArgs = {
-        cancel,
-        completed: stop,
-        getPhase,
-      };
-
-      // In prior versions of iOS it was required that touch listeners be added
-      // to the handle to work correctly (even if the handle got removed in a portal / clone)
-      // In the latest version it appears to be the opposite: for reparenting to work
-      // the events need to be attached to the window.
-      // For now i'll keep these two functions seperate in case we need to swap it back again
-      // Old behaviour:
-      // https://gist.github.com/parris/dda613e3ae78f14eb2dc9fa0f4bfce3d
-      // https://stackoverflow.com/questions/33298828/touch-move-event-dont-fire-after-touch-start-target-is-removed
-      const unbindTarget = bindEvents(window, getHandleBindings(args), options);
-      const unbindWindow = bindEvents(window, getWindowBindings(args), options);
-
-      unbindEventsRef.current = function unbindAll() {
-        unbindTarget();
-        unbindWindow();
-      };
-    },
-    [cancel, getPhase, stop],
-  );
-
-  const startDragging = useCallback(
-    function startDragging() {
-      const phase: Phase = getPhase();
-      invariant(
-        phase.type === 'PENDING',
-        `Cannot start dragging from phase ${phase.type}`,
-      );
-
-      const actions: FluidDragActions = phase.actions.fluidLift(phase.point);
-
-      setPhase({
-        type: 'DRAGGING',
-        actions,
-        hasMoved: false,
-      });
-    },
-    [getPhase, setPhase],
-  );
-
-  const startPendingDrag = useCallback(
-    function startPendingDrag(actions: PreDragActions, point: Position) {
-      invariant(
-        getPhase().type === 'IDLE',
-        'Expected to move from IDLE to PENDING drag',
-      );
-
-      const longPressTimerId: TimeoutID = setTimeout(
-        startDragging,
-        timeForLongPress,
-      );
-
-      setPhase({
-        type: 'PENDING',
-        point,
-        actions,
-        longPressTimerId,
-      });
-
-      bindCapturingEvents();
-    },
-    [bindCapturingEvents, getPhase, setPhase, startDragging],
+export default function useTouchSensor(api: SensorAPI) {
+  const lifecycle: TouchLifecycle = useMemo(
+    () => createTouchLifecycle(api),
+    [api],
   );
 
   useLayoutEffect(
     function mount() {
-      listenForCapture();
-
-      return function unmount() {
-        // remove any existing listeners
-        unbindEventsRef.current();
-
-        // need to kill any pending drag start timer
-        const phase: Phase = getPhase();
-        if (phase.type === 'PENDING') {
-          clearTimeout(phase.longPressTimerId);
-          setPhase(idle);
-        }
-      };
+      return lifecycle.mount();
     },
-    [getPhase, listenForCapture, setPhase],
+    [lifecycle],
   );
 
   // This is needed for safari

@@ -1,6 +1,5 @@
-import { useRef } from 'react';
 import type { Position } from 'css-box-model';
-import { useCallback, useMemo } from '../../../use-memo-one';
+import { useMemo } from '../../../use-memo-one';
 import { invariant } from '../../../invariant';
 import type {
   PreDragActions,
@@ -12,15 +11,19 @@ import type {
 import type {
   AnyEventBinding,
   EventBinding,
-  EventOptions,
   MouseEventBinding,
 } from '../../event-bindings/event-types';
-import bindEvents from '../../event-bindings/bind-events';
 import * as keyCodes from '../../key-codes';
 import preventStandardKeyEvents from './util/prevent-standard-key-events';
 import supportedPageVisibilityEventName from './util/supported-page-visibility-event-name';
 import useLayoutEffect from '../../use-isomorphic-layout-effect';
-import { noop } from '../../../empty';
+import createCaptureLifecycle from './util/create-capture-lifecycle';
+import type {
+  CaptureLifecycle,
+  CapturePhase,
+  DraggingPhase,
+  PendingPhase,
+} from './util/create-capture-lifecycle';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
 export const primaryButton = 0;
@@ -36,38 +39,22 @@ function isSloppyClickThresholdExceeded(
   );
 }
 
-interface Idle {
-  type: 'IDLE';
-}
-
-interface Pending {
-  type: 'PENDING';
+interface Pending extends PendingPhase {
   point: Position;
-  actions: PreDragActions;
 }
 
-interface Dragging {
-  type: 'DRAGGING';
-  actions: FluidDragActions;
-}
+type Dragging = DraggingPhase;
 
-type Phase = Idle | Pending | Dragging;
+type Phase = CapturePhase<Pending, Dragging>;
 
-const idle: Idle = { type: 'IDLE' };
+type MouseLifecycle = CaptureLifecycle<Pending, Dragging>;
 
-interface GetCaptureArgs {
-  cancel: () => void;
-  completed: () => void;
-  getPhase: () => Phase;
-  setPhase: (phase: Phase) => void;
-}
-
-function getCaptureBindings({
+function getDragBindings({
   cancel,
-  completed,
+  stop: completed,
   getPhase,
   setPhase,
-}: GetCaptureArgs): AnyEventBinding[] {
+}: MouseLifecycle): AnyEventBinding[] {
   return [
     {
       eventName: 'mousemove',
@@ -208,183 +195,109 @@ function getCaptureBindings({
   ];
 }
 
-export default function useMouseSensor(api: SensorAPI) {
-  const phaseRef = useRef<Phase>(idle);
-  const unbindEventsRef = useRef<() => void>(noop);
+function createMouseLifecycle(api: SensorAPI): MouseLifecycle {
+  return createCaptureLifecycle<Pending, Dragging>({
+    getCaptureBindings: ({ stop, startPendingDrag }) => {
+      const startCaptureBinding: MouseEventBinding = {
+        eventName: 'mousedown',
+        fn: function onMouseDown(event: MouseEvent) {
+          // Event already used
+          if (event.defaultPrevented) {
+            return;
+          }
+          // only starting a drag if dragging with the primary mouse button
+          if (event.button !== primaryButton) {
+            return;
+          }
 
-  const startCaptureBinding: MouseEventBinding = useMemo(
-    () => ({
-      eventName: 'mousedown',
-      fn: function onMouseDown(event: MouseEvent) {
-        // Event already used
-        if (event.defaultPrevented) {
-          return;
-        }
-        // only starting a drag if dragging with the primary mouse button
-        if (event.button !== primaryButton) {
-          return;
-        }
+          // Do not start a drag if any modifier key is pressed
+          if (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
+            return;
+          }
 
-        // Do not start a drag if any modifier key is pressed
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
-          return;
-        }
+          const draggableId: DraggableId | null =
+            api.findClosestDraggableId(event);
 
-        const draggableId: DraggableId | null =
-          api.findClosestDraggableId(event);
+          if (!draggableId) {
+            return;
+          }
 
-        if (!draggableId) {
-          return;
-        }
+          const actions: PreDragActions | null = api.tryGetLock(
+            draggableId,
+            stop,
+            { sourceEvent: event },
+          );
 
-        const actions: PreDragActions | null = api.tryGetLock(
-          draggableId,
-          // stop is defined later
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          stop,
-          { sourceEvent: event },
-        );
+          if (!actions) {
+            return;
+          }
 
-        if (!actions) {
-          return;
-        }
+          // consuming the event
+          event.preventDefault();
 
-        // consuming the event
-        event.preventDefault();
+          const point: Position = {
+            x: event.clientX,
+            y: event.clientY,
+          };
 
-        const point: Position = {
-          x: event.clientX,
-          y: event.clientY,
-        };
-
-        // unbind this listener
-        unbindEventsRef.current();
-        // using this function before it is defined as their is a circular usage pattern
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        startPendingDrag(actions, point);
-      },
-    }),
-    // not including startPendingDrag as it is not defined initially
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [api],
-  );
-
-  const preventForcePressBinding: EventBinding = useMemo(
-    () => ({
-      eventName: 'webkitmouseforcewillbegin',
-      fn: (event: Event) => {
-        if (event.defaultPrevented) {
-          return;
-        }
-
-        const id: DraggableId | null = api.findClosestDraggableId(event);
-
-        if (!id) {
-          return;
-        }
-
-        const options: DraggableOptions | null =
-          api.findOptionsForDraggable(id);
-
-        if (!options) {
-          return;
-        }
-
-        if (options.shouldRespectForcePress) {
-          return;
-        }
-
-        if (!api.canGetLock(id)) {
-          return;
-        }
-
-        event.preventDefault();
-      },
-    }),
-    [api],
-  );
-
-  const listenForCapture = useCallback(
-    function listenForCapture() {
-      const options: EventOptions = {
-        passive: false,
-        capture: true,
-      };
-
-      unbindEventsRef.current = bindEvents(
-        window,
-        [preventForcePressBinding, startCaptureBinding],
-        options,
-      );
-    },
-    [preventForcePressBinding, startCaptureBinding],
-  );
-
-  const stop = useCallback(() => {
-    const current: Phase = phaseRef.current;
-    if (current.type === 'IDLE') {
-      return;
-    }
-
-    phaseRef.current = idle;
-    unbindEventsRef.current();
-
-    listenForCapture();
-  }, [listenForCapture]);
-
-  const cancel = useCallback(() => {
-    const phase: Phase = phaseRef.current;
-    stop();
-    if (phase.type === 'DRAGGING') {
-      phase.actions.cancel({ shouldBlockNextClick: true });
-    }
-    if (phase.type === 'PENDING') {
-      phase.actions.abort();
-    }
-  }, [stop]);
-
-  const bindCapturingEvents = useCallback(
-    function bindCapturingEvents() {
-      const options = { capture: true, passive: false };
-      const bindings: AnyEventBinding[] = getCaptureBindings({
-        cancel,
-        completed: stop,
-        getPhase: () => phaseRef.current,
-        setPhase: (phase: Phase) => {
-          phaseRef.current = phase;
+          startPendingDrag(() => ({ type: 'PENDING', point, actions }));
         },
-      });
-
-      unbindEventsRef.current = bindEvents(window, bindings, options);
-    },
-    [cancel, stop],
-  );
-
-  const startPendingDrag = useCallback(
-    function startPendingDrag(actions: PreDragActions, point: Position) {
-      invariant(
-        phaseRef.current.type === 'IDLE',
-        'Expected to move from IDLE to PENDING drag',
-      );
-      phaseRef.current = {
-        type: 'PENDING',
-        point,
-        actions,
       };
-      bindCapturingEvents();
+
+      const preventForcePressBinding: EventBinding = {
+        eventName: 'webkitmouseforcewillbegin',
+        fn: (event: Event) => {
+          if (event.defaultPrevented) {
+            return;
+          }
+
+          const id: DraggableId | null = api.findClosestDraggableId(event);
+
+          if (!id) {
+            return;
+          }
+
+          const options: DraggableOptions | null =
+            api.findOptionsForDraggable(id);
+
+          if (!options) {
+            return;
+          }
+
+          if (options.shouldRespectForcePress) {
+            return;
+          }
+
+          if (!api.canGetLock(id)) {
+            return;
+          }
+
+          event.preventDefault();
+        },
+      };
+
+      return [preventForcePressBinding, startCaptureBinding];
     },
-    [bindCapturingEvents],
+    getDragBindingGroups: (lifecycle) => [getDragBindings(lifecycle)],
+  });
+}
+
+export default function useMouseSensor(api: SensorAPI) {
+  const lifecycle: MouseLifecycle = useMemo(
+    () => createMouseLifecycle(api),
+    [api],
   );
 
   useLayoutEffect(
     function mount() {
-      listenForCapture();
-
-      // kill any pending window events when unmounting
-      return function unmount() {
-        unbindEventsRef.current();
-      };
+      // unmount 때 window binding만 해제한다. Phase는 건드리지 않는다.
+      return lifecycle.mount();
     },
-    [listenForCapture],
+    [lifecycle],
   );
 }
