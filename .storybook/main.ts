@@ -14,11 +14,7 @@ const storybookConfig: StorybookConfig = {
       },
     },
   },
-  addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-storysource',
-    '@storybook/addon-webpack5-compiler-swc',
-  ],
+  addons: ['@storybook/addon-docs', '@storybook/addon-webpack5-compiler-swc'],
 
   core: {
     disableTelemetry: true,
@@ -48,21 +44,20 @@ const storybookConfig: StorybookConfig = {
     },
   },
 
-  docs: {
-    autodocs: false,
-  },
-
   swc: (config: Options): Options => {
     return {
       ...config,
       jsc: {
         ...(config?.jsc || {}),
-        baseUrl: resolve(__dirname),
+        baseUrl: resolve(import.meta.dirname),
         paths: {
           '@cp949/react-beautiful-dnd': [
             process.env.USE_PRODUCTION_BUILD === 'true'
-              ? resolve(__dirname, '../dist/react-beautiful-dnd.esm.js')
-              : resolve(__dirname, '../src/index.ts'),
+              ? resolve(
+                  import.meta.dirname,
+                  '../dist/react-beautiful-dnd.esm.js',
+                )
+              : resolve(import.meta.dirname, '../src/index.ts'),
           ],
         },
       },
