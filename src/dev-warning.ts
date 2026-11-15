@@ -40,7 +40,6 @@ export function log(type: 'error' | 'warn', message: string): void {
     return;
   }
 
-  // eslint-disable-next-line no-console
   console[type](...getFormattedMessage(message));
 }
 

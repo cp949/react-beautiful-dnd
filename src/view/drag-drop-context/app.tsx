@@ -68,7 +68,6 @@ export interface Props extends Responders {
   // screen reader
   dragHandleUsageInstructions: string;
   // options to exert more control over autoScroll
-  // eslint-disable-next-line react/no-unused-prop-types
   autoScrollerOptions?: PartialAutoScrollerOptions;
 }
 

@@ -1,4 +1,3 @@
-// eslint-disable-next-line n/no-missing-require
 const a11yReport = require('./test-reports/lighthouse/a11y.report.json');
 
 const a11yScore = a11yReport.categories.accessibility.score;
