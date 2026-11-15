@@ -1,6 +1,6 @@
 import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import { DragDropContext } from '@cp949/react-beautiful-dnd';
 import type { DropResult } from '@cp949/react-beautiful-dnd';
 import AuthorList from '../primatives/author-list';

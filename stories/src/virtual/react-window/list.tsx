@@ -1,5 +1,6 @@
-import React, { CSSProperties, ReactElement, useState } from 'react';
-import { FixedSizeList as List, areEqual } from 'react-window';
+import React, { ReactElement, useState } from 'react';
+import { List } from 'react-window';
+import type { RowComponentProps } from 'react-window';
 import {
   Droppable,
   Draggable,
@@ -22,13 +23,12 @@ interface Props {
   initial: Quote[];
 }
 
-interface RowProps {
-  data: Quote[];
-  index: number;
-  style: CSSProperties;
+// react-window 2는 rowProps로 넘긴 값을 row 컴포넌트의 props로 전달한다.
+interface RowExtraProps {
+  quotes: Quote[];
 }
 
-const Row = React.memo(({ data: quotes, index, style }: RowProps) => {
+function Row({ quotes, index, style }: RowComponentProps<RowExtraProps>) {
   const quote: Quote = quotes[index];
 
   return (
@@ -45,7 +45,7 @@ const Row = React.memo(({ data: quotes, index, style }: RowProps) => {
       )}
     </Draggable>
   );
-}, areEqual);
+}
 
 function App(props: Props): ReactElement {
   const [quotes, setQuotes] = useState(() => props.initial);
@@ -87,16 +87,16 @@ function App(props: Props): ReactElement {
       >
         {(droppableProvided: DroppableProvided) => (
           <List
-            height={500}
-            itemCount={quotes.length}
-            itemSize={100}
-            width={300}
-            // you will want to use List.outerRef rather than List.innerRef as it has the correct height when the list is unpopulated
-            outerRef={droppableProvided.innerRef}
-            itemData={quotes}
-          >
-            {Row}
-          </List>
+            style={{ height: 500, width: 300 }}
+            rowCount={quotes.length}
+            rowHeight={100}
+            rowComponent={Row}
+            rowProps={{ quotes }}
+            // 스크롤 컨테이너인 가장 바깥 element를 droppable의 ref로 연결한다.
+            listRef={(list) =>
+              droppableProvided.innerRef(list?.element ?? null)
+            }
+          />
         )}
       </Droppable>
     </DragDropContext>

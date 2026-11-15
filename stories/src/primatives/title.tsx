@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import { grid } from '../constants';
 
 export default styled.h4`

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ReactElement } from 'react';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import { grid, borderRadius } from '../constants';
 
 interface Props {

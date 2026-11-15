@@ -8,7 +8,7 @@ import React, {
 import { getBox } from 'css-box-model';
 import type { Position, BoxModel } from 'css-box-model';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import {
   DragDropContext,
   Droppable,

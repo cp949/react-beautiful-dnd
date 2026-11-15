@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../stories/src/colors';
 import { version } from '../package.json';
 
 // Doing this more complex check as console.table || console.log makes CI cry

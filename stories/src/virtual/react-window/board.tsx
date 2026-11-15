@@ -1,8 +1,9 @@
-import React, { CSSProperties, ReactElement, useReducer } from 'react';
-import { FixedSizeList as List, areEqual } from 'react-window';
+import React, { ReactElement, useReducer } from 'react';
+import { List } from 'react-window';
+import type { RowComponentProps } from 'react-window';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../../colors';
 import {
   DragDropContext,
   Droppable,
@@ -28,14 +29,12 @@ const Container = styled.div`
   display: flex;
 `;
 
-interface RowProps {
-  data: Quote[];
-  index: number;
-  style: CSSProperties;
+// react-window 2는 rowProps로 넘긴 값을 row 컴포넌트의 props로 전달한다.
+interface RowExtraProps {
+  quotes: Quote[];
 }
 
-// Memoizing row items for even better performance!
-const Row = React.memo(({ data: quotes, index, style }: RowProps) => {
+function Row({ quotes, index, style }: RowComponentProps<RowExtraProps>) {
   const quote: Quote | undefined | null = quotes[index];
 
   // We are rendering an extra item for the placeholder
@@ -45,13 +44,13 @@ const Row = React.memo(({ data: quotes, index, style }: RowProps) => {
   }
 
   // Faking some nice spacing around the items
+  // react-window 2의 style은 left: 0, width: 100%이고 세로 위치를 transform으로 준다.
+  // top은 transform과 합산되므로 grid만큼 더하면 위쪽 여백이 된다.
   const patchedStyle = {
     ...style,
-    // style.left and style.top should be number
-    // https://github.com/bvaughn/react-window/blob/04a1dce75ebf3e46d5809036aff0c7c48771fb4f/src/createListComponent.js#L471-L478
-    left: (style.left as number) + grid,
-    top: (style.top as number) + grid,
-    width: `calc(${style.width} - ${grid * 2}px)`,
+    left: grid,
+    top: grid,
+    width: `calc(100% - ${grid * 2}px)`,
     height: `calc(${style.height}px - ${grid}px)`,
   };
 
@@ -67,7 +66,7 @@ const Row = React.memo(({ data: quotes, index, style }: RowProps) => {
       )}
     </Draggable>
   );
-}, areEqual);
+}
 
 interface ColumnProps {
   columnId: string;
@@ -119,12 +118,16 @@ const Column = React.memo(function Column(props: ColumnProps) {
 
           return (
             <List
-              height={500}
-              itemCount={itemCount}
-              itemSize={110}
-              width={300}
-              outerRef={droppableProvided.innerRef}
+              rowCount={itemCount}
+              rowHeight={110}
+              rowComponent={Row}
+              rowProps={{ quotes }}
+              listRef={(list) =>
+                droppableProvided.innerRef(list?.element ?? null)
+              }
               style={{
+                height: 500,
+                width: 300,
                 backgroundColor: getBackgroundColor(
                   snapshot.isDraggingOver,
                   Boolean(snapshot.draggingFromThisWith),
@@ -133,10 +136,7 @@ const Column = React.memo(function Column(props: ColumnProps) {
                 // We add this spacing so that when we drop into an empty list we will animate to the correct visual position.
                 padding: grid,
               }}
-              itemData={quotes}
-            >
-              {Row}
-            </List>
+            />
           );
         }}
       </Droppable>

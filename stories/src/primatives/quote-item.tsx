@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import type { DraggableProvided } from '@cp949/react-beautiful-dnd';
 import { borderRadius, grid } from '../constants';
 import type { Quote, AuthorColors } from '../types';

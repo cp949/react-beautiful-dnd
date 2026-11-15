@@ -85,8 +85,7 @@
     "redux": "^5.0.1"
   },
   "devDependencies": {
-    "@atlaskit/css-reset": "6.11.5",
-    "@atlaskit/theme": "13.1.0",
+    "@atlaskit/css-reset": "8.4.10",
     "@babel/core": "7.26.8",
     "@babel/plugin-transform-class-properties": "7.25.9",
     "@babel/plugin-transform-modules-commonjs": "7.26.3",
@@ -119,7 +118,6 @@
     "@types/raf-schd": "4.0.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@types/react-window": "1.8.8",
     "@types/seedrandom": "3.0.8",
     "babel-jest": "30.5.2",
     "babel-loader": "9.2.1",
@@ -149,7 +147,7 @@
     "react-18": "npm:react@18.3.1",
     "react-dom": "19.3.1",
     "react-dom-18": "npm:react-dom@18.3.1",
-    "react-window": "1.8.11",
+    "react-window": "2.5.3",
     "release-it": "21.1.2",
     "require-from-string": "2.0.2",
     "rimraf": "6.1.4",

@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import {
   DragDropContext,
   Draggable,

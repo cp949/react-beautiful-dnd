@@ -1,6 +1,6 @@
 import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import { Droppable } from '@cp949/react-beautiful-dnd';
 import type {
   DroppableProvided,

@@ -6,7 +6,7 @@ import React, {
   KeyboardEvent,
 } from 'react';
 import styled from '@emotion/styled';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import { Draggable } from '@cp949/react-beautiful-dnd';
 import type {
   DraggableProvided,

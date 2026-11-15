@@ -1,4 +1,4 @@
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import styled from '@emotion/styled';
 import React, { ReactElement, useState } from 'react';
 import {

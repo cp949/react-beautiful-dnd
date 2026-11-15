@@ -1,4 +1,4 @@
-import { colors } from '@atlaskit/theme';
+import { colors } from './colors';
 import seedrandom from 'seedrandom';
 import type { Author, Quote, QuoteMap } from './types';
 import finnImg from '../static/media/finn-min.png';

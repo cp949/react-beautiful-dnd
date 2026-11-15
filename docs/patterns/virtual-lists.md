@@ -105,10 +105,11 @@ However, a `placeholder` does not make sense in the context of a virtual list as
 A simple way to add extra space to a virtual list is to add a non-visible item to your list. It is important that this extra item is not a `<Draggable />`.
 
 ```js
-// This example uses the `react-window` API
+// This example uses the `react-window` v2 API
+// Values passed to `rowProps` are received as props of the row component
 
-const Row = ({ data, index, style }: RowProps) => {
-  const item = data[index];
+const Row = ({ items, index, style }: RowComponentProps<{ items: Item[] }>) => {
+  const item = items[index];
 
    // We are rendering an extra item for the placeholder
   if (!item) {
@@ -134,15 +135,14 @@ function render(provided: DroppableProvided, snapshot: DroppableStateSnapshot) {
 
   return (
     <List
-      height={500}
-      itemCount={itemCount}
-      itemSize={110}
-      width={300}
-      outerRef={provided.innerRef}
-      itemData={quotes}
-    >
-      {Row}
-    </List>
+      style={{ height: 500, width: 300 }}
+      rowCount={itemCount}
+      rowHeight={110}
+      rowComponent={Row}
+      rowProps={{ items: quotes }}
+      // Use the outermost element of the list (the scroll container) as the droppable ref
+      listRef={(list) => provided.innerRef(list?.element ?? null)}
+    />
   );
 }
 ```

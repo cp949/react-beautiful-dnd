@@ -1,7 +1,7 @@
 import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/react';
-import { colors } from '@atlaskit/theme';
+import { colors } from '../colors';
 import type {
   DropResult,
   DraggableLocation,
