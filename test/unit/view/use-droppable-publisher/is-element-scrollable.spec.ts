@@ -19,7 +19,10 @@ it('should return false if an element has overflow:visible', () => {
   (['overflowY', 'overflowX'] as const).forEach((overflow) => {
     const el: HTMLElement = document.createElement('div');
     el.style[overflow] = 'visible';
+    // 분리된 요소는 computed style이 비어 overflow 값과 무관하게 null이 되므로 연결한다.
+    document.body.appendChild(el);
     expect(getClosestScrollable(el)).toBe(null);
+    el.remove();
   });
 });
 
