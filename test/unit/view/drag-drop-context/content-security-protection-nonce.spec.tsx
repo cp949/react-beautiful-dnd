@@ -11,9 +11,8 @@ it('should insert nonce into style tag', () => {
       {null}
     </DragDropContext>,
   );
-  const styleTag = document.querySelector(
-    `[${attributes.prefix}-always=":r0:"]`,
-  );
+  // useId 형식이 React 버전마다 달라 속성 값은 지정하지 않는다.
+  const styleTag = document.querySelector(`[${attributes.prefix}-always]`);
   const nonceAttribute = styleTag ? styleTag.getAttribute('nonce') : '';
   expect(nonceAttribute).toEqual(nonce);
 

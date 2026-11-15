@@ -28,6 +28,11 @@ const expectConsoleNotCalled = () => {
   expect(consoleLogSpy).not.toHaveBeenCalled();
 };
 
+// useId 형식은 React 버전마다 다르다(18: `:R0:`, 19.1+: `_R_0_`).
+// 스냅샷이 버전에 묶이지 않도록 id를 `ID(0)` 형태로 정규화한다.
+const normalizeIds = (html: string): string =>
+  html.replace(/:R([0-9a-z]+):|_R_([0-9a-z]+)_/g, (_, a, b) => `ID(${a ?? b})`);
+
 // Checking that the browser globals are not available in this test file
 invariant(
   typeof window === 'undefined' && typeof document === 'undefined',
@@ -35,7 +40,7 @@ invariant(
 );
 
 it('should support rendering to a string', () => {
-  const result: string = renderToString(<App />);
+  const result: string = normalizeIds(renderToString(<App />));
 
   expect(result).toEqual(expect.any(String));
   expect(result).toMatchSnapshot();
@@ -43,7 +48,7 @@ it('should support rendering to a string', () => {
 });
 
 it('should support rendering to static markup', () => {
-  const result: string = renderToStaticMarkup(<App />);
+  const result: string = normalizeIds(renderToStaticMarkup(<App />));
 
   expect(result).toEqual(expect.any(String));
   expect(result).toMatchSnapshot();
