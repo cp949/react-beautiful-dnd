@@ -1,3 +1,9 @@
+/**
+ * Jest 30은 Node의 기본 TS 로더를 먼저 쓰는데, 이 로더는 import 확장자(.ts)를 요구한다.
+ * 확장자 없는 import를 그대로 두기 위해 ts-node 로더를 지정한다.
+ *
+ * @jest-config-loader ts-node
+ */
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="./test/typings/environment.d.ts" />
 

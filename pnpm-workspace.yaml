@@ -1,6 +1,7 @@
 # pnpm 11+는 package.json의 pnpm 필드를 읽지 않는다. 설정은 이 파일에 둔다.
 # 빌드 스크립트 실행 여부. v10에서도 승인 목록이 없어 실행되지 않았으므로 동일하게 거부한다.
 allowBuilds:
+  '@parcel/watcher': false
   '@swc/core': false
   cypress: false
   esbuild: false
