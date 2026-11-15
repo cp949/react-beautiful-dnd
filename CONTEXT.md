@@ -18,12 +18,12 @@ _Avoid_: mutex, claim
 Sensor가 드래그 시작 이벤트를 기다리는 상태. 드래그가 끝나면 다시 Capture로 돌아간다.
 _Avoid_: listening, armed
 
-**Phase**:
+**Sensor phase**:
 mouse와 touch Sensor가 한 번의 드래그 동안 거치는 단계. IDLE, PENDING, DRAGGING 중 하나다.
-_Avoid_: state, stage
+_Avoid_: state, stage, Drag phase (store 쪽 단계)
 
 **Pending drag**:
-Lock은 얻었지만 아직 요소를 들어 올리지 않은 Phase. mouse는 이동 임계값, touch는 long press 시간을 넘기면 끝난다.
+Lock은 얻었지만 아직 요소를 들어 올리지 않은 Sensor phase. mouse는 이동 임계값, touch는 long press 시간을 넘기면 끝난다.
 _Avoid_: pre-drag state
 
 **Stop**:
@@ -33,3 +33,9 @@ _Avoid_: end, finish
 **Cancel**:
 Stop과 함께 진행 중인 드래그를 원래 위치로 되돌리는 동작.
 _Avoid_: abort (Pending drag를 버릴 때의 actions 이름으로만 쓴다)
+
+### 드래그 진행
+
+**Drag phase**:
+store가 한 번의 드래그를 추적하는 단계. IDLE, COLLECTING, DRAGGING, DROP_PENDING, DROP_ANIMATING 중 하나다.
+_Avoid_: Sensor phase (Sensor 쪽 단계)
