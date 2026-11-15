@@ -52,14 +52,20 @@ This package descends from a chain of forks:
   `fast-glob` from `devDependencies` — each had exactly one call site, replaced
   with Node's built-in `fs/promises` APIs or a small inlined implementation.
   `@atlaskit/theme` (deprecated) was removed as well; the 25 colors the stories
-  use now live in `stories/src/colors.ts`.
+  use now live in `stories/src/colors.ts`. `@atlaskit/css-reset` was removed
+  too; the rules the stories use now live in `.storybook/reset.css`. `ts-node`
+  was removed because its only use was loading `jest.config.ts`.
 - **Development toolchain**: moved to current major versions to keep the audit
   at 0 and stay on maintained releases — pnpm 12, Node 24.20.0 for development
-  and CI, React 19 (tests still run against React 18 and 19), Vitest 5, jsdom 31,
-  Babel 8, Storybook 10, stylelint 18, Cypress 16, `react-window` 2. None of
-  these are shipped to consumers. One upgrade is deliberately held back:
-  TypeScript stays on 6 because `fork-ts-checker-webpack-plugin`
-  does not work with TypeScript 7 yet.
+  and CI, React 19 (tests still run against React 18 and 19), Vitest 5
+  (replacing Jest 30), jsdom 31 (was 26), Babel 8, Storybook 10, stylelint 18,
+  Cypress 16, `react-window` 2. None of these are shipped to consumers. One
+  upgrade is deliberately held back: TypeScript stays on 6. TypeScript 7.0.2
+  passes `tsc`, the build and the tests, but Storybook's type check
+  (`typescript.check`, run by `fork-ts-checker-webpack-plugin`) fails with
+  `readConfigFile is not a function` while the Storybook build still exits 0.
+  `tsdown` also warns that its `tsgo` declaration generator on TypeScript 7.0
+  is deprecated and needs 7.1 or later.
 - **CI and services**: CircleCI was replaced with GitHub Actions
   (`.github/workflows/ci.yml`: validate, Vitest on React 18/19, bundle size,
   build, Cypress, Lighthouse), since CircleCI was never connected to this
