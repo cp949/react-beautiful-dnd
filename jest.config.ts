@@ -26,7 +26,9 @@ const config: Config = {
   // node_modules is default.
   testPathIgnorePatterns: ['/node_modules/', '/cypress/'],
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
+    // 문자열 'babel-jest'는 jest 내부의 @babel/core 7에 묶인 사본으로 해석된다.
+    // Babel 8로 변환하려면 이 저장소에 설치된 babel-jest의 경로를 지정한다.
+    '\\.[jt]sx?$': require.resolve('babel-jest'),
   },
   verbose: true,
   watchPlugins: [
