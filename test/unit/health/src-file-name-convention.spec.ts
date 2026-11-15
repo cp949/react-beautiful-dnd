@@ -12,6 +12,7 @@ const isSnakeCase = (filePath: string): boolean => convention.test(filePath);
 const exceptions: string[] = [
   'CHANGELOG.md',
   'CODE_OF_CONDUCT.md',
+  'CONTEXT.md',
   'CONTRIBUTING.md',
   'ISSUE_TEMPLATE.md',
   'README.md',
