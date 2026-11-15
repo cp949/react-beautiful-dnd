@@ -1,4 +1,4 @@
-import '@atlaskit/css-reset';
+import './reset.css';
 
 import { Preview } from '@storybook/react';
 import React from 'react';

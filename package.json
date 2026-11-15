@@ -84,7 +84,6 @@
     "redux": "^5.0.1"
   },
   "devDependencies": {
-    "@atlaskit/css-reset": "8.4.10",
     "@babel/core": "8.1.2",
     "@babel/plugin-transform-class-properties": "8.0.1",
     "@babel/plugin-transform-modules-commonjs": "8.1.2",

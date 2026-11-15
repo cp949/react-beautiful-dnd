@@ -1,0 +1,266 @@
+/*
+ * stories와 Storybook 미리보기에 적용하는 전역 CSS 리셋이다.
+ *
+ * @atlaskit/css-reset 8.4.10의 dist/bundle.css에서 stories가 쓰는 요소의 규칙만 옮겼다.
+ * 원본: Copyright 2019 Atlassian Pty Ltd, Apache License 2.0
+ * 변경: Atlassian 디자인 토큰(--ds-*) 변수를 걷어내고 대체값만 남겼다.
+ *       stories가 쓰지 않는 규칙(blockquote, 다크 모드, 스크롤바 등)은 뺐다.
+ */
+
+html,
+body,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl,
+img,
+pre,
+form,
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+fieldset {
+  border: 0;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #fff;
+  color: #172b4d;
+  font:
+    normal 400 14px/1.42857142857143 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  text-decoration-skip-ink: auto;
+}
+
+/* 요소 사이 기본 간격 */
+p,
+ul,
+ol,
+dl,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+table {
+  margin: 12px 0 0 0;
+}
+
+/* 링크 */
+a {
+  color: #0052cc;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0065ff;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #0747a6;
+}
+
+a:focus-visible {
+  outline: 2px solid #2684ff;
+  outline-offset: 2px;
+}
+
+/* 제목. 원본은 margin-top을 정의되지 않은 토큰 변수로 지정해 h3 외에는 0으로 계산됐다. */
+h1 {
+  font:
+    600 2.0714285714285716em/1.103448275862069 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 0;
+}
+
+h2 {
+  font:
+    500 1.7142857142857142em/1.1666666666666667 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 0;
+}
+
+h3 {
+  font:
+    500 1.4285714285714286em/1.2 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 28px;
+}
+
+h4 {
+  font:
+    600 1.1428571428571428em/1.25 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 0;
+}
+
+h5 {
+  font:
+    600 1em/1.1428571428571428 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 0;
+}
+
+h6 {
+  font:
+    600 0.8571428571428571em/1.3333333333333333 ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+/* 목록 */
+ul,
+ol,
+dl {
+  padding-left: 40px;
+}
+
+dd,
+dd + dt,
+li + li {
+  margin-top: 4px;
+}
+
+/* 첫 요소의 위쪽 간격 제거 */
+p:first-child,
+ul:first-child,
+ol:first-child,
+dl:first-child,
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child,
+pre:first-child,
+form:first-child,
+table:first-child {
+  margin-top: 0;
+}
+
+/* 기타 글자 요소 */
+small {
+  font:
+    normal 400 11px/16px ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Ubuntu,
+    'Helvetica Neue',
+    sans-serif;
+}
+
+code,
+kbd {
+  font-family: ui-monospace, Menlo, 'Segoe UI Mono', 'Ubuntu Mono', monospace;
+}
+
+/* 표 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead,
+tbody,
+tfoot {
+  border-bottom: 2px solid #dfe1e6;
+}
+
+td,
+th {
+  border: none;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+th {
+  vertical-align: top;
+}
+
+td:first-child,
+th:first-child {
+  padding-left: 0;
+}
+
+td:last-child,
+th:last-child {
+  padding-right: 0;
+}
+
+/* 구버전 브라우저가 inline으로 처리하는 요소 */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* Chrome 83의 user agent 스타일이 버튼 글꼴을 Arial로 바꾸는 것을 되돌린다. */
+button {
+  font-family: inherit;
+}
