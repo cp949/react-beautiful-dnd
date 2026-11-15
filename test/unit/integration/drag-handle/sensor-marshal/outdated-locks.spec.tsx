@@ -1,3 +1,4 @@
+import type { MockInstance } from 'vitest';
 import React from 'react';
 import { act, render } from '@testing-library/react';
 import { invariant } from '../../../../../src/invariant';
@@ -8,10 +9,10 @@ import type {
 } from '../../../../../src/types';
 import App from '../../util/app';
 
-let consoleWarnSpy: jest.SpyInstance;
+let consoleWarnSpy: MockInstance;
 
 beforeEach(() => {
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {
@@ -19,7 +20,7 @@ afterEach(() => {
 });
 
 it('should not allow pre drag actions when in a dragging phase', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');
@@ -54,7 +55,7 @@ it('should not allow pre drag actions when in a dragging phase', () => {
 });
 
 it('should not allow drag actions after a drop', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');
@@ -79,7 +80,7 @@ it('should not allow drag actions after a drop', () => {
 });
 
 it('should not allow drag actions after lock lost', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   const { unmount } = render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');

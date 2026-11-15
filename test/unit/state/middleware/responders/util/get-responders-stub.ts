@@ -2,9 +2,10 @@ import type { Responders } from '../../../../../../src/types';
 
 export default function getRespondersStub() {
   return {
-    onBeforeDragStart: jest.fn<Responders['onBeforeDragStart'], []>(),
-    onDragStart: jest.fn<Responders['onDragStart'], []>(),
-    onDragUpdate: jest.fn<Responders['onDragUpdate'], []>(),
-    onDragEnd: jest.fn<Responders['onDragEnd'], []>(),
+    onBeforeDragStart:
+      vi.fn<(...args: []) => Responders['onBeforeDragStart']>(),
+    onDragStart: vi.fn<(...args: []) => Responders['onDragStart']>(),
+    onDragUpdate: vi.fn<(...args: []) => Responders['onDragUpdate']>(),
+    onDragEnd: vi.fn<(...args: []) => Responders['onDragEnd']>(),
   };
 }

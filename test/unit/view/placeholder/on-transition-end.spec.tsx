@@ -7,16 +7,16 @@ import getPlaceholderStyle from './util/get-placeholder-style';
 import { placeholder } from './util/data';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should only fire a single transitionend event a single time when transitioning multiple properties', () => {
-  const onTransitionEnd = jest.fn();
-  const onClose = jest.fn();
+  const onTransitionEnd = vi.fn();
+  const onClose = vi.fn();
 
   const { container } = render(
     <Placeholder
@@ -29,7 +29,7 @@ it('should only fire a single transitionend event a single time when transitioni
   );
   // finish the animate open timer
   act(() => {
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
   });
   expectIsFull(getPlaceholderStyle(container));
 

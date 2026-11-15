@@ -31,19 +31,19 @@ const getPopulatedRegistry = (dimensions?: DimensionMap): Registry => {
 
 beforeEach(() => {
   setViewport(preset.viewport);
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
   resetViewport();
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 
 it('should log a warning if items are added that do not have consecutive indexes', () => {
-  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-  const mock = jest.fn();
+  const mock = vi.fn();
   const customInHome2: DraggableDimension = {
     ...preset.inHome2,
     descriptor: {
@@ -93,9 +93,9 @@ it('should log a warning if items are added that do not have consecutive indexes
 });
 
 it('should log a warning if items are added have duplicate indexes', () => {
-  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-  const mock = jest.fn();
+  const mock = vi.fn();
   const customInHome4: DraggableDimension = {
     ...preset.inHome4,
     descriptor: {

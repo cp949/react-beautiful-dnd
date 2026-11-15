@@ -19,7 +19,7 @@ import {
 } from '../../../../util/preset-action-args';
 
 it('should fire a complete drop action when a drop animation finish action is fired', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
 
   const store: Store = createStore(
     passThroughMiddleware(mock),

@@ -5,8 +5,8 @@ import type { SensorAPI } from '../../../../../src/types';
 import App from '../../util/app';
 
 it('should allow different locks in different DragDropContexts', () => {
-  const a = jest.fn<void, [SensorAPI]>();
-  const b = jest.fn<void, [SensorAPI]>();
+  const a = vi.fn<(...args: [SensorAPI]) => void>();
+  const b = vi.fn<(...args: [SensorAPI]) => void>();
 
   const { getAllByText } = render(
     <React.Fragment>

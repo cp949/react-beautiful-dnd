@@ -24,7 +24,7 @@ describe('useCallback', () => {
   }
 
   it('should return the passed callback until there is an input change', () => {
-    const mock = jest.fn().mockReturnValue(<div>hey</div>);
+    const mock = vi.fn().mockReturnValue(<div>hey</div>);
     const callback = () => {};
     const { rerender } = render(
       <WithCallback inputs={[1, 2]} callback={callback}>
@@ -85,7 +85,7 @@ describe('useMemo', () => {
   }
 
   it('should not break the cache on multiple calls', () => {
-    const mock = jest.fn().mockReturnValue(<div>hey</div>);
+    const mock = vi.fn().mockReturnValue(<div>hey</div>);
     const { rerender } = render(
       <WithUseMemo inputs={[1, 2]} getResult={() => ({ hello: 'world' })}>
         {mock}
@@ -112,7 +112,7 @@ describe('useMemo', () => {
   });
 
   it('should break the cache when the inputs change', () => {
-    const mock = jest.fn().mockReturnValue(<div>hey</div>);
+    const mock = vi.fn().mockReturnValue(<div>hey</div>);
     const { rerender } = render(
       <WithUseMemo inputs={[1, 2]} getResult={() => ({ hello: 'world' })}>
         {mock}
@@ -140,7 +140,7 @@ describe('useMemo', () => {
   });
 
   it('should use the latest get result function when the cache breaks', () => {
-    const mock = jest.fn().mockReturnValue(<div>hey</div>);
+    const mock = vi.fn().mockReturnValue(<div>hey</div>);
     const { rerender } = render(
       <WithUseMemo inputs={[1, 2]} getResult={() => ({ hello: 'world' })}>
         {mock}
@@ -169,7 +169,7 @@ describe('useMemo', () => {
 
   describe('no inputs', () => {
     it('should not memoize with no inputs', () => {
-      const mock = jest.fn().mockReturnValue(<div>hey</div>);
+      const mock = vi.fn().mockReturnValue(<div>hey</div>);
       const { rerender } = render(
         <WithUseMemo getResult={() => ({ hello: 'world' })}>
           {mock}
@@ -195,7 +195,7 @@ describe('useMemo', () => {
     });
 
     it('should start memoizing if inputs are provided', () => {
-      const mock = jest.fn().mockReturnValue(<div>hey</div>);
+      const mock = vi.fn().mockReturnValue(<div>hey</div>);
       const { rerender } = render(
         <WithUseMemo getResult={() => ({ hello: 'world' })}>
           {mock}
@@ -251,7 +251,7 @@ describe('useMemo', () => {
     });
 
     it('should only call get result once on first pass', () => {
-      const getResult = jest.fn().mockReturnValue({ hello: 'friend' });
+      const getResult = vi.fn().mockReturnValue({ hello: 'friend' });
       render(
         <WithUseMemo getResult={getResult} inputs={undefined}>
           {() => null}

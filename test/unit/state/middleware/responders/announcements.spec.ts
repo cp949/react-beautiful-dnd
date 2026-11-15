@@ -1,3 +1,4 @@
+import type { MockedFunction } from 'vitest';
 import { invariant } from '../../../../../src/invariant';
 import {
   completeDrop,
@@ -26,13 +27,21 @@ import getAnnounce from './util/get-announce-stub';
 import getCompletedWithResult from './util/get-completed-with-result';
 
 beforeEach(() => {
-  jest.useFakeTimers({
-    legacyFakeTimers: true,
+  // jest의 legacy 타이머처럼 performance, Date는 실제 시계를 유지한다.
+  vi.useFakeTimers({
+    toFake: [
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'setImmediate',
+      'clearImmediate',
+    ],
   });
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 interface Case {
@@ -63,13 +72,13 @@ const combineUpdate: DragUpdate = {
 const start = (dispatch: Dispatch) => {
   dispatch(initialPublish(initialPublishArgs));
   // release async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 };
 
 const update = (dispatch: Dispatch) => {
   dispatch(moveDown());
   // release async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 };
 
 const end = (store: Store) => {
@@ -137,7 +146,7 @@ cases.forEach((current: Case) => {
     current.description ? `: ${current.description}` : ''
   }`, () => {
     let responders: Responders;
-    let announce: jest.MockedFunction<Announce>;
+    let announce: MockedFunction<Announce>;
     let store: Store;
 
     beforeEach(() => {
@@ -165,7 +174,7 @@ cases.forEach((current: Case) => {
     });
 
     it('should not announce twice if the responder makes an announcement', () => {
-      responders[current.responder] = jest.fn(
+      responders[current.responder] = vi.fn(
         (data: any, provided: ResponderProvided) => {
           announce.mockReset();
           provided.announce('hello');
@@ -179,10 +188,10 @@ cases.forEach((current: Case) => {
     });
 
     it('should prevent async announcements', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       let provided: ResponderProvided;
-      responders[current.responder] = jest.fn(
+      responders[current.responder] = vi.fn(
         (data: any, supplied: ResponderProvided) => {
           announce.mockReset();
           provided = supplied;
@@ -198,8 +207,9 @@ cases.forEach((current: Case) => {
       announce.mockReset();
 
       // perform an async message
-      setTimeout(() => provided.announce('async message'));
-      jest.runOnlyPendingTimers();
+      // tick 안에서 만든 만료 타이머는 1ms 뒤에 실행되므로, 같은 시점으로 맞추기 위해 1ms를 준다.
+      setTimeout(() => provided.announce('async message'), 1);
+      vi.runOnlyPendingTimers();
 
       expect(announce).not.toHaveBeenCalled();
       expect(warn).toHaveBeenCalled();
@@ -209,9 +219,9 @@ cases.forEach((current: Case) => {
     });
 
     it('should prevent multiple announcement calls from a consumer', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      const responderSpy = jest
+      const responderSpy = vi
         .spyOn(responders, current.responder)
         .mockImplementation((data: unknown, supplied: ResponderProvided) => {
           announce.mockReset();

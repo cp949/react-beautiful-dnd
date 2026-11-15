@@ -7,16 +7,16 @@ import type { Control } from './util/controls';
 import getBodyElement from '../../../src/view/get-body-element';
 
 it('should have any errors when body is changed just before unmount', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   const { unmount } = render(<App />);
 
   expect(() => {
     getBodyElement().innerHTML = '';
     unmount();
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
   }).not.toThrow();
 
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 forEachSensor((control: Control) => {
@@ -31,7 +31,7 @@ forEachSensor((control: Control) => {
     expect(() => {
       getBodyElement().innerHTML = '';
       unmount();
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     }).not.toThrow();
   });
 });

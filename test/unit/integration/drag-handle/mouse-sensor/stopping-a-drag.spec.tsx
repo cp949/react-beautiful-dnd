@@ -7,7 +7,7 @@ import { simpleLift, mouse } from '../../util/controls';
 import supportedEventName from '../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name';
 
 it('should prevent default on the event that causes a drop', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -21,7 +21,7 @@ it('should prevent default on the event that causes a drop', () => {
 });
 
 it('should prevent default on an escape press', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -38,7 +38,7 @@ it('should prevent default on an escape press', () => {
 
 it('should not prevent the default behaviour for an indirect cancel', () => {
   ['resize', supportedEventName].forEach((eventName: string) => {
-    const onDragEnd = jest.fn();
+    const onDragEnd = vi.fn();
     const { getByText, unmount } = render(<App onDragEnd={onDragEnd} />);
     const handle: HTMLElement = getByText('item: 0');
 
@@ -60,7 +60,7 @@ it('should not prevent the default behaviour for an indirect cancel', () => {
 });
 
 it('should cancel and prevent default on mousedown during a drag as it might be from a different button', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 

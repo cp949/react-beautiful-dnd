@@ -7,7 +7,10 @@ it('should return true if an element has overflow:auto or overflow:scroll', () =
     ['auto', 'scroll'].forEach((value: string) => {
       const el: HTMLElement = document.createElement('div');
       el.style[overflow] = value;
+      // 문서에 연결되지 않은 요소는 jsdom 31에서 computed style이 비어 있으므로 연결한다.
+      document.body.appendChild(el);
       expect(getClosestScrollable(el)).toBe(el);
+      el.remove();
     });
   });
 });

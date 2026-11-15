@@ -83,7 +83,7 @@ export const touch: Control = {
   },
   lift: () => {
     act(() => {
-      jest.advanceTimersByTime(timeForLongPress);
+      vi.advanceTimersByTime(timeForLongPress);
     });
   },
   move: (handle: HTMLElement) => {
@@ -112,11 +112,11 @@ export const forEachSensor = (tests: (control: Control) => void) => {
   controls.forEach((control: Control) => {
     describe(`with: ${control.name}`, () => {
       beforeEach(() => {
-        jest.useFakeTimers();
+        vi.useFakeTimers();
       });
       afterEach(() => {
-        jest.clearAllTimers();
-        jest.useRealTimers();
+        vi.clearAllTimers();
+        vi.useRealTimers();
       });
 
       tests(control);

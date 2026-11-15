@@ -18,16 +18,16 @@ import type { State, DragUpdate } from '../../../../../src/types';
 import type { Store, Dispatch } from '../../../../../src/state/store-types';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 const start = (dispatch: Dispatch) => {
   dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 };
 
 it('should call onDragUpdate if the position has changed on move', () => {
@@ -43,7 +43,7 @@ it('should call onDragUpdate if the position has changed on move', () => {
   // not called until next cycle
   expect(responders.onDragUpdate).not.toHaveBeenCalled();
 
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   const update: DragUpdate = {
     ...getDragStart(),
     combine: null,
@@ -66,7 +66,7 @@ it('should not call onDragUpdate if there is no movement from the last update', 
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
   // onDragUpdate not called yet
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragUpdate).not.toHaveBeenCalled();
 
   // A movement to the same index is not causing an update
@@ -77,12 +77,12 @@ it('should not call onDragUpdate if there is no movement from the last update', 
   store.dispatch(move(moveArgs));
 
   // update not called after flushing
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragUpdate).not.toHaveBeenCalled();
 
   // Triggering an actual movement
   store.dispatch(moveDown());
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragUpdate).toHaveBeenCalledTimes(1);
 
   const state: State = store.getState();
@@ -98,6 +98,6 @@ it('should not call onDragUpdate if there is no movement from the last update', 
     }),
   );
 
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragUpdate).toHaveBeenCalledTimes(1);
 });

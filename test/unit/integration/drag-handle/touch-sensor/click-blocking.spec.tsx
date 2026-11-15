@@ -4,11 +4,11 @@ import App from '../../util/app';
 import { touch, simpleLift } from '../../util/controls';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should block a click after a drag', () => {
@@ -25,7 +25,7 @@ it('should block a click after a drag', () => {
 });
 
 it('should not block a click after an aborted pending drag', () => {
-  const onDragStart = jest.fn();
+  const onDragStart = vi.fn();
   const { getByText } = render(<App onDragStart={onDragStart} />);
   const handle: HTMLElement = getByText('item: 0');
 

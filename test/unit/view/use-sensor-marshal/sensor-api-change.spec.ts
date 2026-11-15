@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useMouseSensor, {
   primaryButton,
@@ -16,35 +17,35 @@ import type {
 
 interface FakeApi {
   api: SensorAPI;
-  findClosestDraggableId: jest.Mock;
+  findClosestDraggableId: Mock;
   getForceStop: () => () => void;
 }
 
 function getFakeApi(): FakeApi {
   let forceStop: (() => void) | null = null;
   const fluid = {
-    move: jest.fn(),
-    drop: jest.fn(),
-    cancel: jest.fn(),
+    move: vi.fn(),
+    drop: vi.fn(),
+    cancel: vi.fn(),
     shouldRespectForcePress: () => false,
   } as unknown as FluidDragActions;
   const actions = {
-    abort: jest.fn(),
-    fluidLift: jest.fn(() => fluid),
+    abort: vi.fn(),
+    fluidLift: vi.fn(() => fluid),
     shouldRespectForcePress: () => false,
   } as unknown as PreDragActions;
-  const findClosestDraggableId = jest.fn(() => 'item');
+  const findClosestDraggableId = vi.fn(() => 'item');
 
   const api = {
-    canGetLock: jest.fn(() => true),
-    tryGetLock: jest.fn((_id: string, stop: () => void) => {
+    canGetLock: vi.fn(() => true),
+    tryGetLock: vi.fn((_id: string, stop: () => void) => {
       forceStop = stop;
       return actions;
     }),
     findClosestDraggableId,
-    findOptionsForDraggable: jest.fn(() => null),
-    tryReleaseLock: jest.fn(),
-    isLockClaimed: jest.fn(() => false),
+    findOptionsForDraggable: vi.fn(() => null),
+    tryReleaseLock: vi.fn(),
+    isLockClaimed: vi.fn(() => false),
   } as unknown as SensorAPI;
 
   return {
@@ -60,7 +61,7 @@ function getFakeApi(): FakeApi {
 }
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 function fireMouseDown() {
@@ -107,7 +108,7 @@ it('mouse: Pending drag 중 api가 바뀐 뒤 이전 Lock이 stop하면 unmount 
 });
 
 it('touch: drag 중 api가 바뀐 뒤 이전 Lock이 stop하면 unmount 후 이전 listener가 남지 않는다', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   const first = getFakeApi();
   const second = getFakeApi();
   const { rerender, unmount } = renderHook(
@@ -119,7 +120,7 @@ it('touch: drag 중 api가 바뀐 뒤 이전 Lock이 stop하면 unmount 후 이�
 
   fireTouchStart();
   // long press가 지나 DRAGGING으로 넘어간다. PENDING은 unmount 때 정리되므로 DRAGGING이어야 재현된다.
-  jest.advanceTimersByTime(timeForLongPress);
+  vi.advanceTimersByTime(timeForLongPress);
   expect(first.findClosestDraggableId).toHaveBeenCalledTimes(1);
 
   rerender(second.api);

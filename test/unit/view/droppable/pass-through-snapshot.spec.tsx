@@ -15,7 +15,7 @@ const getLastSnapshot = (myMock: any) => {
 };
 
 it('should let a consumer know when a foreign list is being dragged over', () => {
-  const myMock = jest.fn();
+  const myMock = vi.fn();
   const WrappedComponent = getStubber(myMock);
 
   render(
@@ -30,7 +30,7 @@ it('should let a consumer know when a foreign list is being dragged over', () =>
 });
 
 it('should update snapshot as dragging over changes', () => {
-  const myMock = jest.fn();
+  const myMock = vi.fn();
   const WrappedComponent = getStubber(myMock);
 
   const { rerender } = render(

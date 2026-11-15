@@ -1,7 +1,8 @@
+import type { Mock } from 'vitest';
 import type { Middleware } from '../../../../../src/state/store-types';
 
 const passThroughMiddleware = (
-  mock: jest.Mock<unknown, [unknown]>,
+  mock: Mock<(...args: [unknown]) => unknown>,
 ): Middleware => {
   const result: Middleware = () => (next) => (action) => {
     mock(action);

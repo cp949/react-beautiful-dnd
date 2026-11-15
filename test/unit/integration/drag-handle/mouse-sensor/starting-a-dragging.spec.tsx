@@ -9,7 +9,7 @@ import {
 import { isDragging } from '../../util/helpers';
 import App from '../../util/app';
 // blocking announcement messages
-jest.spyOn(console, 'warn').mockImplementation((message: string) => {
+vi.spyOn(console, 'warn').mockImplementation((message: string) => {
   invariant(
     message.includes('Message not passed to screen reader'),
     `Unexpected console.warn("${message}")`,

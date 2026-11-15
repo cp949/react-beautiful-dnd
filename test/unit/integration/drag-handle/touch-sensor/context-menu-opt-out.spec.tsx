@@ -5,11 +5,11 @@ import { touch } from '../../util/controls';
 import { isDragging } from '../../util/helpers';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should opt of a context menu', () => {

@@ -6,11 +6,11 @@ import { homeOwnProps as defaultOwnProps } from './util/get-props';
 import { withError } from '../../../util/console';
 
 beforeAll(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {});
+  vi.spyOn(console, 'error').mockImplementation(() => {});
 });
 
 afterAll(() => {
-  if (jest.isMockFunction(console.error)) {
+  if (vi.isMockFunction(console.error)) {
     // FIXME
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (console.error as any).mockReset();

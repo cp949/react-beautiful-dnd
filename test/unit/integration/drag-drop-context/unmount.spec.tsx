@@ -11,8 +11,8 @@ it('should not throw when unmounting', () => {
 });
 
 it('should clean up any window event handlers', () => {
-  const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-  const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+  const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
   const { unmount } = render(
     <DragDropContext onDragEnd={() => {}}>{null}</DragDropContext>,

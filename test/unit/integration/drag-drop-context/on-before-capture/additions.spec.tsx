@@ -69,17 +69,17 @@ function getIndex(el: HTMLElement): number {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should adjust captured values for any changes that impact that dragging item', () => {
   // 1. Changing the `type` of the Droppable
   // 2. Adding and item before the dragging item to impact it's index
-  const onDragStart = jest.fn();
+  const onDragStart = vi.fn();
 
   function Root() {
     const [items, setItems] = useState(['initial']);
@@ -148,7 +148,7 @@ it('should adjust captured values for any changes that impact that dragging item
   expect(getIndex(initial)).toBe(1);
 
   // flush onDragStart timer
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   // onDragStart called with correct new index
   const expected: DragStart = {

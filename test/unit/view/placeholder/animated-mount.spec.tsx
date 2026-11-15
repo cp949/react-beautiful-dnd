@@ -1,3 +1,4 @@
+import type { MockInstance } from 'vitest';
 import { act, render } from '@testing-library/react';
 import React from 'react';
 import Placeholder from '../../../../src/view/placeholder';
@@ -7,19 +8,19 @@ import getPlaceholderStyle from './util/get-placeholder-style';
 import * as attributes from '../../../../src/view/data-attributes';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 const contextId = 'hello-there';
 
-let spy: jest.SpiedFunction<typeof React.createElement>;
+let spy: MockInstance<typeof React.createElement>;
 
 beforeEach(() => {
-  spy = jest.spyOn(React, 'createElement');
+  spy = vi.spyOn(React, 'createElement');
 });
 
 afterEach(() => {
@@ -35,8 +36,8 @@ const getCreatePlaceholderCalls = () => {
 };
 
 it('should animate a mount', () => {
-  const onClose = jest.fn();
-  const onTransitionEnd = jest.fn();
+  const onClose = vi.fn();
+  const onTransitionEnd = vi.fn();
   const { container } = render(
     <Placeholder
       contextId={contextId}
@@ -55,7 +56,7 @@ it('should animate a mount', () => {
 
   // Will trigger a .setState
   act(() => {
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
   });
 
   const postMount = getPlaceholderStyle(container);
@@ -63,8 +64,8 @@ it('should animate a mount', () => {
 });
 
 it('should not animate a mount if interrupted', () => {
-  const onClose = jest.fn();
-  const onTransitionEnd = jest.fn();
+  const onClose = vi.fn();
+  const onTransitionEnd = vi.fn();
   const { container, rerender } = render(
     <Placeholder
       animate="open"
@@ -100,7 +101,7 @@ it('should not animate a mount if interrupted', () => {
 
   // validation - no further updates
   spy.mockClear();
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   rerender(
     <Placeholder
       animate="none"
@@ -115,9 +116,9 @@ it('should not animate a mount if interrupted', () => {
 });
 
 it('should not animate in if unmounted', () => {
-  const onClose = jest.fn();
-  const onTransitionEnd = jest.fn();
-  const error = jest.spyOn(console, 'error');
+  const onClose = vi.fn();
+  const onTransitionEnd = vi.fn();
+  const error = vi.spyOn(console, 'error');
 
   const { container, unmount } = render(
     <Placeholder
@@ -131,7 +132,7 @@ it('should not animate in if unmounted', () => {
   expectIsEmpty(getPlaceholderStyle(container));
 
   unmount();
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   // an internal setState would be triggered the timer was
   // not cleared when unmounting

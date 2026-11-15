@@ -5,7 +5,7 @@ import AnimateInOut from '../../../../src/view/animate-in-out/animate-in-out';
 import type { AnimateProvided } from '../../../../src/view/animate-in-out/animate-in-out';
 
 it('should allow children not to be rendered (no animation allowed)', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
 
   const { container } = render(
     <AnimateInOut on={null} shouldAnimate={false}>
@@ -18,7 +18,7 @@ it('should allow children not to be rendered (no animation allowed)', () => {
 });
 
 it('should allow children not to be rendered (even when animation is allowed)', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
 
   const { container } = render(
     <AnimateInOut on={null} shouldAnimate>
@@ -31,7 +31,7 @@ it('should allow children not to be rendered (even when animation is allowed)', 
 });
 
 it('should pass data through to children', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
   const data = { hello: 'world' };
 
   render(
@@ -50,7 +50,7 @@ it('should pass data through to children', () => {
 });
 
 it('should open instantly if required', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
   const data = { hello: 'world' };
 
   render(
@@ -69,7 +69,7 @@ it('should open instantly if required', () => {
 });
 
 it('should animate open if requested', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
   const data = { hello: 'world' };
 
   render(
@@ -88,7 +88,7 @@ it('should animate open if requested', () => {
 });
 
 it('should close instantly if required', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
   const data = { hello: 'world' };
   function App({ value }: { value: unknown }) {
     return (
@@ -118,7 +118,7 @@ it('should close instantly if required', () => {
 });
 
 it('should animate closed if required', () => {
-  const child = jest.fn().mockReturnValue(<div>hi</div>);
+  const child = vi.fn().mockReturnValue(<div>hi</div>);
   const data = { hello: 'world' };
 
   interface Props {

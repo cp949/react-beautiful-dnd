@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { render } from '@testing-library/react';
 import React from 'react';
 import type { ReactNode } from 'react';
@@ -8,9 +9,11 @@ import type { Styles } from '../../../../src/view/use-style-marshal/get-styles';
 import type { StyleMarshal } from '../../../../src/view/use-style-marshal/style-marshal-types';
 import { prefix } from '../../../../src/view/data-attributes';
 
-const getMarshal = (myMock: jest.Mock<null>): StyleMarshal =>
-  myMock.mock.calls[0][0];
-const getMock = () => jest.fn().mockImplementation(() => null);
+const getMarshal = (
+  myMock: Mock<(marshal: StyleMarshal) => null>,
+): StyleMarshal => myMock.mock.calls[0][0];
+const getMock = () =>
+  vi.fn<(marshal: StyleMarshal) => null>().mockImplementation(() => null);
 
 interface Props {
   contextId: ContextId;

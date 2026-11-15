@@ -25,9 +25,9 @@ const shouldStop: Action[] = [
 ];
 
 const getScrollerStub = (): AutoScroller => ({
-  start: jest.fn(),
-  stop: jest.fn(),
-  scroll: jest.fn(),
+  start: vi.fn(),
+  stop: vi.fn(),
+  scroll: vi.fn(),
 });
 
 shouldStop.forEach((action: Action) => {

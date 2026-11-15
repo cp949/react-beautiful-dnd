@@ -19,7 +19,7 @@ setViewport(preset.viewport);
 it('should publish updates to the enabled state when dragging', () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { rerender } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem isDropDisabled={false} />
@@ -71,7 +71,7 @@ it('should not publish updates to the enabled state when there is no drag', () =
 it('should not publish updates when there is no change', () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { rerender } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem isDropDisabled={false} />

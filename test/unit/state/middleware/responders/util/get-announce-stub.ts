@@ -1,3 +1,4 @@
+import type { MockedFunction } from 'vitest';
 import type { Announce } from '../../../../../../src/types';
 
-export default (): jest.MockedFunction<Announce> => jest.fn();
+export default (): MockedFunction<Announce> => vi.fn();

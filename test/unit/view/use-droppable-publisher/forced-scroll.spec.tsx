@@ -25,7 +25,7 @@ setViewport(preset.viewport);
 it('should throw if the droppable has no closest scrollable', () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   // no scroll parent
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
@@ -36,12 +36,12 @@ it('should throw if the droppable has no closest scrollable', () => {
   invariant(droppable);
   const parent = container.querySelector('.scroll-parent') as HTMLElement;
   invariant(parent);
-  jest
-    .spyOn(droppable, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
-  jest
-    .spyOn(parent, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(bigClient.borderBox));
+  vi.spyOn(droppable, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(smallFrameClient.borderBox),
+  );
+  vi.spyOn(parent, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(bigClient.borderBox),
+  );
 
   // validating no initial scroll
   expect(parent.scrollTop).toBe(0);
@@ -67,7 +67,7 @@ describe('there is a closest scrollable', () => {
   it('should update the scroll of the closest scrollable', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -96,7 +96,7 @@ describe('there is a closest scrollable', () => {
   it('should throw if asked to scoll while scroll is not currently being watched', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />

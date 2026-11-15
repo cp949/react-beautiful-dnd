@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type { Position } from 'css-box-model';
 import type {
   Id,
@@ -50,10 +51,10 @@ export function getDraggableEntry({
 export const getDroppableCallbacks = (
   dimension: DroppableDimension,
 ): DroppableCallbacks => ({
-  getDimensionAndWatchScroll: jest.fn().mockReturnValue(dimension),
-  getScrollWhileDragging: jest.fn().mockReturnValue(origin),
-  scroll: jest.fn(),
-  dragStopped: jest.fn(),
+  getDimensionAndWatchScroll: vi.fn().mockReturnValue(dimension),
+  getScrollWhileDragging: vi.fn().mockReturnValue(origin),
+  scroll: vi.fn(),
+  dragStopped: vi.fn(),
 });
 
 interface DroppableArgs {
@@ -74,13 +75,13 @@ export function getDroppableEntry({
 
 export interface DimensionWatcher {
   draggable: {
-    getDimension: jest.Mock;
+    getDimension: Mock;
   };
   droppable: {
-    getDimensionAndWatchScroll: jest.Mock;
-    scroll: jest.Mock;
-    getScrollWhileDragging: jest.Mock;
-    dragStopped: jest.Mock;
+    getDimensionAndWatchScroll: Mock;
+    scroll: Mock;
+    getScrollWhileDragging: Mock;
+    dragStopped: Mock;
   };
 }
 
@@ -93,13 +94,13 @@ export const populate = (
   const { draggables, droppables } = dimensions;
   const watcher: DimensionWatcher = {
     draggable: {
-      getDimension: jest.fn(),
+      getDimension: vi.fn(),
     },
     droppable: {
-      getDimensionAndWatchScroll: jest.fn(),
-      scroll: jest.fn(),
-      getScrollWhileDragging: jest.fn(),
-      dragStopped: jest.fn(),
+      getDimensionAndWatchScroll: vi.fn(),
+      scroll: vi.fn(),
+      getScrollWhileDragging: vi.fn(),
+      dragStopped: vi.fn(),
     },
   };
 

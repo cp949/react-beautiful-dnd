@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import React from 'react';
 import type { ReactNode } from 'react';
 import { render } from '@testing-library/react';
@@ -7,11 +8,11 @@ import useAnnouncer from '../../../src/view/use-announcer';
 import { getId } from '../../../src/view/use-announcer/use-announcer';
 
 // beforeEach(() => {
-//   jest.useFakeTimers();
+//   vi.useFakeTimers();
 // });
 
 // afterEach(() => {
-//   jest.useRealTimers();
+//   vi.useRealTimers();
 // });
 
 interface Props {
@@ -24,9 +25,9 @@ function WithAnnouncer(props: Props) {
   return <>{props.children(announce)}</>;
 }
 
-const getAnnounce = (myMock: jest.Mock<unknown, [Announce]>) =>
+const getAnnounce = (myMock: Mock<(...args: [Announce]) => unknown>) =>
   myMock.mock.calls[0][0];
-const getMock = () => jest.fn().mockImplementation(() => null);
+const getMock = () => vi.fn().mockImplementation(() => null);
 
 // A little helper as react-testing-library does not have a getById function
 const getElement = (contextId: ContextId) =>

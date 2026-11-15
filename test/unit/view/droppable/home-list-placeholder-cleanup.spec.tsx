@@ -10,11 +10,11 @@ import {
 } from './util/get-props';
 
 // Spy Placeholder component
-jest.mock('../../../../src/view/placeholder', () => jest.fn());
+vi.mock('../../../../src/view/placeholder', () => ({ default: vi.fn() }));
 
 import _Placeholder from '../../../../src/view/placeholder';
-const Placeholder = jest.mocked(_Placeholder);
-const { default: OriginalPlaceholder } = jest.requireActual<{
+const Placeholder = vi.mocked(_Placeholder);
+const { default: OriginalPlaceholder } = await vi.importActual<{
   default: typeof _Placeholder;
 }>('../../../../src/view/placeholder');
 

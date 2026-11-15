@@ -53,7 +53,7 @@ function App({ currentUser, children }: Props) {
 }
 
 function getMock() {
-  return jest.fn((currentUser: string, provided: DraggableProvided) => (
+  return vi.fn((currentUser: string, provided: DraggableProvided) => (
     <Person name={currentUser} provided={provided} />
   ));
 }

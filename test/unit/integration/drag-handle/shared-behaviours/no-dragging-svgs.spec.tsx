@@ -31,7 +31,7 @@ forEachSensor((control: Control) => {
       );
 
     const spyable = { render };
-    const renderSpy = jest.spyOn(spyable, 'render');
+    const renderSpy = vi.spyOn(spyable, 'render');
     // this is a setup problem: a drag handle cannot be a svg
     withWarn(() => {
       withError(() => {

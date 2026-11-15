@@ -34,7 +34,7 @@ beforeEach(() => {
 
 it('should publish the dimensions of the target', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const expected: DroppableDimension = getDroppableDimension({
     descriptor: {
       id: 'fake-id',
@@ -57,9 +57,9 @@ it('should publish the dimensions of the target', () => {
     </WithAppContext>,
   );
   const el = container.firstElementChild as HTMLElement;
-  jest
-    .spyOn(el, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(bigClient.borderBox));
+  vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(bigClient.borderBox),
+  );
 
   // pull the get dimension function out
   const callbacks: DroppableCallbacks = registerSpy.mock.calls[0][0].callbacks;
@@ -78,7 +78,7 @@ it('should publish the dimensions of the target', () => {
 
 it('should consider the window scroll when calculating dimensions', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const windowScroll: Position = {
     x: 500,
     y: 1000,
@@ -107,9 +107,9 @@ it('should consider the window scroll when calculating dimensions', () => {
     </WithAppContext>,
   );
   const el = container.firstElementChild as HTMLElement;
-  jest
-    .spyOn(el, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(bigClient.borderBox));
+  vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(bigClient.borderBox),
+  );
 
   // pull the get dimension function out
   const callbacks: DroppableCallbacks = registerSpy.mock.calls[0][0].callbacks;
@@ -125,7 +125,7 @@ it('should consider the window scroll when calculating dimensions', () => {
 describe('no closest scrollable', () => {
   it('should return null for the closest scrollable if there is no scroll container', () => {
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const expected: DroppableDimension = getDroppableDimension({
       descriptor,
       borderBox: bigClient.borderBox,
@@ -140,9 +140,9 @@ describe('no closest scrollable', () => {
       </WithAppContext>,
     );
     const el = container.querySelector('.droppable') as HTMLElement;
-    jest
-      .spyOn(el, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(bigClient.borderBox));
+    vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(bigClient.borderBox),
+    );
 
     // pull the get dimension function out
     const callbacks: DroppableCallbacks =
@@ -189,7 +189,7 @@ describe('droppable is scrollable', () => {
       },
     });
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     // both the droppable and the parent are scrollable
     const { container } = render(
       <WithAppContext registry={registry}>
@@ -198,9 +198,9 @@ describe('droppable is scrollable', () => {
     );
     const el = container.querySelector('.droppable') as HTMLElement;
     // returning smaller border box as this is what occurs when the element is scrollable
-    jest
-      .spyOn(el, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+    vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(smallFrameClient.borderBox),
+    );
     // scrollWidth / scrollHeight are based on the paddingBox of an element
     Object.defineProperty(el, 'scrollWidth', {
       value: bigClient.paddingBox.width,
@@ -253,7 +253,7 @@ describe('droppable is scrollable', () => {
     });
 
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     // both the droppable and the parent are scrollable
     const { container } = render(
       <WithAppContext registry={registry}>
@@ -262,9 +262,9 @@ describe('droppable is scrollable', () => {
     );
     const el = container.querySelector('.droppable') as HTMLElement;
     // returning smaller border box as this is what occurs when the element is scrollable
-    jest
-      .spyOn(el, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+    vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(smallFrameClient.borderBox),
+    );
     // scrollWidth / scrollHeight are based on the paddingBox of an element
     Object.defineProperty(el, 'scrollWidth', {
       value: bigClient.paddingBox.width,
@@ -312,22 +312,22 @@ describe('parent of droppable is scrollable', () => {
       windowScroll: preset.windowScroll,
     });
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext registry={registry}>
         <App parentIsScrollable droppableIsScrollable={false} />
       </WithAppContext>,
     );
     const droppable = container.querySelector('.droppable') as HTMLElement;
-    jest
-      .spyOn(droppable, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(bigClient.borderBox));
+    vi.spyOn(droppable, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(bigClient.borderBox),
+    );
     const parent: HTMLElement = container.querySelector(
       '.scroll-parent',
     ) as HTMLElement;
-    jest
-      .spyOn(parent, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+    vi.spyOn(parent, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(smallFrameClient.borderBox),
+    );
     Object.defineProperty(parent, 'scrollWidth', {
       value: scrollSize.scrollWidth,
     });
@@ -349,7 +349,7 @@ describe('parent of droppable is scrollable', () => {
 
 describe('both droppable and parent is scrollable', () => {
   it('should log a warning as the use case is not supported', () => {
-    const consoleWarnSpy = jest
+    const consoleWarnSpy = vi
       .spyOn(console, 'warn')
       .mockImplementation(() => {});
     const expected: DroppableDimension = getDroppableDimension({
@@ -373,7 +373,7 @@ describe('both droppable and parent is scrollable', () => {
       windowScroll: preset.windowScroll,
     });
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext registry={registry}>
         <App parentIsScrollable droppableIsScrollable />,
@@ -381,9 +381,9 @@ describe('both droppable and parent is scrollable', () => {
     );
     const droppable = container.querySelector('.droppable') as HTMLElement;
     const parent = container.querySelector('.scroll-parent') as HTMLElement;
-    jest
-      .spyOn(droppable, 'getBoundingClientRect')
-      .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+    vi.spyOn(droppable, 'getBoundingClientRect').mockImplementation(() =>
+      setDOMRect(smallFrameClient.borderBox),
+    );
     Object.defineProperty(droppable, 'scrollWidth', {
       value: bigClient.paddingBox.width,
     });
@@ -391,7 +391,7 @@ describe('both droppable and parent is scrollable', () => {
       value: bigClient.paddingBox.height,
     });
     // should never be called!
-    jest.spyOn(parent, 'getBoundingClientRect').mockImplementation(() => {
+    vi.spyOn(parent, 'getBoundingClientRect').mockImplementation(() => {
       throw new Error(
         'Should not be getting the boundingClientRect on the parent',
       );
@@ -417,7 +417,7 @@ it('should capture the initial scroll of the closest scrollable', () => {
   // in this case the parent of the droppable is the closest scrollable
   const frameScroll: Position = { x: 10, y: 20 };
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container } = render(
     <WithAppContext registry={registry}>
       <App parentIsScrollable droppableIsScrollable={false} />,
@@ -436,12 +436,12 @@ it('should capture the initial scroll of the closest scrollable', () => {
   Object.defineProperty(parent, 'scrollHeight', {
     value: bigClient.paddingBox.height,
   });
-  jest
-    .spyOn(droppable, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(bigClient.borderBox));
-  jest
-    .spyOn(parent, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+  vi.spyOn(droppable, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(bigClient.borderBox),
+  );
+  vi.spyOn(parent, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(smallFrameClient.borderBox),
+  );
   const expected: DroppableDimension = getDroppableDimension({
     descriptor,
     borderBox: bigClient.borderBox,
@@ -477,7 +477,7 @@ it('should capture the initial scroll of the closest scrollable', () => {
 it('should indicate if subject clipping is permitted based on the ignoreContainerClipping prop', () => {
   // in this case the parent of the droppable is the closest scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container } = render(
     <WithAppContext registry={registry}>
       <App
@@ -499,12 +499,12 @@ it('should indicate if subject clipping is permitted based on the ignoreContaine
   Object.defineProperty(parent, 'scrollHeight', {
     value: scrollSize.scrollHeight,
   });
-  jest
-    .spyOn(droppable, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(bigClient.borderBox));
-  jest
-    .spyOn(parent, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+  vi.spyOn(droppable, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(bigClient.borderBox),
+  );
+  vi.spyOn(parent, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(smallFrameClient.borderBox),
+  );
   const expected: DroppableDimension = getDroppableDimension({
     descriptor,
     borderBox: bigClient.borderBox,

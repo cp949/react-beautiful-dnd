@@ -55,14 +55,13 @@ This package descends from a chain of forks:
   use now live in `stories/src/colors.ts`.
 - **Development toolchain**: moved to current major versions to keep the audit
   at 0 and stay on maintained releases — pnpm 12, Node 24.20.0 for development
-  and CI, React 19 (tests still run against React 18 and 19), Jest 30,
+  and CI, React 19 (tests still run against React 18 and 19), Vitest 5, jsdom 31,
   Babel 8, Storybook 10, stylelint 18, Cypress 16, `react-window` 2. None of
-  these are shipped to consumers. Two upgrades are deliberately held back:
+  these are shipped to consumers. One upgrade is deliberately held back:
   TypeScript stays on 6 because `fork-ts-checker-webpack-plugin`
-  does not work with TypeScript 7 yet, and `jsdom` stays on 26 because
-  `jest-environment-jsdom` 30 requires it.
+  does not work with TypeScript 7 yet.
 - **CI and services**: CircleCI was replaced with GitHub Actions
-  (`.github/workflows/ci.yml`: validate, Jest on React 18/19, bundle size,
+  (`.github/workflows/ci.yml`: validate, Vitest on React 18/19, bundle size,
   build, Cypress, Lighthouse), since CircleCI was never connected to this
   repository. Chromatic and Renovate configuration were removed for the same
   reason — neither service is set up for this fork, and the Chromatic workflow

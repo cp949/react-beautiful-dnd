@@ -43,7 +43,7 @@ it('should throw an error if a drop action occurs while not in a phase where you
 });
 
 it('should dispatch a DROP_PENDING action if COLLECTING', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
   store.dispatch(initialPublish(initialPublishArgs));
@@ -64,7 +64,7 @@ it('should dispatch a DROP_PENDING action if COLLECTING', () => {
 });
 
 it('should throw if a drop action is fired and there is DROP_PENDING and it is waiting for a publish', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
   store.dispatch(initialPublish(initialPublishArgs));

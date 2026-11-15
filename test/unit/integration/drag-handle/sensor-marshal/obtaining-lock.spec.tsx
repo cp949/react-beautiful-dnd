@@ -13,8 +13,8 @@ import { isDragging, isDropAnimating } from '../../util/helpers';
 function noop() {}
 
 it('should allow an exclusive lock for drag actions', () => {
-  const a = jest.fn<void, [SensorAPI]>();
-  const b = jest.fn<void, [SensorAPI]>();
+  const a = vi.fn<(...args: [SensorAPI]) => void>();
+  const b = vi.fn<(...args: [SensorAPI]) => void>();
 
   render(<App sensors={[a, b]} />);
   const first: SensorAPI | undefined = a.mock.calls[0]?.[0];
@@ -37,7 +37,7 @@ it('should allow an exclusive lock for drag actions', () => {
 });
 
 it('should allow a lock to be released', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
 
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
@@ -58,7 +58,7 @@ it('should allow a lock to be released', () => {
 });
 
 it('should not allow a sensor to obtain a on a dropping item, but can claim one on something else while dragging', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   const { getByText } = render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');
@@ -100,7 +100,7 @@ it('should not allow a sensor to obtain a on a dropping item, but can claim one 
 });
 
 it('should release a lock when aborting a pre drag', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');
@@ -122,7 +122,7 @@ it('should release a lock when aborting a pre drag', () => {
 });
 
 it('should release a lock when cancelling or dropping a drag', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');

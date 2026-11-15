@@ -93,26 +93,26 @@ class App extends React.Component<any, State> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should allow the changing of combining in onDragStart', () => {
   withPoorDimensionMocks(() => {
     const responders: Responders = {
-      onDragStart: jest.fn(),
-      onDragUpdate: jest.fn(),
-      onDragEnd: jest.fn(),
+      onDragStart: vi.fn(),
+      onDragUpdate: vi.fn(),
+      onDragEnd: vi.fn(),
     };
     const { getByTestId, rerender } = render(<App {...responders} />);
 
     const handle: HTMLElement = getByTestId('0');
     simpleLift(keyboard, handle);
     // flush onDragStart  responder
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
 
     const start: DragStart = {
       draggableId: '0',
@@ -129,7 +129,7 @@ it('should allow the changing of combining in onDragStart', () => {
 
     // now moving down will cause a combine impact!
     fireEvent.keyDown(handle, { keyCode: keyCodes.arrowDown });
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     const update: DragUpdate = {
       ...start,
       destination: null,

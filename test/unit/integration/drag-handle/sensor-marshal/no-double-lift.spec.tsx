@@ -9,7 +9,7 @@ import type {
 import App from '../../util/app';
 
 it('should not allow double lifting', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');

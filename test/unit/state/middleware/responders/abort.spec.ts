@@ -22,11 +22,11 @@ import getCompletedWithResult from './util/get-completed-with-result';
 import { tryGetDestination } from '../../../../../src/state/get-impact-location';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should call onDragEnd with the last published critical descriptor', () => {
@@ -35,7 +35,7 @@ it('should call onDragEnd with the last published critical descriptor', () => {
 
   store.dispatch(flush());
   store.dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
   store.dispatch(flush());
@@ -57,7 +57,7 @@ it('should publish an onDragEnd with no destination even if there is a current d
 
   store.dispatch(flush());
   store.dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   const state: State = store.getState();
   invariant(state.phase === 'DRAGGING');
@@ -89,7 +89,7 @@ it('should not publish an onDragEnd if aborted after a drop', () => {
   // lift
   store.dispatch(flush());
   store.dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalled();
 
   // drop

@@ -8,17 +8,17 @@ import App from '../../util/app';
 import { invariant } from '../../../../../src/invariant';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 afterEach(() => {
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 
 [mouse, touch].forEach((control: Control) => {
   describe(`with: ${control.name}`, () => {
     it('should cleanup a drag if a lock is forceably released mid drag', () => {
-      const sensor = jest.fn<void, [SensorAPI]>();
+      const sensor = vi.fn<(...args: [SensorAPI]) => void>();
 
       const { getByText } = render(<App sensors={[sensor]} />);
       const handle: HTMLElement = getByText('item: 0');

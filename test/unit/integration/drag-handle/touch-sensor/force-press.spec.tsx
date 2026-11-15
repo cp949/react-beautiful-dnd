@@ -7,11 +7,11 @@ import { forcePressThreshold } from '../../../../../src/view/use-sensor-marshal/
 import { isDragging } from '../../util/helpers';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 function getForceChange(force: number): Event {

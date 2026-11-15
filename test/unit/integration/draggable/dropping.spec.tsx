@@ -23,6 +23,14 @@ import {
 } from '../../../../src/animation';
 import { zIndexOptions } from '../../../../src/view/draggable/get-style';
 
+// style.transition은 읽을 때 값이 정규화된다(예: .2 -> 0.2, 쉼표 뒤 공백).
+// 같은 정규화를 거친 기대값과 비교하기 위해 임시 요소를 통과시킨다.
+const normalizeTransition = (value: string): string => {
+  const el = document.createElement('div');
+  el.style.transition = value;
+  return el.style.transition;
+};
+
 it('should animate a drop to the required offset', () => {
   const { getByText } = render(<App />);
   const handle: HTMLElement = getByText('item: 0');
@@ -39,7 +47,9 @@ it('should animate a drop to the required offset', () => {
 
   // moving back to origin so no transform
   expect(handle.style.transform).toBe('');
-  expect(handle.style.transition).toBe(transitions.drop(timings.minDropTime));
+  expect(handle.style.transition).toBe(
+    normalizeTransition(transitions.drop(timings.minDropTime)),
+  );
   expect(handle.style.zIndex).toBe(`${zIndexOptions.dropAnimating}`);
 
   // completing drop
@@ -52,7 +62,7 @@ it('should animate a drop to the required offset', () => {
 });
 
 it('should provide the correct snapshot to consumers', () => {
-  const spy = jest.fn();
+  const spy = vi.fn();
   const renderItem: RenderItem = renderItemAndSpy(spy);
 
   const { getByText } = render(<App renderItem={renderItem} />);
@@ -95,7 +105,7 @@ it('should provide the correct snapshot to consumers', () => {
 
 it('should animate scale and opacity when combining', () => {
   withPoorDimensionMocks((preset) => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     const renderItem: RenderItem = renderItemAndSpy(spy);
     const box0 = preset.inHome1.client.borderBox;
     const box1 = preset.inHome2.client.borderBox;
@@ -138,7 +148,9 @@ it('should animate scale and opacity when combining', () => {
       };
       expect(snapshot).toEqual(expected);
       expect(handle.style.opacity).toBe(`${combine.opacity.drop}`);
-      expect(handle.style.transition).toBe(transitions.drop(0.33));
+      expect(handle.style.transition).toBe(
+        normalizeTransition(transitions.drop(0.33)),
+      );
       expect(handle.style.transform).toEqual(
         expect.stringContaining(`scale(${combine.scale.drop})`),
       );

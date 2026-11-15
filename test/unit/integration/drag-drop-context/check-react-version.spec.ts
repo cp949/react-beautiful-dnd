@@ -1,11 +1,12 @@
+import type { MockInstance } from 'vitest';
 import React from 'react';
 import checkReactVersion from '../../../../src/view/drag-drop-context/check-react-version';
 import { peerDependencies } from '../../../../package.json';
 
-let consoleWarnSpy: jest.SpyInstance;
+let consoleWarnSpy: MockInstance;
 
 beforeEach(() => {
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {

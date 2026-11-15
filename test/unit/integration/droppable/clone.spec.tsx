@@ -65,7 +65,7 @@ it('should render a dragging item into the container', () => {
 });
 
 it('should give the clone the starting location', () => {
-  const spy = jest.fn();
+  const spy = vi.fn();
   const renderItem: RenderItem = renderItemAndSpy(spy);
   const { getByTestId } = render(<App renderItem={renderItem} useClone />);
 

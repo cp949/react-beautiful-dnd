@@ -8,8 +8,8 @@ import type { Control } from '../../util/controls';
 
 forEachSensor((control: Control) => {
   it('should control a successful drag through the sensor', () => {
-    const onDragStart = jest.fn();
-    const onDragEnd = jest.fn();
+    const onDragStart = vi.fn();
+    const onDragEnd = vi.fn();
     const { getByText } = render(
       <App onDragStart={onDragStart} onDragEnd={onDragEnd} />,
     );
@@ -23,7 +23,7 @@ forEachSensor((control: Control) => {
       expect(isDragging(handle)).toBe(true);
 
       // on drag start is async
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
       expect(onDragStart).toHaveBeenCalled();
 
       // move
@@ -44,8 +44,8 @@ forEachSensor((control: Control) => {
   });
 
   it('should control a cancel through the sensor', () => {
-    const onDragStart = jest.fn();
-    const onDragEnd = jest.fn();
+    const onDragStart = vi.fn();
+    const onDragEnd = vi.fn();
     const { getByText } = render(
       <App onDragStart={onDragStart} onDragEnd={onDragEnd} />,
     );
@@ -59,7 +59,7 @@ forEachSensor((control: Control) => {
       expect(isDragging(handle)).toBe(true);
 
       // on drag start is async
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
       expect(onDragStart).toHaveBeenCalled();
 
       // move

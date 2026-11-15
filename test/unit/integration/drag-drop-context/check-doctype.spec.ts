@@ -1,10 +1,11 @@
+import type { MockInstance } from 'vitest';
 import { JSDOM } from 'jsdom';
 import checkDoctype from '../../../../src/view/drag-drop-context/check-doctype';
 
-let consoleWarnSpy: jest.SpyInstance;
+let consoleWarnSpy: MockInstance;
 
 beforeEach(() => {
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {

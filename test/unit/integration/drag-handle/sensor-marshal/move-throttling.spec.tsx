@@ -14,7 +14,7 @@ import { add } from '../../../../../src/state/position';
 function noop() {}
 
 it('should throttle move events by request animation frame', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   const { getByText } = render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');
@@ -44,7 +44,7 @@ it('should throttle move events by request animation frame', () => {
 });
 
 it('should cancel any pending moves after a lock is released', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   const { getByText } = render(<App sensors={[sensor]} />);
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
   invariant(api, 'expected api to be set');

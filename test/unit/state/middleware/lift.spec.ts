@@ -38,17 +38,17 @@ const getBasicMarshal = (dispatch: Dispatch): DimensionMarshal => {
 
 beforeEach(() => {
   setViewport(preset.viewport);
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
   resetViewport();
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 
 it('should throw if a drag cannot be started when a lift action occurs', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
     middleware(getBasicMarshal((action) => store.dispatch(action))),
@@ -64,7 +64,7 @@ it('should throw if a drag cannot be started when a lift action occurs', () => {
 });
 
 it('should flush any animating drops', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
     middleware(getBasicMarshal((action) => store.dispatch(action))),
@@ -100,7 +100,7 @@ it('should flush any animating drops', () => {
 });
 
 it('should publish the initial dimensions when lifting', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
     middleware(getBasicMarshal((action) => store.dispatch(action))),

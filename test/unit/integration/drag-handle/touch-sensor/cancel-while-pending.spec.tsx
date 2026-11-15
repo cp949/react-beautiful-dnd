@@ -6,11 +6,11 @@ import supportedEventName from '../../../../../src/view/use-sensor-marshal/senso
 import { touch } from '../../util/controls';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 const events: string[] = [

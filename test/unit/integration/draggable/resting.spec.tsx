@@ -20,7 +20,7 @@ it('should have no movement when at rest', () => {
 });
 
 it('should have a resting snapshot', () => {
-  const snapshotSpy = jest.fn();
+  const snapshotSpy = vi.fn();
   const renderItem: RenderItem = renderItemAndSpy(snapshotSpy);
 
   render(<App renderItem={renderItem} />);
@@ -31,7 +31,7 @@ it('should have a resting snapshot', () => {
 });
 
 it('should be provided with its rubric', () => {
-  const watcher = jest.fn();
+  const watcher = vi.fn();
   const items = Array.from({ length: 3 }, (v, k): Item => ({
     id: `${k}`,
   }));

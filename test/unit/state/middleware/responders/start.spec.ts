@@ -13,13 +13,21 @@ import getAnnounce from './util/get-announce-stub';
 
 beforeEach(() => {
   // Keep performance usaged
-  jest.useFakeTimers({
-    legacyFakeTimers: true,
+  // jest의 legacy 타이머처럼 performance, Date는 실제 시계를 유지한다.
+  vi.useFakeTimers({
+    toFake: [
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'setImmediate',
+      'clearImmediate',
+    ],
   });
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should call the onDragStart responder when a initial publish occurs', () => {
@@ -34,7 +42,7 @@ it('should call the onDragStart responder when a initial publish occurs', () => 
   expect(responders.onDragStart).not.toHaveBeenCalled();
 
   // flushing onDragStart
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalledWith(
     getDragStart(),
     expect.any(Object),
@@ -45,7 +53,7 @@ it('should call the onBeforeDragState and onDragStart in the correct order', () 
   let mockCalled: number | null = null;
   let onBeforeDragStartCalled: number | null = null;
   let onDragStartCalled: number | null = null;
-  const mock = jest.fn().mockImplementation(() => {
+  const mock = vi.fn().mockImplementation(() => {
     mockCalled = performance.now();
   });
   const responders = getRespondersStub();
@@ -66,7 +74,7 @@ it('should call the onBeforeDragState and onDragStart in the correct order', () 
   store.dispatch(initialPublish(initialPublishArgs));
   expect(responders.onBeforeDragStart).toHaveBeenCalledWith(getDragStart());
   // flushing onDragStart
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   // checking the order
   invariant(onBeforeDragStartCalled);
@@ -83,7 +91,7 @@ it('should throw an exception if an initial publish is called before a drag ends
 
   const start = () => {
     store.dispatch(initialPublish(initialPublishArgs));
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
   };
   // first execution is all good
   start();

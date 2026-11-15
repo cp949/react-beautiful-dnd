@@ -31,7 +31,7 @@ it('should not prevent a subsequent click if aborting during a pending drag', ()
 });
 
 it('should prevent a subsequent click if cancelling a drag', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -52,7 +52,7 @@ it('should prevent a subsequent click if cancelling a drag', () => {
 });
 
 it('should prevent a subsequent click if dropping a drag', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 

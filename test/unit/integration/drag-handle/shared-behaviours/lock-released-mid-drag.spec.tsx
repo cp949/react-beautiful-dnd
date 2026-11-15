@@ -9,7 +9,7 @@ import { invariant } from '../../../../../src/invariant';
 
 forEachSensor((control: Control) => {
   it('should cleanup a drag if a lock is forceably released mid drag', () => {
-    const sensor = jest.fn<void, [SensorAPI]>();
+    const sensor = vi.fn<(...args: [SensorAPI]) => void>();
 
     const { getByText } = render(<App sensors={[sensor]} />);
     const handle: HTMLElement = getByText('item: 0');

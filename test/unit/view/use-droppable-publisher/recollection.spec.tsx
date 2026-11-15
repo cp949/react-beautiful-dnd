@@ -58,7 +58,7 @@ it('should recollect scroll if requested', () => {
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App droppableIsScrollable />
@@ -67,9 +67,9 @@ it('should recollect scroll if requested', () => {
   const el = container.querySelector('.droppable') as HTMLElement;
   invariant(el);
   // returning smaller border box as this is what occurs when the element is scrollable
-  jest
-    .spyOn(el, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(smallFrameClient.borderBox));
+  vi.spyOn(el, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(smallFrameClient.borderBox),
+  );
   // scrollWidth / scrollHeight are based on the paddingBox of an element
   Object.defineProperty(el, 'scrollWidth', {
     value: bigClient.paddingBox.width,
@@ -99,7 +99,7 @@ it('should throw if there is no drag occurring when a recollection is requested'
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App droppableIsScrollable showPlaceholder />
@@ -115,7 +115,7 @@ it('should throw if there if recollecting from droppable that is not a scroll co
   const marshal = getMarshalStub();
   // both the droppable and the parent are scrollable
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   render(
     <WithAppContext marshal={marshal} registry={registry}>
       <App />

@@ -35,7 +35,7 @@ it('should move to a provided offset', () => {
 });
 
 it('should pass on the snapshot', () => {
-  const spy = jest.fn();
+  const spy = vi.fn();
   const renderItem: RenderItem = renderItemAndSpy(spy);
 
   const { getByText } = render(<App renderItem={renderItem} />);
@@ -93,7 +93,7 @@ it('should animate movements when in snap mode', () => {
 
 it('should update the snapshot and opacity when combining with another item', () => {
   withPoorDimensionMocks((preset) => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     const renderItem: RenderItem = renderItemAndSpy(spy);
     const box1 = preset.inHome1.client.borderBox;
     const box2 = preset.inHome2.client.borderBox;

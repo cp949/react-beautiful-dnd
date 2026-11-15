@@ -1,3 +1,4 @@
+import type { Mock, MockedFunction } from 'vitest';
 import type { Position, BoxModel } from 'css-box-model';
 import { invariant } from '../../../../src/invariant';
 import type { DropReason } from '../../../../src/types';
@@ -34,7 +35,7 @@ export function getOffset(el: HTMLElement): Position {
 }
 
 export function getDropReason(
-  onDragEnd: jest.MockedFunction<OnDragEndResponder>,
+  onDragEnd: MockedFunction<OnDragEndResponder>,
 ): DropReason {
   const calls = onDragEnd.mock.calls;
 
@@ -71,9 +72,10 @@ const preset = getPreset();
 
 export const renderItemAndSpy =
   (
-    mock: jest.Mock<
-      unknown,
-      [DraggableProvided, DraggableStateSnapshot, DraggableRubric]
+    mock: Mock<
+      (
+        ...args: [DraggableProvided, DraggableStateSnapshot, DraggableRubric]
+      ) => unknown
     >,
   ): RenderItem =>
   (item: Item) => {
@@ -92,7 +94,7 @@ export type Call = [DraggableProvided, DraggableStateSnapshot, DraggableRubric];
 
 export const getCallsFor = (
   id: DraggableId,
-  mock: jest.Mock<unknown, Call>,
+  mock: Mock<(...args: Call) => unknown>,
 ): Call[] => {
   return mock.mock.calls.filter((call) => {
     const provided: DraggableProvided = call[0];
@@ -102,7 +104,7 @@ export const getCallsFor = (
 
 export const getProvidedFor = (
   id: DraggableId,
-  mock: jest.Mock<unknown, Call>,
+  mock: Mock<(...args: Call) => unknown>,
 ): DraggableProvided[] => {
   return getCallsFor(id, mock).map((call) => {
     return call[0];
@@ -111,7 +113,7 @@ export const getProvidedFor = (
 
 export const getSnapshotsFor = (
   id: DraggableId,
-  mock: jest.Mock<unknown, Call>,
+  mock: Mock<(...args: Call) => unknown>,
 ): DraggableStateSnapshot[] => {
   return getCallsFor(id, mock).map((call) => {
     return call[1];
@@ -120,7 +122,7 @@ export const getSnapshotsFor = (
 
 export const getRubricsFor = (
   id: DraggableId,
-  mock: jest.Mock<unknown, Call>,
+  mock: Mock<(...args: Call) => unknown>,
 ): DraggableRubric[] => {
   return getCallsFor(id, mock).map((call) => {
     return call[2];
@@ -143,7 +145,7 @@ export const withPoorDimensionMocks = (
 ): void => {
   // lists and all items will have the same dimensions
   // This is so that when we move we are combining
-  const protoSpy = jest
+  const protoSpy = vi
     .spyOn(Element.prototype, 'getBoundingClientRect')
     .mockImplementation(function fake(this: Element) {
       invariant(
@@ -163,7 +165,7 @@ export const withPoorDimensionMocks = (
     });
 
   // Stubbing out totally - not including margins in this
-  const styleSpy = jest
+  const styleSpy = vi
     .spyOn(window, 'getComputedStyle')
     .mockImplementation(function fake(el: Element) {
       function getSpacing(box: BoxModel) {

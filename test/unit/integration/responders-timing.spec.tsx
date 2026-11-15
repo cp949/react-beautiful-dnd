@@ -33,13 +33,21 @@ class Item extends React.Component<ItemProps> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers({
-    legacyFakeTimers: true,
+  // jest의 legacy 타이머처럼 performance, Date는 실제 시계를 유지한다.
+  vi.useFakeTimers({
+    toFake: [
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'setImmediate',
+      'clearImmediate',
+    ],
   });
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should call the onBeforeDragStart before connected components are updated, and onDragStart after', () => {
@@ -47,38 +55,36 @@ it('should call the onBeforeDragStart before connected components are updated, a
   let onDragStartTime: DOMHighResTimeStamp | null = null;
   let renderTime: DOMHighResTimeStamp | null = null;
   const responders: Responders = {
-    onBeforeDragStart: jest.fn().mockImplementation(() => {
+    onBeforeDragStart: vi.fn().mockImplementation(() => {
       invariant(!onBeforeDragStartTime, 'onBeforeDragStartTime already set');
       onBeforeDragStartTime = performance.now();
     }),
-    onDragStart: jest.fn().mockImplementation(() => {
+    onDragStart: vi.fn().mockImplementation(() => {
       invariant(!onDragStartTime, 'onDragStartTime already set');
       onDragStartTime = performance.now();
     }),
-    onDragEnd: jest.fn(),
+    onDragEnd: vi.fn(),
   };
-  const onItemRender = jest.fn().mockImplementation(() => {
+  const onItemRender = vi.fn().mockImplementation(() => {
     invariant(!renderTime, 'renderTime already set');
     renderTime = performance.now();
   });
   // Both list and item will have the same dimensions
-  jest
-    .spyOn(Element.prototype, 'getBoundingClientRect')
-    .mockImplementation(() =>
-      setDOMRect(
-        getRect({
-          top: 0,
-          left: 0,
-          right: 100,
-          bottom: 100,
-        }),
-      ),
-    );
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(
+      getRect({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 100,
+      }),
+    ),
+  );
 
   // Stubbing out totally - not including margins in this
-  jest
-    .spyOn(window, 'getComputedStyle')
-    .mockImplementation(() => getComputedSpacing({}));
+  vi.spyOn(window, 'getComputedStyle').mockImplementation(() =>
+    getComputedSpacing({}),
+  );
   const { getByTestId, unmount } = render(
     <DragDropContext {...responders}>
       <Droppable droppableId="droppable">
@@ -109,7 +115,7 @@ it('should call the onBeforeDragStart before connected components are updated, a
   const handle: HTMLElement = getByTestId('drag-handle');
   simpleLift(keyboard, handle);
   // flushing onDragStart
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   // checking values are set
   invariant(onBeforeDragStartTime, 'onBeforeDragStartTime should be set');

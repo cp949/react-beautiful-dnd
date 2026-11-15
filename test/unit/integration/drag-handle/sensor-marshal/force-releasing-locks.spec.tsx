@@ -5,9 +5,9 @@ import type { SensorAPI, PreDragActions } from '../../../../../src/types';
 import App from '../../util/app';
 
 it('should correctly state whether a lock is claimed', () => {
-  const a = jest.fn<void, [SensorAPI]>();
-  const b = jest.fn<void, [SensorAPI]>();
-  const onForceStop = jest.fn();
+  const a = vi.fn<(...args: [SensorAPI]) => void>();
+  const b = vi.fn<(...args: [SensorAPI]) => void>();
+  const onForceStop = vi.fn();
 
   render(<App sensors={[a, b]} />);
   const first: SensorAPI | undefined = a.mock.calls[0]?.[0];

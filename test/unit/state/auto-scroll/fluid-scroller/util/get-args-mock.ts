@@ -3,8 +3,8 @@ import { AutoScrollerOptions } from '../../../../../../src/state/auto-scroller/f
 import type { DroppableId } from '../../../../../../src/types';
 
 export default (autoScrollerOptions?: AutoScrollerOptions) => {
-  const scrollWindow = jest.fn<void, [Position]>();
-  const scrollDroppable = jest.fn<void, [DroppableId, Position]>();
+  const scrollWindow = vi.fn<(...args: [Position]) => void>();
+  const scrollDroppable = vi.fn<(...args: [DroppableId, Position]) => void>();
 
   return {
     scrollWindow,

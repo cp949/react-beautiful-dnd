@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type { Store } from '../../../../src/state/store-types';
 import type { DimensionMarshal } from '../../../../src/state/dimension-marshal/dimension-marshal-types';
 import middleware from '../../../../src/state/middleware/dimension-marshal-stopper';
@@ -17,7 +18,7 @@ import {
   userCancelArgs,
 } from '../../../util/preset-action-args';
 
-const getMarshal = (stopPublishing: jest.Mock): DimensionMarshal => {
+const getMarshal = (stopPublishing: Mock): DimensionMarshal => {
   const fake = {
     stopPublishing,
   } as unknown as DimensionMarshal;
@@ -26,7 +27,7 @@ const getMarshal = (stopPublishing: jest.Mock): DimensionMarshal => {
 };
 
 it('should stop a collection if a drag is aborted', () => {
-  const stopPublishing = jest.fn();
+  const stopPublishing = vi.fn();
   const store: Store = createStore(middleware(getMarshal(stopPublishing)));
 
   store.dispatch(initialPublish(initialPublishArgs));
@@ -37,7 +38,7 @@ it('should stop a collection if a drag is aborted', () => {
 });
 
 it('should not stop a collection if a drop is pending', () => {
-  const stopPublishing = jest.fn();
+  const stopPublishing = vi.fn();
   const store: Store = createStore(
     middleware(getMarshal(stopPublishing)),
     // will convert the drop into a drop pending
@@ -57,7 +58,7 @@ it('should not stop a collection if a drop is pending', () => {
 });
 
 it('should stop a collection if a drag is complete', () => {
-  const stopPublishing = jest.fn();
+  const stopPublishing = vi.fn();
   const store: Store = createStore(
     middleware(getMarshal(stopPublishing)),
     // will convert the drop into a drop pending
@@ -75,7 +76,7 @@ it('should stop a collection if a drag is complete', () => {
 });
 
 it('should stop a collection if a drop animation starts', () => {
-  const stopPublishing = jest.fn();
+  const stopPublishing = vi.fn();
   const store: Store = createStore(
     middleware(getMarshal(stopPublishing)),
     // will convert the drop into a drop pending

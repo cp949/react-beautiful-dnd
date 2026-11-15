@@ -33,11 +33,11 @@ const result: DropResult = {
 };
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should call the onDragEnd responder when a DROP_COMPLETE action occurs', () => {
@@ -45,7 +45,7 @@ it('should call the onDragEnd responder when a DROP_COMPLETE action occurs', () 
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
   store.dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
   store.dispatch(
@@ -78,7 +78,7 @@ it('should use the drop result and not the final impact', () => {
   const store: Store = createStore(middleware(() => responders, getAnnounce()));
 
   store.dispatch(initialPublish(initialPublishArgs));
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 
   const state: State = store.getState();

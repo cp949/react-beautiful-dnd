@@ -18,7 +18,7 @@ import createStore from './util/create-store';
 import passThroughMiddleware from './util/pass-through-middleware';
 
 it('should trigger a drop on a dynamic publish if a drop pending is waiting', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
     // will fire the pending drop action
@@ -54,7 +54,7 @@ it('should trigger a drop on a dynamic publish if a drop pending is waiting', ()
 });
 
 it('should not trigger a drop on a publish if a drop is not pending', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(
     passThroughMiddleware(mock),
     // will fire the pending drop action

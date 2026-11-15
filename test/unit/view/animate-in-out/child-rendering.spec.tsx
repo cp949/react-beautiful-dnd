@@ -49,7 +49,7 @@ it('should allow children not to be rendered', () => {
 });
 
 it('should allow children not to be rendered after a close animation', () => {
-  const child = jest
+  const child = vi
     .fn()
     .mockImplementation((provided: AnimateProvided) => (
       <Child provided={provided} />

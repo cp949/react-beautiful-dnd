@@ -73,9 +73,9 @@ class InnerList extends React.Component<InnerListProps> {
 }
 
 // Stubbing out totally - not including margins in this
-jest
-  .spyOn(window, 'getComputedStyle')
-  .mockImplementation(() => getComputedSpacing({}));
+vi.spyOn(window, 'getComputedStyle').mockImplementation(() =>
+  getComputedSpacing({}),
+);
 
 const setDroppableBounds = (ref?: HTMLElement | null) => {
   if (!ref) {
@@ -98,7 +98,7 @@ interface State {
 
 const first = {
   id: 'first',
-  onRender: jest.fn(),
+  onRender: vi.fn(),
   setRef: (ref?: HTMLElement | null) => {
     if (!ref) {
       return;
@@ -117,7 +117,7 @@ const first = {
 
 const second = {
   id: 'second',
-  onRender: jest.fn(),
+  onRender: vi.fn(),
   setRef: (ref?: HTMLElement | null) => {
     if (!ref) {
       return;
@@ -177,11 +177,11 @@ class App extends React.Component<any, State> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should call the onBeforeDragStart before connected components are updated, and onDragStart after', () => {
@@ -202,7 +202,7 @@ it('should call the onBeforeDragStart before connected components are updated, a
   simpleLift(keyboard, handle);
 
   // flushing onDragStart
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   // initial lift will render the first item
   expect(first.onRender).toHaveBeenCalledTimes(1);
@@ -230,7 +230,7 @@ it('should call the onBeforeDragStart before connected components are updated, a
   // checking for no post renders
   clearRenderMocks();
   requestAnimationFrame.flush();
-  jest.runAllTimers();
+  vi.runAllTimers();
   expect(first.onRender).toHaveBeenCalledTimes(0);
   expect(second.onRender).toHaveBeenCalledTimes(0);
 

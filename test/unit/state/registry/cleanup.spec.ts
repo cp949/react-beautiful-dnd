@@ -28,8 +28,8 @@ it('should remove any registrations', () => {
 });
 
 it('should remove unsubscribe any event listeners', () => {
-  const listener1 = jest.fn();
-  const listener2 = jest.fn();
+  const listener1 = vi.fn();
+  const listener2 = vi.fn();
   const registry: Registry = createRegistry();
 
   const unsubscribe1 = registry.subscribe(listener1);

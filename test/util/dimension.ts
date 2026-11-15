@@ -59,6 +59,8 @@ export const getComputedSpacing = ({
   marginRight: `${margin.right}px`,
   marginBottom: `${margin.bottom}px`,
   marginLeft: `${margin.left}px`,
+  // border-style이 none이면 브라우저와 jsdom 31 모두 border-width를 0으로 계산한다.
+  borderStyle: 'solid',
   borderTopWidth: `${border.top}px`,
   borderRightWidth: `${border.right}px`,
   borderBottomWidth: `${border.bottom}px`,

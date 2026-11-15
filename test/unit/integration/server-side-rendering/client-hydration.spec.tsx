@@ -18,7 +18,7 @@ it('should support hydrating a server side rendered application', () => {
   // we need to mock out the warnings caused by useLayoutEffect
   // This will not happen on the client as the string is rendered
   // on the server
-  const error = jest.spyOn(console, 'error').mockImplementation(noop);
+  const error = vi.spyOn(console, 'error').mockImplementation(noop);
 
   const serverHTML: string = renderToString(<App />);
 

@@ -5,15 +5,15 @@ import App from '../../util/app';
 import { simpleLift, keyboard } from '../../util/controls';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should move up when pressing the up arrow', () => {
-  const onDragUpdate = jest.fn();
+  const onDragUpdate = vi.fn();
   const { getByText } = render(<App onDragUpdate={onDragUpdate} />);
   const handle: HTMLElement = getByText('item: 1');
 
@@ -25,7 +25,7 @@ it('should move up when pressing the up arrow', () => {
   fireEvent(handle, event);
 
   // flush async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(onDragUpdate).toHaveBeenCalled();
   expect(onDragUpdate.mock.calls[0][0].destination.index).toBe(0);
 
@@ -34,7 +34,7 @@ it('should move up when pressing the up arrow', () => {
 });
 
 it('should move down when pressing the down arrow', () => {
-  const onDragUpdate = jest.fn();
+  const onDragUpdate = vi.fn();
   const { getByText } = render(<App onDragUpdate={onDragUpdate} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -46,7 +46,7 @@ it('should move down when pressing the down arrow', () => {
   fireEvent(handle, event);
 
   // flush async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(onDragUpdate).toHaveBeenCalled();
   expect(onDragUpdate.mock.calls[0][0].destination.index).toBe(1);
 
@@ -55,7 +55,7 @@ it('should move down when pressing the down arrow', () => {
 });
 
 it('should move right when pressing the right arrow', () => {
-  const onDragUpdate = jest.fn();
+  const onDragUpdate = vi.fn();
   const { getByText } = render(
     <App onDragUpdate={onDragUpdate} direction="horizontal" />,
   );
@@ -69,7 +69,7 @@ it('should move right when pressing the right arrow', () => {
   fireEvent(handle, event);
 
   // flush async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(onDragUpdate).toHaveBeenCalled();
   expect(onDragUpdate.mock.calls[0][0].destination.index).toBe(1);
 
@@ -78,7 +78,7 @@ it('should move right when pressing the right arrow', () => {
 });
 
 it('should move left when pressing the left arrow', () => {
-  const onDragUpdate = jest.fn();
+  const onDragUpdate = vi.fn();
   const { getByText } = render(
     <App onDragUpdate={onDragUpdate} direction="horizontal" />,
   );
@@ -92,7 +92,7 @@ it('should move left when pressing the left arrow', () => {
   fireEvent(handle, event);
 
   // flush async responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(onDragUpdate).toHaveBeenCalled();
   expect(onDragUpdate.mock.calls[0][0].destination.index).toBe(0);
 

@@ -16,11 +16,11 @@ import getAnnounce from './util/get-announce-stub';
 import getCompletedWithResult from './util/get-completed-with-result';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should behave correctly across multiple drags', () => {
@@ -29,7 +29,7 @@ it('should behave correctly across multiple drags', () => {
   Array.from({ length: 4 }).forEach(() => {
     // start
     store.dispatch(initialPublish(initialPublishArgs));
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(responders.onDragStart).toHaveBeenCalledWith(
       getDragStart(),
       expect.any(Object),
@@ -47,7 +47,7 @@ it('should behave correctly across multiple drags', () => {
     };
     store.dispatch(moveDown());
     // flush responder call
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
     expect(responders.onDragUpdate).toHaveBeenCalledWith(
       update,
       expect.any(Object),

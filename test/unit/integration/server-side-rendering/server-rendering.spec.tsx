@@ -1,19 +1,20 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
+import type { MockInstance } from 'vitest';
 import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { invariant } from '../../../../src/invariant';
 import App from '../util/app';
 
-let consoleWarnSpy: jest.SpiedFunction<typeof console.warn>;
-let consoleErrorSpy: jest.SpiedFunction<typeof console.error>;
-let consoleLogSpy: jest.SpiedFunction<typeof console.log>;
+let consoleWarnSpy: MockInstance<typeof console.warn>;
+let consoleErrorSpy: MockInstance<typeof console.error>;
+let consoleLogSpy: MockInstance<typeof console.log>;
 
 beforeEach(() => {
-  consoleWarnSpy = jest.spyOn(console, 'warn');
-  consoleErrorSpy = jest.spyOn(console, 'error');
-  consoleLogSpy = jest.spyOn(console, 'log');
+  consoleWarnSpy = vi.spyOn(console, 'warn');
+  consoleErrorSpy = vi.spyOn(console, 'error');
+  consoleLogSpy = vi.spyOn(console, 'log');
 });
 
 afterEach(() => {

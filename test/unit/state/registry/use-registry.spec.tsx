@@ -11,7 +11,7 @@ const preset = getPreset();
 
 it('should remove any registrations', () => {
   const hook = { useRegistry };
-  const useRegistrySpy = jest.spyOn(hook, 'useRegistry');
+  const useRegistrySpy = vi.spyOn(hook, 'useRegistry');
   const entry: DraggableEntry = getDraggableEntry({
     uniqueId: '1',
     dimension: preset.inHome1,

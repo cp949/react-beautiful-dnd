@@ -10,7 +10,7 @@ import type { Control } from '../../util/controls';
 
 forEachSensor((control: Control) => {
   it('should cancel when pressing escape', () => {
-    const onDragEnd = jest.fn();
+    const onDragEnd = vi.fn();
     const { getByText } = render(<App onDragEnd={onDragEnd} />);
     const handle: HTMLElement = getByText('item: 0');
 
@@ -32,7 +32,7 @@ forEachSensor((control: Control) => {
   });
 
   it('should cancel when window is resized', () => {
-    const onDragEnd = jest.fn();
+    const onDragEnd = vi.fn();
     const { getByText } = render(<App onDragEnd={onDragEnd} />);
     const handle: HTMLElement = getByText('item: 0');
 
@@ -55,7 +55,7 @@ forEachSensor((control: Control) => {
   });
 
   it('should cancel when there is a visibility change', () => {
-    const onDragEnd = jest.fn();
+    const onDragEnd = vi.fn();
     const { getByText } = render(<App onDragEnd={onDragEnd} />);
     const handle: HTMLElement = getByText('item: 0');
 

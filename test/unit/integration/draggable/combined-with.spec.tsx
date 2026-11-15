@@ -16,7 +16,7 @@ import {
 
 it('should update the snapshot of an item being combined with', () => {
   withPoorDimensionMocks((preset) => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     const renderItem: RenderItem = renderItemAndSpy(spy);
     const { getByText } = render(
       <App renderItem={renderItem} isCombineEnabled />,

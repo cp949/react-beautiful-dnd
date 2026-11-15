@@ -1,3 +1,4 @@
+import type { MockedFunction } from 'vitest';
 import { createBox, getRect } from 'css-box-model';
 import type { BoxModel, Position } from 'css-box-model';
 import type {
@@ -50,16 +51,16 @@ const unscrollableViewport: Viewport = createViewport({
 
 let jumpScroll: JumpScroller;
 let mocks: {
-  scrollWindow: jest.MockedFunction<() => void>;
-  scrollDroppable: jest.MockedFunction<() => void>;
-  move: jest.MockedFunction<() => void>;
+  scrollWindow: MockedFunction<() => void>;
+  scrollDroppable: MockedFunction<() => void>;
+  move: MockedFunction<() => void>;
 };
 
 beforeEach(() => {
   mocks = {
-    scrollWindow: jest.fn(),
-    scrollDroppable: jest.fn(),
-    move: jest.fn(),
+    scrollWindow: vi.fn(),
+    scrollDroppable: vi.fn(),
+    move: vi.fn(),
   };
   jumpScroll = jumpScroller(mocks);
 });

@@ -4,19 +4,19 @@ import App from '../../util/app';
 import { simpleLift, keyboard } from '../../util/controls';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should not prevent clicks after a drag', () => {
   // clearing any pending listeners that have leaked from other tests
   fireEvent.click(window);
 
-  const onDragStart = jest.fn();
-  const onDragEnd = jest.fn();
+  const onDragStart = vi.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(
     <App onDragStart={onDragStart} onDragEnd={onDragEnd} />,
   );
@@ -25,7 +25,7 @@ it('should not prevent clicks after a drag', () => {
   simpleLift(keyboard, handle);
 
   // flush start timer
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(onDragStart).toHaveBeenCalled();
   keyboard.drop(handle);
 

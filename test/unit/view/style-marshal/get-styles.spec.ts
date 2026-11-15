@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  *
  * We've decided to run the stylelint in the node environment
  * to avoid issues and conflicts with jsdom

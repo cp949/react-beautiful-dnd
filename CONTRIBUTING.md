@@ -67,8 +67,7 @@ This project uses `redux` for its state management. If you have not used `redux`
 
 We test our application very thoroughly. Changes will not be accepted without tests
 
-- [`jest`](https://facebook.github.io/jest/): We use the jest test runner. It is worth getting familiar with it
-- [Test JavaScript with Jest](https://egghead.io/lessons/javascript-test-javascript-with-jest)
+- [`vitest`](https://vitest.dev/): We use the vitest test runner. It is worth getting familiar with it
 - [React Testing Cookbook](https://egghead.io/courses/react-testing-cookbook)
 
 #### Performance

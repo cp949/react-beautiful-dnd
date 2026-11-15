@@ -15,7 +15,7 @@ import { simpleLift, keyboard } from './util/controls';
 import setDOMRect from '../../util/set-dom-rect';
 
 // Both list and item will have the same dimensions
-jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() =>
+vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() =>
   setDOMRect(
     getRect({
       top: 0,
@@ -27,9 +27,9 @@ jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() =>
 );
 
 // Stubbing out totally - not including margins in this
-jest
-  .spyOn(window, 'getComputedStyle')
-  .mockImplementation(() => getComputedSpacing({}));
+vi.spyOn(window, 'getComputedStyle').mockImplementation(() =>
+  getComputedSpacing({}),
+);
 
 interface State {
   isDropDisabled: boolean;
@@ -100,25 +100,25 @@ class App extends React.Component<any, State> {
 }
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should allow the disabling of a droppable in onDragStart', () => {
   const responders: Responders = {
-    onDragStart: jest.fn(),
-    onDragUpdate: jest.fn(),
-    onDragEnd: jest.fn(),
+    onDragStart: vi.fn(),
+    onDragUpdate: vi.fn(),
+    onDragEnd: vi.fn(),
   };
   const { getByTestId } = render(<App {...responders} />);
   const handle: HTMLElement = getByTestId('drag-handle');
 
   simpleLift(keyboard, handle);
   // flush responder
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   const start: DragStart = {
     draggableId: 'draggable',
@@ -134,7 +134,7 @@ it('should allow the disabling of a droppable in onDragStart', () => {
   // onDragUpdate will occur after setTimeout
   expect(responders.onDragUpdate).not.toHaveBeenCalled();
 
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   // an update should be fired as the home location has changed
   const update: DragUpdate = {
     ...start,

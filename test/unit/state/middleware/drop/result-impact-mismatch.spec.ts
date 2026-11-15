@@ -19,7 +19,7 @@ import {
 } from '../../../../../src/state/get-impact-location';
 
 it('should clear any destination from a final impact if not dropping on a droppable', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
   store.dispatch(initialPublish(initialPublishArgs));
@@ -52,7 +52,7 @@ it('should clear any destination from a final impact if not dropping on a droppa
 });
 
 it('should clear any destination from a final impact canceling', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
   store.dispatch(initialPublish(initialPublishArgs));
@@ -77,7 +77,7 @@ it('should clear any destination from a final impact canceling', () => {
 });
 
 it('should clear any combine from a final impact if cancelling', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   const store: Store = createStore(passThroughMiddleware(mock), middleware);
 
   store.dispatch(

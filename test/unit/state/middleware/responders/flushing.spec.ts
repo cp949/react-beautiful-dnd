@@ -27,11 +27,11 @@ const result: DropResult = {
 };
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should trigger an on drag start after in the next cycle', () => {
@@ -41,7 +41,7 @@ it('should trigger an on drag start after in the next cycle', () => {
   store.dispatch(initialPublish(initialPublishArgs));
   expect(responders.onDragStart).not.toHaveBeenCalled();
 
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
 });
 
@@ -55,7 +55,7 @@ it('should queue a drag start if an action comes in while the timeout is pending
   store.dispatch(moveDown());
   expect(responders.onDragStart).not.toHaveBeenCalled();
 
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   expect(responders.onDragStart).toHaveBeenCalledTimes(1);
   expect(responders.onDragUpdate).toHaveBeenCalledTimes(1);

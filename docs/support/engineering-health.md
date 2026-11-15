@@ -10,7 +10,7 @@ The [`TypeScript`](https://www.typescriptlang.org/docs/handbook/intro.html) docu
 
 ## Tested
 
-[![Tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://www.npmjs.com/package/@cp949/react-beautiful-dnd) [![Tested with cypress](https://img.shields.io/badge/tested%20with-cypress-brightgreen.svg?style=flat)](https://www.cypress.io/)
+[![Tested with vitest](https://img.shields.io/badge/tested_with-vitest-6e9f18.svg)](https://www.npmjs.com/package/@cp949/react-beautiful-dnd) [![Tested with cypress](https://img.shields.io/badge/tested%20with-cypress-brightgreen.svg?style=flat)](https://www.cypress.io/)
 
 This code base employs a number of different testing strategies including unit, integration, browser and performance tests. Testing various aspects of the system helps to promote its quality and stability.
 

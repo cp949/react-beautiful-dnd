@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type { Position } from 'css-box-model';
 import forEach from './util/for-each';
 import type { BlockFnArgs } from './util/for-each';
@@ -36,10 +37,10 @@ forEach(({ state, axis }: BlockFnArgs) => {
   );
 
   const originalNow = Date.now;
-  let mockNow: jest.Mock<number>;
+  let mockNow: Mock<() => number>;
 
   beforeEach(() => {
-    mockNow = jest.fn().mockReturnValue(0);
+    mockNow = vi.fn().mockReturnValue(0);
     // overriding global
     Date.now = mockNow;
   });

@@ -7,15 +7,15 @@ import { simpleLift, touch } from '../../util/controls';
 import supportedEventName from '../../../../../src/view/use-sensor-marshal/sensors/util/supported-page-visibility-event-name';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should prevent default on the event that causes a drop', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -29,7 +29,7 @@ it('should prevent default on the event that causes a drop', () => {
 });
 
 it('should prevent default on an escape press', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -45,7 +45,7 @@ it('should prevent default on an escape press', () => {
 });
 
 it('should prevent default on a touchcancel', () => {
-  const onDragEnd = jest.fn();
+  const onDragEnd = vi.fn();
   const { getByText } = render(<App onDragEnd={onDragEnd} />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -64,7 +64,7 @@ it('should prevent default on a touchcancel', () => {
 it('should not prevent the default behaviour for an indirect cancel', () => {
   ['orientationchange', 'keydown', 'resize', supportedEventName].forEach(
     (eventName: string) => {
-      const onDragEnd = jest.fn();
+      const onDragEnd = vi.fn();
       const { getByText, unmount } = render(<App onDragEnd={onDragEnd} />);
       const handle: HTMLElement = getByText('item: 0');
 

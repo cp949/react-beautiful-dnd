@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import child from 'child_process';
 import fs from 'fs';
@@ -12,7 +12,7 @@ const exec = promisify(child.exec);
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
 
-jest.setTimeout(120 * 1000);
+vi.setConfig({ testTimeout: 120 * 1000 });
 
 beforeAll(async () => {
   await exec('pnpm build');

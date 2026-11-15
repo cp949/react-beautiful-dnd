@@ -1,3 +1,4 @@
+import type { MockInstance } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React, { Component } from 'react';
 import type { DroppableProvided } from '../../../../src/view/droppable/droppable-types';
@@ -34,10 +35,10 @@ class App extends Component<{
   }
 }
 
-let personRenderSpy: jest.SpyInstance;
+let personRenderSpy: MockInstance;
 
 beforeEach(() => {
-  personRenderSpy = jest.spyOn(Person.prototype, 'render');
+  personRenderSpy = vi.spyOn(Person.prototype, 'render');
 });
 
 afterEach(() => {

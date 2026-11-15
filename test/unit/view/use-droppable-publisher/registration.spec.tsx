@@ -13,7 +13,7 @@ setViewport(preset.viewport);
 
 it('should register itself when mounting', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
 
   render(
     <WithAppContext registry={registry}>
@@ -35,8 +35,8 @@ it('should register itself when mounting', () => {
 
 it('should unregister itself when unmounting', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const unregisterSpy = jest.spyOn(registry.droppable, 'unregister');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
+  const unregisterSpy = vi.spyOn(registry.droppable, 'unregister');
 
   const { unmount } = render(
     <WithAppContext registry={registry}>
@@ -55,8 +55,8 @@ it('should unregister itself when unmounting', () => {
 
 it('should update its registration when a descriptor property changes', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const unregisterSpy = jest.spyOn(registry.droppable, 'unregister');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
+  const unregisterSpy = vi.spyOn(registry.droppable, 'unregister');
 
   const { rerender } = render(
     <WithAppContext registry={registry}>
@@ -104,8 +104,8 @@ it('should update its registration when a descriptor property changes', () => {
 
 it('should not update its registration when a descriptor property does not change on an update', () => {
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
-  const unregisterSpy = jest.spyOn(registry.droppable, 'unregister');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
+  const unregisterSpy = vi.spyOn(registry.droppable, 'unregister');
 
   const { rerender } = render(
     <WithAppContext registry={registry}>

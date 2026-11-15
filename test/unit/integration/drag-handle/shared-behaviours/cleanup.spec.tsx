@@ -1,3 +1,4 @@
+import type { MockInstance } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 import { isDragging } from '../../util/helpers';
@@ -6,14 +7,14 @@ import { forEachSensor, simpleLift } from '../../util/controls';
 
 import type { Control } from '../../util/controls';
 
-function getCallCount(myMock: jest.SpyInstance): number {
+function getCallCount(myMock: MockInstance): number {
   return myMock.mock.calls.length;
 }
 
 forEachSensor((control: Control) => {
   it('should remove all window listeners when unmounting', () => {
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
     const { unmount } = render(<App />);
 
@@ -25,8 +26,8 @@ forEachSensor((control: Control) => {
   });
 
   it('should remove all window listeners when unmounting mid drag', () => {
-    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
 
     const { unmount, getByText } = render(<App />);
     const handle: HTMLElement = getByText('item: 0');

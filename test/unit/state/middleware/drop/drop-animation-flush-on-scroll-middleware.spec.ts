@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type { State } from '../../../../../src/types';
 import type { Store } from '../../../../../src/state/store-types';
 import { invariant } from '../../../../../src/invariant';
@@ -20,7 +21,9 @@ import {
   getCompletedArgs,
 } from '../../../../util/preset-action-args';
 
-function getToDropAnimation(mock: jest.Mock<unknown, [unknown]>): Store {
+function getToDropAnimation(
+  mock: Mock<(...args: [unknown]) => unknown>,
+): Store {
   const store: Store = createStore(
     passThroughMiddleware(mock),
     // will convert the drop into a drop animate
@@ -50,7 +53,7 @@ function getToDropAnimation(mock: jest.Mock<unknown, [unknown]>): Store {
 }
 
 it('should clear any running drop is a scroll event occurs', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   getToDropAnimation(mock);
 
   mock.mockReset();
@@ -67,7 +70,7 @@ it('should clear any running drop is a scroll event occurs', () => {
 });
 
 it('should only try to clear once', () => {
-  const mock = jest.fn();
+  const mock = vi.fn();
   getToDropAnimation(mock);
 
   mock.mockReset();
@@ -87,7 +90,7 @@ it('should not try to cancel a drop animation if the drop finished', () => {
     completeDrop(getCompletedArgs('DROP')),
     dropAnimationFinished(),
   ].forEach((action: Action) => {
-    const mock = jest.fn();
+    const mock = vi.fn();
     const store: Store = getToDropAnimation(mock);
 
     store.dispatch(action);

@@ -111,7 +111,7 @@ export default function Board() {
 }
 
 export function withPoorBoardDimensions(fn: (a: typeof preset) => void): void {
-  const protoSpy = jest
+  const protoSpy = vi
     .spyOn(Element.prototype, 'getBoundingClientRect')
     .mockImplementation(function fake(this: HTMLElement) {
       invariant(
@@ -135,7 +135,7 @@ export function withPoorBoardDimensions(fn: (a: typeof preset) => void): void {
     });
 
   // Stubbing out totally - not including margins in this
-  const styleSpy = jest
+  const styleSpy = vi
     .spyOn(window, 'getComputedStyle')
     .mockImplementation(function fake(el: Element) {
       function getSpacing(box: BoxModel) {

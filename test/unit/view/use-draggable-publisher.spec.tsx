@@ -75,7 +75,7 @@ disableWarn();
 describe('dimension registration', () => {
   it('should register itself when mounting', () => {
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
     render(<Item registry={registry} />);
 
     const expected: DraggableEntry = {
@@ -92,8 +92,8 @@ describe('dimension registration', () => {
 
   it('should unregister itself when unmounting', () => {
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
-    const unregisterSpy = jest.spyOn(registry.draggable, 'unregister');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
+    const unregisterSpy = vi.spyOn(registry.draggable, 'unregister');
     const { unmount } = render(<Item registry={registry} />);
 
     const expected: DraggableEntry = {
@@ -118,9 +118,9 @@ describe('dimension registration', () => {
 
   it('should update its registration when a descriptor property changes', () => {
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
-    const updateSpy = jest.spyOn(registry.draggable, 'update');
-    const unregisterSpy = jest.spyOn(registry.draggable, 'unregister');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
+    const updateSpy = vi.spyOn(registry.draggable, 'update');
+    const unregisterSpy = vi.spyOn(registry.draggable, 'unregister');
     const { rerender } = render(<Item registry={registry} />);
 
     const expectedInitial: DraggableEntry = {
@@ -170,8 +170,8 @@ describe('dimension registration', () => {
 
   it('should not update its registration when a descriptor property does not change on an update', () => {
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
-    const updateSpy = jest.spyOn(registry.draggable, 'update');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
+    const updateSpy = vi.spyOn(registry.draggable, 'update');
     const { rerender } = render(<Item registry={registry} />);
 
     expect(registerSpy).toHaveBeenCalledTimes(1);
@@ -205,11 +205,11 @@ describe('dimension publishing', () => {
         left: 0,
       },
     });
-    jest
-      .spyOn(window, 'getComputedStyle')
-      .mockImplementation(() => noComputedSpacing);
+    vi.spyOn(window, 'getComputedStyle').mockImplementation(
+      () => noComputedSpacing,
+    );
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
 
     const { container } = render(
       <Item
@@ -255,11 +255,11 @@ describe('dimension publishing', () => {
       },
       margin,
     });
-    jest
-      .spyOn(window, 'getComputedStyle')
-      .mockImplementation(() => getComputedSpacing({ margin }));
+    vi.spyOn(window, 'getComputedStyle').mockImplementation(() =>
+      getComputedSpacing({ margin }),
+    );
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
 
     const { container } = render(
       <Item
@@ -299,11 +299,11 @@ describe('dimension publishing', () => {
       },
       windowScroll: preset.windowScroll,
     });
-    jest
-      .spyOn(window, 'getComputedStyle')
-      .mockImplementation(() => noComputedSpacing);
+    vi.spyOn(window, 'getComputedStyle').mockImplementation(
+      () => noComputedSpacing,
+    );
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
 
     const { container } = render(
       <Item
@@ -357,7 +357,7 @@ describe('dimension publishing', () => {
       return <div>hi</div>;
     }
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.draggable, 'register');
+    const registerSpy = vi.spyOn(registry.draggable, 'register');
     const { unmount } = render(
       <NoRefItem registry={registry} draggableId="draggable" />,
     );

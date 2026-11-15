@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { glob, readFile } from 'fs/promises';
 // Disabling eslint design to prevent using regeneratorRuntime in distributions

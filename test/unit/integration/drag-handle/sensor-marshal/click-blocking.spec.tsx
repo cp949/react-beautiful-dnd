@@ -9,7 +9,7 @@ import type {
 import App from '../../util/app';
 
 it('should block a single click if requested', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
   const { getByText } = render(<App sensors={[sensor]} />);
   const handle: HTMLElement = getByText('item: 0');
   const api: SensorAPI | undefined = sensor.mock.calls[0]?.[0];
@@ -33,7 +33,7 @@ it('should block a single click if requested', () => {
 });
 
 it('should not block any clicks if not requested', () => {
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
 
   const { getByText } = render(<App sensors={[sensor]} />);
   const handle: HTMLElement = getByText('item: 0');
@@ -55,9 +55,9 @@ it('should not block any clicks if not requested', () => {
 });
 
 it('should not block any clicks after a timeout', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
-  const sensor = jest.fn<void, [SensorAPI]>();
+  const sensor = vi.fn<(...args: [SensorAPI]) => void>();
 
   const { getByText } = render(<App sensors={[sensor]} />);
   const handle: HTMLElement = getByText('item: 0');
@@ -70,7 +70,7 @@ it('should not block any clicks after a timeout', () => {
   const drag: SnapDragActions = preDrag.snapLift();
   act(() => drag.drop({ shouldBlockNextClick: true }));
 
-  jest.advanceTimersByTime(1);
+  vi.advanceTimersByTime(1);
 
   // fire click
   const first: MouseEvent = createEvent.click(handle);
@@ -79,5 +79,5 @@ it('should not block any clicks after a timeout', () => {
   // click not prevented
   expect(first.defaultPrevented).toBe(false);
 
-  jest.useRealTimers();
+  vi.useRealTimers();
 });

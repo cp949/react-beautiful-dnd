@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import type { Position } from 'css-box-model';
 import createCaptureLifecycle from '../../../../src/view/use-sensor-marshal/sensors/util/create-capture-lifecycle';
 import type {
@@ -19,22 +20,22 @@ type Lifecycle = CaptureLifecycle<Pending, Dragging>;
 
 // 호출 순서를 기록해서 stop과 cancel의 순서를 검증한다.
 let calls: string[];
-let captureFn: jest.Mock;
-let dragFn: jest.Mock;
-let cleanupPending: jest.Mock;
+let captureFn: Mock;
+let dragFn: Mock;
+let cleanupPending: Mock;
 let unmounts: (() => void)[];
 
 const point: Position = { x: 10, y: 20 };
 
 function getPreDragActions(): PreDragActions {
   return {
-    abort: jest.fn(() => calls.push('abort')),
+    abort: vi.fn(() => calls.push('abort')),
   } as unknown as PreDragActions;
 }
 
 function getFluidActions(): FluidDragActions {
   return {
-    cancel: jest.fn(() => calls.push('cancel')),
+    cancel: vi.fn(() => calls.push('cancel')),
   } as unknown as FluidDragActions;
 }
 
@@ -67,9 +68,9 @@ function fire(eventName: string) {
 
 beforeEach(() => {
   calls = [];
-  captureFn = jest.fn();
-  dragFn = jest.fn();
-  cleanupPending = jest.fn(() => calls.push('cleanupPending'));
+  captureFn = vi.fn();
+  dragFn = vi.fn();
+  cleanupPending = vi.fn(() => calls.push('cleanupPending'));
   unmounts = [];
 });
 
@@ -125,7 +126,7 @@ describe('Capture', () => {
   it('IDLE이 아닐 때 Pending drag를 시작하면 pending을 만들지 않고 오류를 던진다', () => {
     const lifecycle = setup();
     startPending(lifecycle);
-    const createPending = jest.fn();
+    const createPending = vi.fn();
 
     expect(() => lifecycle.startPendingDrag(createPending)).toThrow(
       'Expected to move from IDLE to PENDING drag',
@@ -136,8 +137,8 @@ describe('Capture', () => {
 
 describe('stop', () => {
   it('IDLE에서 호출하면 아무것도 하지 않는다', () => {
-    const addSpy = jest.spyOn(window, 'addEventListener');
-    const removeSpy = jest.spyOn(window, 'removeEventListener');
+    const addSpy = vi.spyOn(window, 'addEventListener');
+    const removeSpy = vi.spyOn(window, 'removeEventListener');
     const lifecycle = setup();
     const addCount = addSpy.mock.calls.length;
     const removeCount = removeSpy.mock.calls.length;
@@ -229,7 +230,7 @@ describe('cancel', () => {
     const lifecycle = setup();
     startPending(lifecycle);
     const actions = startDragging(lifecycle);
-    (actions.cancel as jest.Mock).mockImplementation(() => {
+    (actions.cancel as Mock).mockImplementation(() => {
       calls.push(`cancel:${lifecycle.getPhase().type}`);
       // stop이 끝난 뒤이므로 Capture binding이 이미 걸려 있어야 한다.
       fire('capture-event');
@@ -245,7 +246,7 @@ describe('cancel', () => {
   it('PENDING에서는 정리 hook, stop 순으로 진행한 뒤 actions.abort를 호출한다', () => {
     const lifecycle = setup();
     const actions = startPending(lifecycle);
-    (actions.abort as jest.Mock).mockImplementation(() => {
+    (actions.abort as Mock).mockImplementation(() => {
       calls.push(`abort:${lifecycle.getPhase().type}`);
     });
 

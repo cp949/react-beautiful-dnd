@@ -29,7 +29,7 @@ describe('should immediately publish updates', () => {
   it('should immediately publish the scroll offset of the closest scrollable', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -58,7 +58,7 @@ describe('should immediately publish updates', () => {
     // this can happen if you scroll backward and forward super quick
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -102,7 +102,7 @@ describe('should schedule publish updates', () => {
   it('should publish the scroll offset of the closest scrollable', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -132,7 +132,7 @@ describe('should schedule publish updates', () => {
   it('should throttle multiple scrolls into a animation frame', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -172,7 +172,7 @@ describe('should schedule publish updates', () => {
     // this can happen if you scroll backward and forward super quick
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -215,7 +215,7 @@ describe('should schedule publish updates', () => {
   it('should not publish a scroll update after requested not to update while an animation frame is occurring', () => {
     const marshal = getMarshalStub();
     const registry: Registry = createRegistry();
-    const registerSpy = jest.spyOn(registry.droppable, 'register');
+    const registerSpy = vi.spyOn(registry.droppable, 'register');
     const { container } = render(
       <WithAppContext marshal={marshal} registry={registry}>
         <ScrollableItem />
@@ -256,7 +256,7 @@ it('should stop watching scroll when no longer required to publish', () => {
   // this can happen if you scroll backward and forward super quick
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
@@ -286,12 +286,10 @@ it('should stop watching scroll when no longer required to publish', () => {
 });
 
 it('should stop watching for scroll events when the component is unmounted', () => {
-  const consoleWarnSpy = jest
-    .spyOn(console, 'warn')
-    .mockImplementation(() => {});
+  const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container, unmount } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
@@ -320,7 +318,7 @@ it('should stop watching for scroll events when the component is unmounted', () 
 it('should throw an error if asked to watch a scroll when already listening for scroll changes', () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { unmount } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
@@ -344,7 +342,7 @@ it('should throw an error if asked to watch a scroll when already listening for 
 it('should add and remove events with the same event options', () => {
   const marshal = getMarshalStub();
   const registry: Registry = createRegistry();
-  const registerSpy = jest.spyOn(registry.droppable, 'register');
+  const registerSpy = vi.spyOn(registry.droppable, 'register');
   const { container } = render(
     <WithAppContext marshal={marshal} registry={registry}>
       <ScrollableItem />
@@ -354,8 +352,8 @@ it('should add and remove events with the same event options', () => {
     '.scroll-container',
   ) as HTMLElement;
   invariant(scrollContainer);
-  const addEventListenerSpy = jest.spyOn(scrollContainer, 'addEventListener');
-  const removeEventListenerSpy = jest.spyOn(
+  const addEventListenerSpy = vi.spyOn(scrollContainer, 'addEventListener');
+  const removeEventListenerSpy = vi.spyOn(
     scrollContainer,
     'removeEventListener',
   );

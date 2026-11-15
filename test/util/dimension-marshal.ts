@@ -60,48 +60,48 @@ export const createMarshal = (
 };
 
 export const getMarshalStub = () => ({
-  updateDroppableScroll: jest.fn<void, [id: string, newScroll: Position]>(),
-  updateDroppableIsEnabled: jest.fn<
-    void,
-    [id: DroppableId, isEnabled: boolean]
-  >(),
-  updateDroppableIsCombineEnabled: jest.fn<
-    void,
-    [id: DroppableId, isEnabled: boolean]
-  >(),
-  scrollDroppable: jest.fn<void, [id: DroppableId, change: Position]>(),
-  startPublishing: jest.fn<StartPublishingResult, [LiftRequest]>(() => ({
-    critical,
-    viewport: preset.viewport,
-    dimensions: {
-      draggables: {
-        [preset.inHome1.descriptor.id]: preset.inHome1,
-        [preset.inHome2.descriptor.id]: preset.inHome2,
+  updateDroppableScroll:
+    vi.fn<(...args: [id: string, newScroll: Position]) => void>(),
+  updateDroppableIsEnabled:
+    vi.fn<(...args: [id: DroppableId, isEnabled: boolean]) => void>(),
+  updateDroppableIsCombineEnabled:
+    vi.fn<(...args: [id: DroppableId, isEnabled: boolean]) => void>(),
+  scrollDroppable:
+    vi.fn<(...args: [id: DroppableId, change: Position]) => void>(),
+  startPublishing: vi.fn<(...args: [LiftRequest]) => StartPublishingResult>(
+    () => ({
+      critical,
+      viewport: preset.viewport,
+      dimensions: {
+        draggables: {
+          [preset.inHome1.descriptor.id]: preset.inHome1,
+          [preset.inHome2.descriptor.id]: preset.inHome2,
+        },
+        droppables: {
+          [preset.home.descriptor.id]: preset.home,
+        },
       },
-      droppables: {
-        [preset.home.descriptor.id]: preset.home,
-      },
-    },
-  })),
-  stopPublishing: jest.fn<void, []>(),
+    }),
+  ),
+  stopPublishing: vi.fn<(...args: []) => void>(),
 });
 
 export const getCallbacksStub = () => ({
-  publishWhileDragging: jest.fn<
-    PublishWhileDraggingAction,
-    [PublishWhileDraggingArgs]
-  >(publishWhileDragging),
-  updateDroppableScroll: jest.fn<
-    UpdateDroppableScrollAction,
-    [UpdateDroppableScrollArgs]
+  publishWhileDragging:
+    vi.fn<(...args: [PublishWhileDraggingArgs]) => PublishWhileDraggingAction>(
+      publishWhileDragging,
+    ),
+  updateDroppableScroll: vi.fn<
+    (...args: [UpdateDroppableScrollArgs]) => UpdateDroppableScrollAction
   >(updateDroppableScroll),
-  updateDroppableIsEnabled: jest.fn<
-    UpdateDroppableIsEnabledAction,
-    [UpdateDroppableIsEnabledArgs]
+  updateDroppableIsEnabled: vi.fn<
+    (...args: [UpdateDroppableIsEnabledArgs]) => UpdateDroppableIsEnabledAction
   >(updateDroppableIsEnabled),
-  updateDroppableIsCombineEnabled: jest.fn<
-    UpdateDroppableIsCombineEnabledAction,
-    [UpdateDroppableIsCombineEnabledArgs]
+  updateDroppableIsCombineEnabled: vi.fn<
+    (
+      ...args: [UpdateDroppableIsCombineEnabledArgs]
+    ) => UpdateDroppableIsCombineEnabledAction
   >(updateDroppableIsCombineEnabled),
-  collectionStarting: jest.fn<CollectionStartingAction, []>(collectionStarting),
+  collectionStarting:
+    vi.fn<(...args: []) => CollectionStartingAction>(collectionStarting),
 });

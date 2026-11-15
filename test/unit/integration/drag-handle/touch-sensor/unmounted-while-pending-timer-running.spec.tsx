@@ -6,15 +6,15 @@ import { touch } from '../../util/controls';
 import { noop } from '../../../../../src/empty';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  vi.useRealTimers();
 });
 
 it('should cancel a pending drag when unmounted', () => {
-  const warn = jest.spyOn(console, 'warn').mockImplementation(noop);
+  const warn = vi.spyOn(console, 'warn').mockImplementation(noop);
   const { getByText, unmount } = render(<App />);
   const handle: HTMLElement = getByText('item: 0');
 
@@ -23,7 +23,7 @@ it('should cancel a pending drag when unmounted', () => {
   unmount();
 
   // finish lift timer
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   expect(warn).not.toHaveBeenCalled();
   expect(isDragging(handle)).toBe(false);

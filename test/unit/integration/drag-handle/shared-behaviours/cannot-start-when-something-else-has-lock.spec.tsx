@@ -10,7 +10,7 @@ import type { Control } from '../../util/controls';
 
 forEachSensor((control: Control) => {
   it('should not start a drag if another sensor is capturing', () => {
-    const greedy = jest.fn<void, [SensorAPI]>();
+    const greedy = vi.fn<(...args: [SensorAPI]) => void>();
     const { getByText } = render(<App sensors={[greedy]} />);
     const handle: HTMLElement = getByText('item: 0');
 

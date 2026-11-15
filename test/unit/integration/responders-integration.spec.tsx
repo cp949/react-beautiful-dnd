@@ -1,4 +1,5 @@
 /* eslint-disable jest/expect-expect */
+import type { MockedFunction } from 'vitest';
 import React from 'react';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import { getRect } from 'css-box-model';
@@ -43,14 +44,14 @@ const setRefDimensions = (ref?: HTMLElement | null) => {
     return;
   }
 
-  jest
-    .spyOn(ref, 'getBoundingClientRect')
-    .mockImplementation(() => setDOMRect(borderBox));
+  vi.spyOn(ref, 'getBoundingClientRect').mockImplementation(() =>
+    setDOMRect(borderBox),
+  );
 
   // Stubbing out totally - not including margins in this
-  jest
-    .spyOn(window, 'getComputedStyle')
-    .mockImplementation(() => getComputedSpacing({}));
+  vi.spyOn(window, 'getComputedStyle').mockImplementation(() =>
+    getComputedSpacing({}),
+  );
 };
 
 interface Props {
@@ -58,11 +59,11 @@ interface Props {
 }
 
 interface MockedResponders {
-  onBeforeCapture: jest.MockedFunction<OnBeforeCaptureResponder>;
-  onBeforeDragStart: jest.MockedFunction<OnBeforeDragStartResponder>;
-  onDragStart: jest.MockedFunction<OnDragStartResponder>;
-  onDragUpdate: jest.MockedFunction<OnDragUpdateResponder>;
-  onDragEnd: jest.MockedFunction<OnDragEndResponder>;
+  onBeforeCapture: MockedFunction<OnBeforeCaptureResponder>;
+  onBeforeDragStart: MockedFunction<OnBeforeDragStartResponder>;
+  onDragStart: MockedFunction<OnDragStartResponder>;
+  onDragUpdate: MockedFunction<OnDragUpdateResponder>;
+  onDragEnd: MockedFunction<OnDragEndResponder>;
 }
 
 function App({ responders }: Props) {
@@ -114,13 +115,13 @@ describe('responders integration', () => {
   disableWarn();
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     responders = {
-      onBeforeCapture: jest.fn(),
-      onBeforeDragStart: jest.fn(),
-      onDragStart: jest.fn(),
-      onDragUpdate: jest.fn(),
-      onDragEnd: jest.fn(),
+      onBeforeCapture: vi.fn(),
+      onBeforeDragStart: vi.fn(),
+      onDragStart: vi.fn(),
+      onDragUpdate: vi.fn(),
+      onDragEnd: vi.fn(),
     };
     wrapper = render(<App responders={responders} />);
   });
@@ -128,7 +129,7 @@ describe('responders integration', () => {
   afterEach(() => {
     // clean up any loose events
     wrapper.unmount();
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   const drag = (() => {
@@ -141,7 +142,7 @@ describe('responders integration', () => {
       simpleLift(mouse, getHandle());
 
       // drag start responder is scheduled with setTimeout
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     };
 
     const move = () => {
@@ -153,7 +154,7 @@ describe('responders integration', () => {
       // movements are scheduled in an animation frame
       requestAnimationFrame.step();
       // responder updates are scheduled with setTimeout
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     };
 
     const stop = () => {
@@ -397,8 +398,8 @@ describe('responders integration', () => {
     it('should allow you to change responders before a drag started', () => {
       const newResponders: MockedResponders = {
         ...responders,
-        onDragStart: jest.fn(),
-        onDragEnd: jest.fn(),
+        onDragStart: vi.fn(),
+        onDragEnd: vi.fn(),
       };
       setResponders(newResponders);
 
@@ -415,7 +416,7 @@ describe('responders integration', () => {
     it('should allow you to change onDragEnd during a drag', () => {
       const newResponders: MockedResponders = {
         ...responders,
-        onDragEnd: jest.fn(),
+        onDragEnd: vi.fn(),
       };
 
       drag.start();
@@ -433,8 +434,8 @@ describe('responders integration', () => {
     it('should allow you to change responders between drags', () => {
       const newResponders: MockedResponders = {
         ...responders,
-        onDragStart: jest.fn(),
-        onDragEnd: jest.fn(),
+        onDragStart: vi.fn(),
+        onDragEnd: vi.fn(),
       };
 
       // first drag

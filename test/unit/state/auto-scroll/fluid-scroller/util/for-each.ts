@@ -16,10 +16,10 @@ export default (block: BlockFn) => {
     describe(`on the ${axis.direction} axis`, () => {
       beforeEach(() => {
         requestAnimationFrame.reset();
-        jest.useFakeTimers();
+        vi.useFakeTimers();
       });
       afterEach(() => {
-        jest.useRealTimers();
+        vi.useRealTimers();
       });
 
       afterAll(() => {

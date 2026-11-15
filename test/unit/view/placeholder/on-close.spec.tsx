@@ -7,8 +7,8 @@ import getPlaceholderStyle from './util/get-placeholder-style';
 import { placeholder } from './util/data';
 
 it('should only fire a single onClose event', () => {
-  const onClose = jest.fn();
-  const onTransitionEnd = jest.fn();
+  const onClose = vi.fn();
+  const onTransitionEnd = vi.fn();
 
   const { container, rerender } = render(
     <Placeholder
@@ -59,8 +59,8 @@ it('should only fire a single onClose event', () => {
 });
 
 it('should not fire an onClose if not closing when a transitionend occurs', () => {
-  const onClose = jest.fn();
-  const onTransitionEnd = jest.fn();
+  const onClose = vi.fn();
+  const onTransitionEnd = vi.fn();
 
   const { container, rerender } = render(
     <Placeholder

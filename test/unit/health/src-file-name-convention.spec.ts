@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { glob } from 'fs/promises';
 import { invariant } from '../../../src/invariant';

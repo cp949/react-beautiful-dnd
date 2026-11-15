@@ -1,14 +1,15 @@
+import type { MockInstance } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
 import { DragDropContext, Droppable, Draggable } from '../../../../src';
 import type { DroppableProvided, DraggableProvided } from '../../../../src';
 
-let consoleErrorSpy: jest.SpyInstance;
-let consoleWarnSpy: jest.SpyInstance;
+let consoleErrorSpy: MockInstance;
+let consoleWarnSpy: MockInstance;
 
 beforeEach(() => {
-  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {

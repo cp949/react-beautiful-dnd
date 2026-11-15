@@ -9,8 +9,8 @@ import { getDraggableEntry } from '../../../util/registry';
 const preset = getPreset();
 
 it('should allow adding event listeners', () => {
-  const listener1 = jest.fn();
-  const listener2 = jest.fn();
+  const listener1 = vi.fn();
+  const listener2 = vi.fn();
   const registry: Registry = createRegistry();
 
   registry.subscribe(listener1);
@@ -27,8 +27,8 @@ it('should allow adding event listeners', () => {
 });
 
 it('should allow removing event listeners', () => {
-  const toBeRemoved = jest.fn();
-  const persistent = jest.fn();
+  const toBeRemoved = vi.fn();
+  const persistent = vi.fn();
   const registry: Registry = createRegistry();
 
   const unsubscribe = registry.subscribe(toBeRemoved);
@@ -47,8 +47,8 @@ it('should allow removing event listeners', () => {
 });
 
 it('should not error on a double unsubscribe', () => {
-  const toBeRemoved = jest.fn();
-  const persistent = jest.fn();
+  const toBeRemoved = vi.fn();
+  const persistent = vi.fn();
   const registry: Registry = createRegistry();
 
   const unsubscribe = registry.subscribe(toBeRemoved);

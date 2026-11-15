@@ -16,9 +16,9 @@ import {
 } from '../../../util/preset-action-args';
 
 const getMarshalStub = (): StyleMarshal => ({
-  dragging: jest.fn(),
-  dropping: jest.fn(),
-  resting: jest.fn(),
+  dragging: vi.fn(),
+  dropping: vi.fn(),
+  resting: vi.fn(),
 });
 
 it('should use the dragging styles on an initial publish', () => {

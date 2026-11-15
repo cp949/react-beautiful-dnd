@@ -16,9 +16,9 @@ import { defaultAutoScrollerOptions } from '../../../../src/state/auto-scroller/
 const state = getStatePreset();
 
 const getMocks = (): Args => ({
-  scrollDroppable: jest.fn(),
-  scrollWindow: jest.fn(),
-  move: jest.fn(),
+  scrollDroppable: vi.fn(),
+  scrollWindow: vi.fn(),
+  move: vi.fn(),
   getAutoScrollerOptions: () => defaultAutoScrollerOptions,
 });
 
