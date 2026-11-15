@@ -8,7 +8,6 @@
 **Beautiful** and **accessible** drag and drop for lists with [`React`](https://facebook.github.io/react/)
 
 [![npm](https://img.shields.io/npm/v/@cp949/react-beautiful-dnd.svg)](https://www.npmjs.com/package/@cp949/react-beautiful-dnd)
-[![Discord](https://img.shields.io/discord/1007763479010234398?color=blue)](https://discord.gg/zKhPpmvCEv)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-blue.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -43,11 +42,31 @@ This package descends from a chain of forks:
   specific syntax rules (ban on `throw`, `!!`, `tiny-invariant`) live in the
   local plugin `.oxlint/rbd-plugin.mjs`.
 - **Security**: `pnpm audit` findings reduced from 168 to 0 by upgrading
-  `express`, `webpack`, `cypress`, `lighthouse`, and adjusting `pnpm.overrides`
-  for transitive dependencies with no direct upgrade path.
+  `express`, `webpack`, `cypress`, `lighthouse`, and adding `overrides` for
+  transitive dependencies with no direct upgrade path. The overrides live in
+  `pnpm-workspace.yaml`, because pnpm 11+ no longer reads the `pnpm` field of
+  `package.json`. `deepmerge` 4.3.1 has a known vulnerability and no patched
+  release, so it is replaced with the fork `@cp949/deepmerge` (used by
+  development tools only).
 - **Dependencies**: removed `markdown-it`, `lodash.isequal`, `fs-extra`, and
   `fast-glob` from `devDependencies` — each had exactly one call site, replaced
   with Node's built-in `fs/promises` APIs or a small inlined implementation.
+  `@atlaskit/theme` (deprecated) was removed as well; the 25 colors the stories
+  use now live in `stories/src/colors.ts`.
+- **Development toolchain**: moved to current major versions to keep the audit
+  at 0 and stay on maintained releases — pnpm 12, Node 24.20.0 for development
+  and CI, React 19 (tests still run against React 18 and 19), Jest 30,
+  Babel 8, Storybook 10, stylelint 18, Cypress 16, `react-window` 2. None of
+  these are shipped to consumers. Two upgrades are deliberately held back:
+  TypeScript stays on 6 because `ts-node` and `fork-ts-checker-webpack-plugin`
+  do not work with TypeScript 7 yet, and `jsdom` stays on 26 because
+  `jest-environment-jsdom` 30 requires it.
+- **CI and services**: CircleCI was replaced with GitHub Actions
+  (`.github/workflows/ci.yml`: validate, Jest on React 18/19, bundle size,
+  build, Cypress, Lighthouse), since CircleCI was never connected to this
+  repository. Chromatic and Renovate configuration were removed for the same
+  reason — neither service is set up for this fork, and the Chromatic workflow
+  failed on every push.
 
 ## Core characteristics
 
