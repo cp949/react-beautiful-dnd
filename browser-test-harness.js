@@ -54,14 +54,14 @@ waitOn({
 })
   .then(() => {
     if (!process.argv[2]) {
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line rbd/no-restricted-syntax
       throw new Error('Started servers but no command supplied to run after');
     }
 
     const args = cmdArgsMap[process.argv[2]];
 
     if (!args) {
-      // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line rbd/no-restricted-syntax
       throw new Error('Unknown argument provided');
     }
 
@@ -84,6 +84,6 @@ waitOn({
 
     // eslint-disable-next-line no-console
     console.error(error);
-    // eslint-disable-next-line no-restricted-syntax
+    // eslint-disable-next-line rbd/no-restricted-syntax
     throw new Error('Unable to spin up standalone servers');
   });

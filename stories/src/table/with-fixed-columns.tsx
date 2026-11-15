@@ -43,7 +43,7 @@ const Row = styled.tr<{ isDragging?: boolean }>`
     /* maintain cell width while dragging */
     display: table;
   `
-      : ''}/* stylelint-enable */;
+      : ''};
 `;
 
 const Cell = styled.td`

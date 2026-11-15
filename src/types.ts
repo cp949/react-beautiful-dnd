@@ -208,7 +208,8 @@ export interface CombineImpact<TId extends string = string> {
 }
 
 export type ImpactLocation<TId extends string = string> =
-  ReorderImpact<TId> | CombineImpact<TId>;
+  | ReorderImpact<TId>
+  | CombineImpact<TId>;
 
 export interface Displaced<TId extends string = string> {
   forwards: DisplacementGroups<TId>;
@@ -415,7 +416,8 @@ export type State<TId extends string = string> =
   | DropAnimatingState<TId>;
 
 export type StateWhenUpdatesAllowed<TId extends string = string> =
-  DraggingState<TId> | CollectingState<TId>;
+  | DraggingState<TId>
+  | CollectingState<TId>;
 
 export type Announce = (message: string) => void;
 

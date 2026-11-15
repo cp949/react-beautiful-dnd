@@ -23,5 +23,5 @@ declare interface Window {
 // See: https://github.com/Microsoft/TypeScript/issues/842
 // In order to fix the problem we override some node types
 declare namespace NodeJS {
-  declare type Timeout = TimeoutID;
+  type Timeout = TimeoutID;
 }

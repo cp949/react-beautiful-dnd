@@ -12,7 +12,7 @@ console.log('*************************');
 
 if (a11yScore !== 1) {
   // fail build
-  // eslint-disable-next-line no-restricted-syntax
+  // eslint-disable-next-line rbd/no-restricted-syntax
   throw new Error(
     'NOTE: Lighthouse accessibility audit score must be 100% to pass this build step.',
   );

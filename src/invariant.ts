@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable rbd/no-restricted-syntax */
 const isProduction: boolean = process.env.NODE_ENV === 'production';
 const prefix = 'Invariant failed';
 

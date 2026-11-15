@@ -18,8 +18,8 @@ const exceptions: string[] = [
   'SECURITY.md',
 ];
 
-it('should have every prettier target following the file name convention', async () => {
-  const targets: string[] = pkg.config.prettier_target.split(' ');
+it('should have every format target following the file name convention', async () => {
+  const targets: string[] = pkg.config.format_target.split(' ');
   const paths: string[] = await Array.fromAsync(glob(targets));
 
   invariant(

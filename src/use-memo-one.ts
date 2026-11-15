@@ -37,7 +37,6 @@ export function useMemo<T>(
     );
 
   // create a new cache if required
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const cache: Cache<T> = useCache
     ? committed.current
     : {
@@ -49,6 +48,8 @@ export function useMemo<T>(
   useEffect(() => {
     isFirstRun.current = false;
     committed.current = cache;
+    // cache는 매 렌더링마다 바뀌지만 의도한 동작이다. oxlint는 deps 배열 위치에 경고를 낸다.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cache]);
 
   return cache.result;

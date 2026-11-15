@@ -39,8 +39,9 @@ This package descends from a chain of forks:
 - **Package**: renamed to `@cp949/react-beautiful-dnd`; `dist` file names changed
   from `dnd.*` to `react-beautiful-dnd.*` to match. `peerDependencies` now allow
   React 19 (`^18.0.0 || ^19.0.0`).
-- **Tooling**: migrated from ESLint 8 + `eslint-config-airbnb` (unmaintained
-  since 2021, incompatible with ESLint 9+) to ESLint 9 flat config.
+- **Tooling**: replaced ESLint + Prettier with `oxlint` and `oxfmt`. Project
+  specific syntax rules (ban on `throw`, `!!`, `tiny-invariant`) live in the
+  local plugin `.oxlint/rbd-plugin.mjs`.
 - **Security**: `pnpm audit` findings reduced from 168 to 0 by upgrading
   `express`, `webpack`, `cypress`, `lighthouse`, and adjusting `pnpm.overrides`
   for transitive dependencies with no direct upgrade path.

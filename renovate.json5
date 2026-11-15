@@ -34,12 +34,12 @@
       commitMessagePrefix: "chore(dev-deps):",
     },
     {
-      groupName: "bump eslint dependencies",
-      groupSlug: "all-eslint-major",
+      groupName: "bump oxc dependencies",
+      groupSlug: "all-oxc-major",
       matchManagers: ["npm"],
       matchDepTypes: ["devDependencies"],
       matchUpdateTypes: ["major"],
-      packagePatterns: [".*eslint.*"],
+      packagePatterns: ["^oxlint$", "^oxfmt$"],
       commitMessagePrefix: "chore(dev-deps):",
     },
     {

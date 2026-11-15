@@ -18,9 +18,9 @@ While code coverage is [not a guarantee of code health](https://stackoverflow.co
 
 ## Linting
 
-- [`eslint`](https://eslint.org/)
+- [`oxlint`](https://oxc.rs/docs/guide/usage/linter.html)
 - [`stylelint`](https://github.com/stylelint/stylelint)
-- [`prettier`](https://github.com/prettier/prettier) - well, not strictly a linter, but close enough
+- [`oxfmt`](https://oxc.rs/docs/guide/usage/formatter.html) - well, not strictly a linter, but close enough
 
 ## Performance
 

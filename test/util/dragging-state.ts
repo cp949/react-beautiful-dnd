@@ -13,7 +13,9 @@ import type {
 const state = getStatePreset();
 
 export type IsDraggingState =
-  DraggingState | CollectingState | DropPendingState;
+  | DraggingState
+  | CollectingState
+  | DropPendingState;
 
 export const draggingStates: IsDraggingState[] = [
   state.dragging(),
