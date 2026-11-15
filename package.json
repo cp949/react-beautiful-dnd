@@ -75,7 +75,7 @@
     "build:dist": "tsdown",
     "storybook": "storybook dev -p 9002",
     "build-storybook": "storybook build -c .storybook -o site",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "node ./scripts/publish-guard.mjs && pnpm build"
   },
   "dependencies": {
     "css-box-model": "^1.2.1",

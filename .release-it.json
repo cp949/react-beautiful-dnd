@@ -1,10 +1,14 @@
 {
   "git": {
+    "commit": true,
+    "tag": true,
+    "push": true,
+    "requireCleanWorkingDir": true,
     "commitMessage": "chore: release ${version}",
     "tagName": "v${version}"
   },
   "npm": {
-    "publish": true
+    "publish": false
   },
   "github": {
     "release": true
