@@ -1,19 +1,11 @@
-/**
- * Jest 30은 Node의 기본 TS 로더를 먼저 쓰는데, 이 로더는 import 확장자(.ts)를 요구한다.
- * 확장자 없는 import를 그대로 두기 위해 ts-node 로더를 지정한다.
- *
- * @jest-config-loader ts-node
- */
-/* eslint-disable @typescript-eslint/triple-slash-reference */
-/// <reference path="./test/typings/environment.d.ts" />
+// 이 파일은 CJS(.js)로 둔다. .ts로 두면 Jest 30이 Node 기본 TS 로더를 쓰는데,
+// 이 로더는 import 확장자 요구와 ESM 해석(require 사용 불가) 제약이 있어
+// 별도 로더(ts-node 등)가 필요해진다.
 
-import type { Config } from 'jest';
-import getReactMajorVersion from './test/util/get-react-major-version';
-import isRunningInCI from './test/util/is-running-in-ci';
+const reactMajorVersion = process.env.REACT_MAJOR_VERSION || '19';
 
-const reactMajorVersion = getReactMajorVersion();
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   clearMocks: true,
   modulePathIgnorePatterns: ['/dist/'],
   resetMocks: true,
@@ -48,8 +40,8 @@ if (reactMajorVersion === '18') {
   };
 }
 
-if (isRunningInCI()) {
+if (process.env.CI) {
   config.maxWorkers = 2;
 }
 
-export default config;
+module.exports = config;

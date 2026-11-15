@@ -58,8 +58,8 @@ This package descends from a chain of forks:
   and CI, React 19 (tests still run against React 18 and 19), Jest 30,
   Babel 8, Storybook 10, stylelint 18, Cypress 16, `react-window` 2. None of
   these are shipped to consumers. Two upgrades are deliberately held back:
-  TypeScript stays on 6 because `ts-node` and `fork-ts-checker-webpack-plugin`
-  do not work with TypeScript 7 yet, and `jsdom` stays on 26 because
+  TypeScript stays on 6 because `fork-ts-checker-webpack-plugin`
+  does not work with TypeScript 7 yet, and `jsdom` stays on 26 because
   `jest-environment-jsdom` 30 requires it.
 - **CI and services**: CircleCI was replaced with GitHub Actions
   (`.github/workflows/ci.yml`: validate, Jest on React 18/19, bundle size,
