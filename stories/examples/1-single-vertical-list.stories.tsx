@@ -37,14 +37,6 @@ export const Basic = {
 export const LargeDataSet = {
   render: () => <QuoteApp initial={generateData.large()} />,
   name: 'large data set',
-
-  parameters: {
-    chromatic: {
-      // This is to make sure we do not reach
-      // the 25,000,000px limit of the snapshot.
-      viewports: [320],
-    },
-  },
 };
 
 export const DroppableIsAScrollContainer = {

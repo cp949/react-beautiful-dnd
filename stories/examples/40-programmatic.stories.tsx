@@ -16,11 +16,4 @@ export const WithControls = {
 export const WithRunsheet = {
   render: () => <ProgrammaticRunsheet initial={getQuotes()} />,
   name: 'with runsheet',
-
-  parameters: {
-    // disables Chromatic's snapshotting, because
-    // the snapshot will always be different due to
-    // the programmatic dragging
-    chromatic: { disableSnapshot: true },
-  },
 };

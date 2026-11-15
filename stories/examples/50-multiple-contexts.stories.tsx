@@ -8,11 +8,4 @@ export default {
 export const WithMultipleContexts = {
   render: () => <MultipleContexts />,
   name: 'with multiple contexts',
-
-  parameters: {
-    // disables Chromatic's snapshotting, because
-    // the snapshot will always be different due to
-    // the programmatic dragging
-    chromatic: { disableSnapshot: true },
-  },
 };

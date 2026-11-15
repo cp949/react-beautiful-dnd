@@ -49,7 +49,6 @@
   },
   "scripts": {
     "commit": "cz",
-    "chromatic": "chromatic --project-token=f92123f238de",
     "prepare": "husky",
     "release": "release-it",
     "release:test": "release-it --dry-run",
